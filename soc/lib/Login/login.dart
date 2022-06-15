@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../Dashboard/dashboard_screen.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -130,27 +132,37 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: size.height * 0.09,
                   ),
-                  Container(
-                    width: size.width * 0.08,
-                    height: size.height * 0.08,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.black,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.blue,
-                          offset: Offset(0.0, 0.5),
-                          blurRadius: 5.0,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Dashboard(),
                         ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "login",
-                        style: TextStyle(
-                            color: Colors.green,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                      );
+                    },
+                    child: Container(
+                      width: size.width * 0.08,
+                      height: size.height * 0.08,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.black,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.blue,
+                            offset: Offset(0.0, 0.5),
+                            blurRadius: 5.0,
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                        child: Text(
+                          "login",
+                          style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
                       ),
                     ),
                   )
