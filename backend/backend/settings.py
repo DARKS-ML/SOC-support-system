@@ -41,6 +41,7 @@ INSTALLED_APPS = [
         # newly installed app
     'rest_framework',
     'authentication',
+    'soc',
 ]
 
 MIDDLEWARE = [
