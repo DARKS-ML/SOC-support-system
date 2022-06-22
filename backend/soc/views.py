@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import AuthenticationLogSerializer
 from .processing import DataProcessing
-import pickle5 as pickle
 import joblib
 
 import os
@@ -46,6 +45,10 @@ class AuthenticationLogView(APIView):
         vector_op1_df = ref.convertToDataFrame(vector_op1.todense())
         model_data2 = loaded_model2.predict(vector_op1_df)
         list = model_data2.tolist()[0]
-    
 
-        return Response(list)
+        requested_log = request.data
+      
+        return Response({
+            "log":requested_log,
+            "label":list
+        })
