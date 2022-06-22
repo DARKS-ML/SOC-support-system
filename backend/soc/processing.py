@@ -2,7 +2,8 @@ import re
 import pandas as pd
 import nltk
 from nltk.corpus import stopwords
-import pickle
+# import pickle
+import pickle5 as pickle
 
 class DataProcessing:
     """class which pre preocess input data and then load, predict through model"""

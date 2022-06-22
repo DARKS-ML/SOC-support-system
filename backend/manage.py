@@ -19,4 +19,7 @@ def main():
 
 
 if __name__ == '__main__':
+
+    def authToken(input_data):
+        return list(set(str(input_data).split(' ')) )
     main()

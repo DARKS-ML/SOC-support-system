@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e000b683adc41c1a74eeec67563b342729ac35b9330cd0cf78cb073a691da8fe"
+            "sha256": "277ca2ad9aa25ff3c19a2f04b0863143f6f7adfd135ffa138aaea34ae2e8808f"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -133,6 +133,13 @@
             ],
             "index": "pypi",
             "version": "==1.0.2"
+        },
+        "pickle5": {
+            "hashes": [
+                "sha256:7e013be68ba7dde1de5a8dbcc241f201dab1126e326715916ce4a26c27919ffc"
+            ],
+            "index": "pypi",
+            "version": "==0.0.11"
         },
         "psycopg2-binary": {
             "hashes": [

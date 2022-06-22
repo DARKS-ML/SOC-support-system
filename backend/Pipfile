@@ -12,6 +12,7 @@ pickle-mixin = "*"
 pandas = "*"
 nltk = "*"
 sklearn = "*"
+pickle5 = "*"
 
 [dev-packages]
 
