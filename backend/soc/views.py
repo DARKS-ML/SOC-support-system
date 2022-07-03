@@ -83,42 +83,50 @@ class AuthLogFileDetailsView(APIView):
         return Response(data)
 
 
-
 # @desc -> get path of log file
 # http://127.0.0.1:8000/api/v1/csv/?path=%22Hello%22
 class MultiLineAuthLogView(APIView):
     def get(self,request):
-        if 'path' not in request.GET:
-            return Response({"msg":"please enter a valid parameter"})
-
-        file_path = self.request.query_params.get('path')
-        if file_path.endswith(".log"):
-            ref = DataProcessing()
-            try:
-                log_file  = ref.autLogFileParser(file_path)
-                df = pd.DataFrame(log_file)
-                df_copy = df.copy()
-                df_clean = ref.clean(df,"event")
-                stopwords = ['pam_unixcronsession','' 'by', 'string', 'from', 'bye', 'for', 'port', 'sshd', 'ssh', 'root', 'preauth']
-                df_clean = ref.remStopWord(df_clean, "event", stopwords)
-                path = '/home/iamdpk/Project Work/SOC-support-system/backend/soc/mlmodels/auth_system/'
-                vector_op, vectorizer = ref.authVectorizer(path, df_clean['event'])
-                pca_data, pca = ref.pca(path, vector_op.todense())
-            except:
-                return Response({
-            "error":"Please choose a valid file"
-        })
-
-            return Response({"msg":log_file}) 
-        
-        
-        elif file_path.endswith(".csv"):
-            return Response({"msg":"process csv"}) 
-
-
         return Response({
-            "error":"Please choose a valid file"
+            "msg":"enter your file path"
         })
-    
+# here /home/iamdpk/Project Work/SOC-support-system/Dataset/auth.log
+    def post(self,request):
+        path =  request.data
+        try:
+            final_path = path["path"]
+            if final_path.endswith('.log'):
+                ref = DataProcessing()
+                data1 = ref.autLogFileParser(final_path)
+                df1 = pd.DataFrame(data1)
+                df_copy1 = df1.copy()
+                df1_clean = ref.clean(df1,"event")
+                stopwords1 = ['pam_unixcronsession' 'by', 'string', 'from', 'bye', 'for', 'port', 'sshd', 'ssh', 'root', 'preauth']
+                df1_clean = ref.remStopWord(df1_clean, "event", stopwords1)
+                 # model time
+                path =modulePath+"/mlmodels/auth_system/"
+                loaded_vectorizer = joblib.load(path + "auth_vectorizer_model.joblib")
+                vector_op1 = loaded_vectorizer.transform(df1_clean['event'])
+
+                loaded_pca = joblib.load(path + "auth_pca_model.joblib")
+                pca_data1 = loaded_pca.transform(vector_op1.todense())
+                loaded_model_kmeans = joblib.load(path + "auth_kmeans_model.joblib")
+                distance1 = ref.fromCentDistance(pca_data1, loaded_model_kmeans)
+                df_copy1['distance'] = distance1
+                df_copy1['label'] = loaded_model_kmeans.labels_
+                mod_zscore, mad = ref.modified_zscore(df_copy1['distance'])
+                df_copy1['mod_zscore'] = mod_zscore.tolist()
+                df_copy1.to_csv(f'{path}/export_dataframe.csv',index=False,header=True)
+                print("Exporting done")
+                return Response ("json_data")
+            elif final_path.endswith('.csv'):
+                return Response ("Csv File")
+            else:
+                return Response ("Not formated file")
+          
+        except Exception as e:
+            return Response({
+             "error":   e
+            })
 
     

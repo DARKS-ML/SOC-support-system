@@ -1,10 +1,12 @@
 import re
 import pandas as pd
+import numpy as np
 import nltk
 from nltk.corpus import stopwords
 # import pickle
 import pickle5 as pickle
 from sklearn.decomposition import PCA
+from scipy.spatial import distance
 
 class DataProcessing:
     """class which pre preocess input data and then load, predict through model"""
@@ -54,7 +56,6 @@ class DataProcessing:
         return dataframe
     
     def remStopWord(self,dataframe, column_name, s_words):
-        nltk.download('stopwords')
         all_stopwords = stopwords.words('english')
         all_stopwords.extend(s_words)
         dataframe[column_name] = dataframe[column_name].apply(lambda x: ' '.join([word for word in x.split() if word not in (all_stopwords)]))
@@ -64,7 +65,8 @@ class DataProcessing:
     def loadModel(self,path, mod_name):
         return pickle.load(open(path + 'auth_'+mod_name+'.sav', 'rb'))
 
-    def pca(path, input_data):
+
+    def pca(self,path, input_data):
         pca = PCA(n_components=0.95) 
         pca.fit(input_data)
         data = pca.transform(input_data)
@@ -72,3 +74,38 @@ class DataProcessing:
         #   joblib.dump(pca, path + "auth_pca_model.joblib", compress=True)
         
         return data, pca
+
+    def fromCentDistance(self,pca_data, model):
+        centroids = model.cluster_centers_
+        df_cent = pd.DataFrame(centroids)
+        df_cent['label'] = [i for i in range(len(centroids))]
+        df_pca_data = pd.DataFrame(pca_data)
+        df_pca_data['label'] = model.predict(pca_data)
+        df_pca_data_join = df_pca_data.join(df_cent, 
+                                            on='label', 
+                                            how='left', 
+                                            lsuffix='_pca',
+                                            rsuffix='_cent')
+        df_pca_1 = df_pca_data_join.loc[:, "0_pca":"label_pca"]
+        df_pca_1.drop('label_pca', axis=1, inplace=True)
+        df_cent_1 = df_pca_data_join.loc[:, "0_cent":"label_cent"]
+        df_cent_1.drop('label_cent', axis=1, inplace=True)
+        list1 = df_pca_1.to_numpy().tolist()
+        list2 = df_cent_1.to_numpy().tolist()
+        distances = []
+        for i in range(len(list1)):
+            dist = distance.euclidean(list1[i],list2[i])
+            distances.append(dist)
+        
+        return distances
+   
+    def modified_zscore(self,distance, consistency_correction=1.4826):
+        
+        median = np.median(distance)
+        
+        deviation_from_med = np.array(distance) - median
+        
+        mad = np.mean(np.abs(deviation_from_med))
+        mod_zscore = deviation_from_med/(consistency_correction*mad)
+        
+        return mod_zscore, mad

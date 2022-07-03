@@ -13,6 +13,7 @@ pandas = "*"
 nltk = "*"
 sklearn = "*"
 pickle5 = "*"
+scipy = "*"
 
 [dev-packages]
 
