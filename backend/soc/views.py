@@ -122,11 +122,11 @@ class MultiLineAuthLogView(APIView):
                 df_copy1['mod_zscore'] = mod_zscore.tolist()
 
                 file_name =ref.fileNameFormat("auth")
-                file_path = f'{auth_predicted_csv_path}/{file_name}.csv'
-                df_copy1.to_csv(file_path,index=False,header=True)
+                csv_file_path = f'{auth_predicted_csv_path}/{file_name}.csv'
+                df_copy1.to_csv(csv_file_path,index=False,header=True)
                 
                 import json
-                json_data = ref.convertCsvToJson(file_path)
+                json_data = ref.convertCsvToJson(csv_file_path)
                 
                 json_object = json.dumps(json_data, indent = 4)
                 file_name =ref.fileNameFormat("auth")
@@ -136,8 +136,8 @@ class MultiLineAuthLogView(APIView):
                 
 
                 return Response ({
-                    "msg":"check this path",
-                    "path":json_file_path
+                    "csv_path":csv_file_path,
+                    "json_path":json_file_path
                 })
             elif final_path.endswith('.csv'):
                 return Response ("Csv File")
