@@ -12,18 +12,19 @@ import glob
 import os
 import time
 
+import os.path as path
+
 modulePath = os.path.dirname(__file__)
+base_path =  path.abspath(path.join(__file__ ,"../../.."))
+auth_model_path =base_path+'/Models Collection/Auth Log/'
+auth_predicted_path = base_path+'/Predicted Results/Auth Log/'
+dataset_collection = base_path+'/Dataset/'
 
 # Create your views here.
 
 # @desc -> predict single log line 
 class SingleLineAuthenticationLogView(APIView):      
     def post(self, request):
-        def __init__(self):
-            path =modulePath+"/mlmodels/auth_system/"
-            self.aaa =  joblib.load(path + "auth_vectorizer_model.joblib")
-
-
         input_log = request.data
         ref = DataProcessing()
         data1 = ref.authParserLine(input_log)
@@ -35,18 +36,17 @@ class SingleLineAuthenticationLogView(APIView):
         path =modulePath+"/mlmodels/auth_system/"
 
         # model time
-        path =modulePath+"/mlmodels/auth_system/"
-        loaded_vectorizer = joblib.load(path + "auth_vectorizer_model.joblib")
+        loaded_vectorizer = joblib.load(auth_model_path + "auth_vectorizer_model.joblib")
         
         
         vector_op1 = loaded_vectorizer.transform(df1_clean['event'])
-        loaded_pca = joblib.load(path + "auth_pca_model.joblib")
+        loaded_pca = joblib.load(auth_model_path + "auth_pca_model.joblib")
         pca_data1 = loaded_pca.transform(vector_op1.todense())
 
-        loaded_model_kmeans =  joblib.load(path + "auth_kmeans_model.joblib")
+        loaded_model_kmeans =  joblib.load(auth_model_path + "auth_kmeans_model.joblib")
         model_data1 = loaded_model_kmeans.predict(pca_data1)
 
-        loaded_model2 = joblib.load(path + 'auth_sgd_model.joblib')
+        loaded_model2 = joblib.load(auth_model_path + 'auth_sgd_model.joblib')
         vector_op1_df = ref.convertToDataFrame(vector_op1.todense())
         model_data2 = loaded_model2.predict(vector_op1_df)
         list = model_data2.tolist()[0]
@@ -62,7 +62,7 @@ class SingleLineAuthenticationLogView(APIView):
 # @desc -> get list of files from specific log containg directory  
 class AuthLogFileDetailsView(APIView):
     def get(self,request):
-        dir_name = '/home/iamdpk/Project Work/SOC-support-system/Dataset/'
+        dir_name = dataset_collection
         my_dict = {}
         data = []
         # Get list of all files only in the given directory

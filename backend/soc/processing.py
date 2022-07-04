@@ -54,8 +54,11 @@ class DataProcessing:
         # remove after 'user' including user :(
         dataframe[column_name] = dataframe[column_name].apply(lambda x: x.split(' user ')[0])
         return dataframe
-    
+
     def remStopWord(self,dataframe, column_name, s_words):
+        import nltk
+        from nltk.corpus import stopwords
+        nltk.download('stopwords')
         all_stopwords = stopwords.words('english')
         all_stopwords.extend(s_words)
         dataframe[column_name] = dataframe[column_name].apply(lambda x: ' '.join([word for word in x.split() if word not in (all_stopwords)]))
