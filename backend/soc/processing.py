@@ -1,15 +1,46 @@
 import re
+import csv 
+
 import pandas as pd
 import numpy as np
+
+
 import nltk
 from nltk.corpus import stopwords
-# import pickle
-import pickle5 as pickle
+
+from pytz import timezone 
+from datetime import datetime
+
 from sklearn.decomposition import PCA
 from scipy.spatial import distance
 
 class DataProcessing:
     """class which pre preocess input data and then load, predict through model"""
+    def getCurrentDateTime(self):
+        currentdatetime = datetime.now(timezone("Asia/kathmandu")).strftime('%Y-%m-%d %H:%M:%S.%f')
+        return currentdatetime
+
+    def fileNameFormat(self,file_type):
+        current_time = datetime.now(timezone("Asia/kathmandu")).strftime('%Y_%m_%d__%H_%M_%S')
+        file_name = file_type+"_"+current_time
+        return file_name
+
+    def convertCsvToJson(self,csv_file):
+        json_data = []
+        with open(csv_file) as f:
+            records = csv.DictReader(f)
+            for row in records:
+                json_data.append(row)
+        return json_data
+                
+    def saveJsonFile(self,file_path,json_data,json_file_name):
+        import json
+        # Serializing json 
+        json_object = json.dumps(json_data, indent = 4)
+        # Writing to sample.json
+        with open(json_file_name+".json", "w") as outfile:
+            outfile.write(json_object)
+    
     def autLogFileParser(self,log_file):
         file_name = log_file
         file = open(file_name, "r")

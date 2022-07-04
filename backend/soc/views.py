@@ -17,7 +17,8 @@ import os.path as path
 modulePath = os.path.dirname(__file__)
 base_path =  path.abspath(path.join(__file__ ,"../../.."))
 auth_model_path =base_path+'/Models Collection/Auth Log/'
-auth_predicted_path = base_path+'/Predicted Results/Auth Log/'
+auth_predicted_csv_path = base_path+'/Predicted Results/Auth Log/csv/'
+auth_predicted_json_path = base_path+'/Predicted Results/Auth Log/json/'
 dataset_collection = base_path+'/Dataset/'
 
 # Create your views here.
@@ -92,33 +93,52 @@ class MultiLineAuthLogView(APIView):
         })
 # here /home/iamdpk/Project Work/SOC-support-system/Dataset/auth.log
     def post(self,request):
-        path =  request.data
+        request_data =  request.data
         try:
-            final_path = path["path"]
+            final_path = request_data["path"]
             if final_path.endswith('.log'):
                 ref = DataProcessing()
                 data1 = ref.autLogFileParser(final_path)
                 df1 = pd.DataFrame(data1)
                 df_copy1 = df1.copy()
                 df1_clean = ref.clean(df1,"event")
+
                 stopwords1 = ['pam_unixcronsession' 'by', 'string', 'from', 'bye', 'for', 'port', 'sshd', 'ssh', 'root', 'preauth']
                 df1_clean = ref.remStopWord(df1_clean, "event", stopwords1)
-                 # model time
-                path =modulePath+"/mlmodels/auth_system/"
-                loaded_vectorizer = joblib.load(path + "auth_vectorizer_model.joblib")
+                 
+                # model time
+                loaded_vectorizer = joblib.load(auth_model_path + "auth_vectorizer_model.joblib")
                 vector_op1 = loaded_vectorizer.transform(df1_clean['event'])
 
-                loaded_pca = joblib.load(path + "auth_pca_model.joblib")
+                loaded_pca = joblib.load(auth_model_path + "auth_pca_model.joblib")
                 pca_data1 = loaded_pca.transform(vector_op1.todense())
-                loaded_model_kmeans = joblib.load(path + "auth_kmeans_model.joblib")
+
+                loaded_model_kmeans = joblib.load(auth_model_path + "auth_kmeans_model.joblib")
                 distance1 = ref.fromCentDistance(pca_data1, loaded_model_kmeans)
+                
                 df_copy1['distance'] = distance1
                 df_copy1['label'] = loaded_model_kmeans.labels_
                 mod_zscore, mad = ref.modified_zscore(df_copy1['distance'])
                 df_copy1['mod_zscore'] = mod_zscore.tolist()
-                df_copy1.to_csv(f'{path}/export_dataframe.csv',index=False,header=True)
-                print("Exporting done")
-                return Response ("json_data")
+
+                file_name =ref.fileNameFormat("auth")
+                file_path = f'{auth_predicted_csv_path}/{file_name}.csv'
+                df_copy1.to_csv(file_path,index=False,header=True)
+                
+                import json
+                json_data = ref.convertCsvToJson(file_path)
+                
+                json_object = json.dumps(json_data, indent = 4)
+                file_name =ref.fileNameFormat("auth")
+                json_file_path = f'{auth_predicted_json_path}/{file_name}.json'
+                with open( json_file_path, "w") as outfile:
+                    outfile.write(json_object)
+                
+
+                return Response ({
+                    "msg":"check this path",
+                    "path":json_file_path
+                })
             elif final_path.endswith('.csv'):
                 return Response ("Csv File")
             else:
