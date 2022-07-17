@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status,viewsets
 from .serializers import MultiLineAuthLogSerializer
-from .processing import DataProcessing
+from .processing import AuthLogDataProcessing
 import joblib
 import pandas as pd
 
@@ -19,7 +19,7 @@ base_path =  path.abspath(path.join(__file__ ,"../../.."))
 auth_model_path =base_path+'/Models Collection/Auth Log/'
 auth_predicted_csv_path = base_path+'/Predicted Results/Auth Log/csv/'
 auth_predicted_json_path = base_path+'/Predicted Results/Auth Log/json/'
-dataset_collection = base_path+'/Dataset/'
+dataset_collection = base_path+'/Dataset/auth/'
 
 # Create your views here.
 
@@ -27,7 +27,7 @@ dataset_collection = base_path+'/Dataset/'
 class SingleLineAuthenticationLogView(APIView):      
     def post(self, request):
         input_log = request.data
-        ref = DataProcessing()
+        ref = AuthLogDataProcessing()
         data1 = ref.authParserLine(input_log)
         df1 = ref.convertToDataFrame(data1)
         df1_clean = ref.clean(df1, "event")
@@ -97,7 +97,7 @@ class MultiLineAuthLogView(APIView):
         try:
             final_path = request_data["path"]
             if final_path.endswith('.log'):
-                ref = DataProcessing()
+                ref = AuthLogDataProcessing()
                 data1 = ref.autLogFileParser(final_path)
                 df1 = pd.DataFrame(data1)
                 df_copy1 = df1.copy()

@@ -14,7 +14,7 @@ from datetime import datetime
 from sklearn.decomposition import PCA
 from scipy.spatial import distance
 
-class DataProcessing:
+class AuthLogDataProcessing:
     """class which pre preocess input data and then load, predict through model"""
     def getCurrentDateTime(self):
         currentdatetime = datetime.now(timezone("Asia/kathmandu")).strftime('%Y-%m-%d %H:%M:%S.%f')

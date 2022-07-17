@@ -20,5 +20,6 @@ from soc import urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/',include('authentication.urls')),
-    path('api/v1/',include('soc.urls')),
+    path('api/v1/auth/',include('soc.urls')),
+     path('api/v1/ids/',include('ids.urls')),
 ]
