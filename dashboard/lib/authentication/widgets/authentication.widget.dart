@@ -33,7 +33,7 @@ class AuthWidgets {
         width: (size.width - size.width / 20) / 2.8,
         decoration: BoxDecoration(
           // color: Colors.green,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(4),
           border: Border.all(
             color: Colors.black,
           ),

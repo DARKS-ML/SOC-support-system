@@ -2,6 +2,7 @@ import 'package:dashboard/authentication/screens/authentication.screen.dart';
 import 'package:dashboard/config/responsive.dart';
 import 'package:flutter/material.dart';
 
+import '../services/auth.service.dart';
 import '../widgets/authentication.widget.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -61,20 +62,13 @@ class RegisterScreen extends StatelessWidget {
                 size: _size,
                 text: "Login",
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const LoginScreen(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, "/login");
                 },
               ),
               AuthWidgets.buildButton(
                 size: _size,
                 text: "Register",
-                onTap: () {
-                  //register code
-                },
+                onTap: () => AuthService.loginService(context: context),
               )
             ],
           ),
