@@ -3,11 +3,13 @@ import 'package:side_bar_custom/side_bar_custom.dart';
 
 import 'list_dataset.screen.dart';
 import 'overview.screen.dart';
+import 'previousresult.screen.dart';
 
 class DashboardScreenList {
   static final sidebarScreens = [
     OverViewScreen(),
     ListDataSetScreen(),
+    PreviousPredictResultScreen(),
     const Logout(),
   ];
   static final sidebarScreensname = [
@@ -20,6 +22,11 @@ class DashboardScreenList {
       text: "Others",
       icon: Icons.dashboard,
       tooltipText: "Others page",
+    ),
+    SideBarItem(
+      text: "Previous Predict",
+      icon: Icons.skip_previous,
+      tooltipText: "Previous Result Page",
     ),
     SideBarItem(
       text: "Logout",

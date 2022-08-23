@@ -44,6 +44,30 @@ class IDSLogFileDetailsView(APIView):
         return Response(data)
 
 
+# @desc -> get list of files from specific log containg directory  
+class PredictedIDSFileDetailsView(APIView):
+    def get(self,request):
+        dir_name = ids_predicted_json_path
+        my_dict = {}
+        data = []
+        # Get list of all files only in the given directory
+        list_of_files = filter(os.path.isfile,glob.glob(dir_name + '*'))
+        # Sort list of files based on last modification time in ascending order
+        list_of_files = sorted(list_of_files,key = os.path.getmtime,reverse=True)
+        # Iterate over sorted list of files and print file path 
+        # along with last modification time of file 
+        for file_path in list_of_files:
+            timestamp_str = time.strftime( "%Y-%m-%d %H:%M:%S",
+                                            time.gmtime(os.path.getmtime(file_path))) 
+            my_dict = {
+                "date":timestamp_str,
+                "path":file_path
+            }
+            data.append(my_dict)
+        # return Response(my_dict)
+        return Response(data)
+
+
 # Create your views here.
 class IDSLogView(APIView):
     def post(self,request):
