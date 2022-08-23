@@ -1,6 +1,6 @@
 # SOC-support-system
 
-install pipenv 
+"install pipenv" 
 GOTO base Project path ie, backend 
 $pipenv shell 
 install postgress and set as per backend/setting.py database str -->
