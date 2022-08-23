@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import '../Model/auth_log_model.dart';
 import 'package:flutter/services.dart' as root_bundle;
+
+import '../model/auth_log_model.dart';
 
 Future<List<AuthLogModel>> readJsonAuthLog() async {
   final jsondata = await root_bundle.rootBundle.loadString(

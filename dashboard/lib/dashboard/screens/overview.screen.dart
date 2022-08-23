@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
-import '../Model/auth_log_model.dart';
+import '../model/auth_log_model.dart';
 import '../services/auth_log_services.dart';
 
 class OverViewScreen extends StatefulWidget {
