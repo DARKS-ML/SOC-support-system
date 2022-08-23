@@ -11,7 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import SGDClassifier
 from sklearn.linear_model import LogisticRegression
-import pickle5 as pickle
+import  pickle
 
 from pytz import timezone 
 from datetime import datetime
