@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:side_bar_custom/side_bar_custom.dart';
 
-import 'list_dataset.screen.dart';
-import 'overview.screen.dart';
-import 'previousresult.screen.dart';
+import '../list_dataset.screen.dart';
+import '../overview.screen.dart';
+import '../previousresult.screen.dart';
 
 class DashboardScreenList {
   static final sidebarScreens = [
-    OverViewScreen(),
     ListDataSetScreen(),
+    OverViewScreen(),
     PreviousPredictResultScreen(),
     const Logout(),
   ];
   static final sidebarScreensname = [
     SideBarItem(
       text: "Dashboard",
-      icon: Icons.other_houses_sharp,
-      tooltipText: "Dashboard page",
-    ),
-    SideBarItem(
-      text: "Others",
       icon: Icons.dashboard,
       tooltipText: "Others page",
+    ),
+    SideBarItem(
+      text: "Overview",
+      icon: Icons.other_houses_sharp,
+      tooltipText: "Overview page",
     ),
     SideBarItem(
       text: "Previous Predict",

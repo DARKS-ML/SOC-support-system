@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dashboard/dashboard/screens/auth.chart_details.screen.dart';
+import 'package:dashboard/dashboard/screens/details/auth.chart_details.screen.dart';
+import 'package:dashboard/dashboard/widgets/index.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:loading_indicator/loading_indicator.dart';
 
-import 'ids.chart_details.screen.dart';
+import 'details/ids.chart_details.screen.dart';
 
 class ListDataSetScreen extends StatelessWidget {
   const ListDataSetScreen({Key? key}) : super(key: key);
@@ -29,7 +32,14 @@ class ListDataSetScreen extends StatelessWidget {
           CircleAvatar(
             backgroundColor: Colors.black,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                displayDialog(
+                  context: context,
+                  actions: [],
+                  child: GlobalWidget.displayDialog(),
+                  widget: Text(""),
+                );
+              },
               icon: const Icon(
                 Icons.notification_add,
                 color: Colors.yellow,
@@ -96,6 +106,51 @@ fetchDataFromAPi({required Future future, required String socType}) {
               bool isToday = filecreatedDate == todayDate;
               return ListTile(
                 onTap: () async {
+                  displayDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    actions: [],
+                    child: const Center(
+                      child: LoadingIndicator(
+                          indicatorType: Indicator.lineScalePulseOutRapid,
+
+                          /// Required, The loading type of the widget
+                          colors: [
+                            Colors.black,
+                            Colors.grey,
+                            Colors.red,
+                            Colors.green
+                          ],
+
+                          /// Optional, The color collections
+                          strokeWidth: 2,
+
+                          /// Optional, The stroke of the line, only applicable to widget which contains line
+                          backgroundColor: Colors.transparent,
+
+                          /// Optional, Background of the widget
+                          pathBackgroundColor: Colors.black
+
+                          /// Optional, the stroke backgroundColor
+                          ),
+                    ),
+                    widget: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("Processing....\n"),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/dashboard');
+                          },
+                          child: const Icon(
+                            Icons.clear,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                   final data = decodeData[index];
                   // final dataTosend = json.encode(data);
                   await predictData(
@@ -111,6 +166,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                           jsonFileNameOrigin.split("dashboard/")[1];
 
                       if (socType == "auth") {
+                        // Navigator.pop(context);
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -120,6 +176,8 @@ fetchDataFromAPi({required Future future, required String socType}) {
                           ),
                         );
                       } else if (socType == "ids") {
+                        // Navigator.pop(context);
+
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -177,8 +235,8 @@ fetchDataFromAPi({required Future future, required String socType}) {
                 const Divider(),
           );
         } else {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Center(
+            child: GlobalWidget.displayDialog(),
           );
         }
       } catch (e) {
@@ -236,10 +294,32 @@ Future predictData({
       ),
       body: dataTosend,
     );
+
     final responseBody = [response.statusCode, response.body];
     log(responseBody.toString());
     return responseBody;
   } catch (e) {
     rethrow;
   }
+}
+
+displayDialog({
+  required BuildContext context,
+  required Widget widget,
+  // required String contentText,
+  required Widget child,
+  required List<Widget> actions,
+  bool barrierDismissible = true,
+}) {
+  return showDialog(
+    barrierDismissible: barrierDismissible,
+    context: context,
+    builder: (_) {
+      return CupertinoAlertDialog(
+        title: widget,
+        content: child,
+        actions: actions,
+      );
+    },
+  );
 }

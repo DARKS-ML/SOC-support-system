@@ -1,7 +1,7 @@
 import 'package:dashboard/authentication/screens/authentication.screen.dart';
 import 'package:flutter/material.dart';
 
-import 'dashboard/screens/dashboard.screen.dart';
+import 'dashboard/screens/main/dashboard.screen.dart';
 
 void main() {
   runApp(const MyApp());

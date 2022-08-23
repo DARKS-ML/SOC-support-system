@@ -8,8 +8,8 @@ import 'package:loading_indicator/loading_indicator.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
-import '../model/auth_log_model.dart';
-import '../services/auth_log_services.dart';
+import '../../model/auth_log_model.dart';
+import '../../services/auth_log_services.dart';
 
 class AuthChartDetailsScreen extends StatefulWidget {
   final String fileName;
@@ -57,7 +57,10 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: FloatingActionButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pushReplacementNamed(
+            context,
+            '/dashboard',
+          ),
           backgroundColor: Colors.white,
           elevation: 5,
           child: const Padding(
@@ -117,28 +120,32 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                       );
                     } else {
                       return const Center(
-                        child: LoadingIndicator(
-                            indicatorType: Indicator.lineScalePulseOutRapid,
+                        child: SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: LoadingIndicator(
+                              indicatorType: Indicator.lineScalePulseOutRapid,
 
-                            /// Required, The loading type of the widget
-                            colors: [
-                              Colors.black,
-                              Colors.grey,
-                              Colors.red,
-                              Colors.green
-                            ],
+                              /// Required, The loading type of the widget
+                              colors: [
+                                Colors.black,
+                                Colors.grey,
+                                Colors.red,
+                                Colors.green
+                              ],
 
-                            /// Optional, The color collections
-                            strokeWidth: 2,
+                              /// Optional, The color collections
+                              strokeWidth: 2,
 
-                            /// Optional, The stroke of the line, only applicable to widget which contains line
-                            backgroundColor: Colors.transparent,
+                              /// Optional, The stroke of the line, only applicable to widget which contains line
+                              backgroundColor: Colors.transparent,
 
-                            /// Optional, Background of the widget
-                            pathBackgroundColor: Colors.black
+                              /// Optional, Background of the widget
+                              pathBackgroundColor: Colors.black
 
-                            /// Optional, the stroke backgroundColor
-                            ),
+                              /// Optional, the stroke backgroundColor
+                              ),
+                        ),
                       );
                     }
                   }),

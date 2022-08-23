@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dashboard/dashboard/screens/auth.chart_details.screen.dart';
+import 'package:dashboard/dashboard/screens/details/auth.chart_details.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

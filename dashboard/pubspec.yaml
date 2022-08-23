@@ -39,6 +39,7 @@ dependencies:
   syncfusion_flutter_charts: ^20.2.44
   http: ^0.13.5
   loading_indicator: ^3.1.0
+  flutter_platform_alert: ^0.3.0
 
 dev_dependencies:
   flutter_test:
