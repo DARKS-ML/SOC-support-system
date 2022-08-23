@@ -1,20 +1,30 @@
 # SOC-support-system
 
-install pipenv -->
-GOTO base Project path ie, backend -->
-$pipenv shell -->
-install postgress and set as per backend/setting.py database str -->
-$python manage.py makemigration -->
-$python manage.py migrate -->
-$python manage.py runserver -->
-browse to  "http://127.0.0.1:8000/"-->
-this list out all urls -->
-1. admin/ : not in use -->
-2. auth/ : for user register/login -->
-    2i. "http://127.0.0.1:8000/auth/login/" : for login -->
-    2ii."http://127.0.0.1:8000/auth/register/": for register -->
-3."http://127.0.0.1:8000/api/v1/" : gives auth prediction base urls list -->
-    3i. "http://127.0.0.1:8000/api/v1/authpredict/": for signle line log prediction -->
+> install pipenv
+**GOTO base Project path ie, backend **
+```shell
+$pipenv shell 
+```
+**install postgress and set as per backend/setting.py database str **
+```shell
+$python manage.py makemigration 
+```
+```shell
+$python manage.py migrate 
+```
+```shell
+$python manage.py runserver 
+```
+**Browse to  "http://127.0.0.1:8000/"**
+**this list out all urls **
+> admin/ : not in use 1. admin/ : not in use 
+##### auth/ : for user register/login 2. auth/ : for user register/login 
+    2i. "http://127.0.0.1:8000/auth/login/" : for login 
+    2ii."http://127.0.0.1:8000/auth/register/": for register 
+#### 3."http://127.0.0.1:8000/api/v1/" 
+**gives auth prediction base urls list **
+> "http://127.0.0.1:8000/api/v1/authpredict/"    "http://127.0.0.1:8000/api/v1/authpredict/"
+####  for signle line log prediction 	for signle line log prediction 
         -> simply pass [POST]: log data ie 
             -> "Nov bla bla bala "
             example response:
@@ -24,7 +34,10 @@ this list out all urls -->
                         "label": "anomaly"
                     }
                 ]
-    3ii. "http://127.0.0.1:8000/api/v1/logfiles/" : list all dataset files -->
+    3ii. ```shell
+"http://127.0.0.1:8000/api/v1/logfiles/" 
+```
+	list all dataset files -->
             -> check response [GET] 
         example:
             [
@@ -56,3 +69,4 @@ this list out all urls -->
                     "json_path": "/home/iamdpk/Project Work/SOC-support-system/Predicted Results/Auth Log/json//auth_2022_07_04__23_03_08.json"
                 } 
             ^^^^^^ check this file path for   🤔
+
