@@ -24,20 +24,20 @@ $python manage.py runserver
 #### 3."http://127.0.0.1:8000/api/v1/" 
 **gives auth prediction base urls list **
 > "http://127.0.0.1:8000/api/v1/authpredict/"    "http://127.0.0.1:8000/api/v1/authpredict/"
-
-	for signle line log prediction 
+####  for signle line log prediction 	for signle line log prediction 
         -> simply pass [POST]: log data ie 
             -> "Nov bla bla bala "
             example response:
-           
-
-         [
-                        {
-                            "log": "Nov 30 09:22:03 ip-172-31-27-153 sshd[22218]: Did not receive identification string from 196.200.90.236",
-                            "label": "anomaly"
-                        }
-                    ]
-    3ii. "http://127.0.0.1:8000/api/v1/logfiles/" : list all dataset files -->
+                [
+                    {
+                        "log": "Nov 30 09:22:03 ip-172-31-27-153 sshd[22218]: Did not receive identification string from 196.200.90.236",
+                        "label": "anomaly"
+                    }
+                ]
+    3ii. ```shell
+"http://127.0.0.1:8000/api/v1/logfiles/" 
+```
+	list all dataset files -->
             -> check response [GET] 
         example:
             [
