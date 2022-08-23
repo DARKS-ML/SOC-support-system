@@ -21,7 +21,7 @@ class AuthLogDataProcessing:
         return currentdatetime
 
     def fileNameFormat(self,file_type):
-        current_time = datetime.now(timezone("Asia/kathmandu")).strftime('%Y_%m_%d__%H_%M_%S')
+        current_time = datetime.now(timezone("Asia/kathmandu")).strftime('%Y_%m_%d')
         file_name = file_type+"_"+current_time
         return file_name
 
