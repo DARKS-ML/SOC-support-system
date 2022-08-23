@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dashboard/dashboard/screens/chart_details.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class ListDataSet extends StatelessWidget {
-  const ListDataSet({Key? key}) : super(key: key);
+class ListDataSetScreen extends StatelessWidget {
+  const ListDataSetScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +75,9 @@ fetchDataFromAPi({required Future future, required String socType}) {
           final snapshotData = snapshot.data;
           final decodeData = json.decode(snapshotData);
           final datasetLength = decodeData.length;
+          DateTime now = DateTime.now();
+          final todayDate =
+              "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
           return ListView.separated(
             shrinkWrap: true,
             physics: const ScrollPhysics(),
@@ -82,21 +86,51 @@ fetchDataFromAPi({required Future future, required String socType}) {
               final datasetPath = decodeData[index]["path"].toString();
               final String finalDatasetName =
                   datasetPath.split("SOC-support-system/")[1];
-
+              final filecreatedDateTime = decodeData[index]["date"];
+              final filecreatedDate =
+                  decodeData[index]['date'].toString().split(" ")[0];
+              bool isToday = filecreatedDate == todayDate;
               return ListTile(
-                onTap: () {
+                onTap: () async {
                   final data = decodeData[index];
                   // final dataTosend = json.encode(data);
-                  predictData(
+                  await predictData(
                     dataTosend: data,
                     socType: socType,
-                  );
+                  ).then((value) async {
+                    if (value[0] == 200) {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ChartDetailsScreen(),
+                        ),
+                      );
+                    } else {
+                      final Size size = MediaQuery.of(context).size;
+                      final snackBar = SnackBar(
+                        // width: size.width / 2.5,
+                        content: const Text('Only Select .log file'),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.red,
+                        margin: EdgeInsets.fromLTRB(
+                          size.width - size.width / 2.4,
+                          0,
+                          10,
+                          size.height / 1.17,
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                  });
                 },
                 title: Text(
                   finalDatasetName,
                   textAlign: TextAlign.justify,
                 ),
-                subtitle: Text(decodeData[index]["date"]),
+                subtitle: Text(filecreatedDateTime),
+                trailing: isToday
+                    ? Icon(Icons.circle, size: 10, color: Colors.black)
+                    : null,
               );
             },
             separatorBuilder: (BuildContext context, int index) =>
@@ -151,7 +185,7 @@ buildDataSetContainer({required Size size, required String datasetName}) {
 
 // ///////////////////////////////////////////
 
-predictData({
+Future predictData({
   required dataTosend,
   required String socType,
 }) async {
@@ -162,8 +196,9 @@ predictData({
       ),
       body: dataTosend,
     );
-    log(response.body);
-    return response.body;
+    final responseBody = [response.statusCode, response.body];
+    log(responseBody.toString());
+    return responseBody;
   } catch (e) {
     rethrow;
   }

@@ -84,6 +84,29 @@ class AuthLogFileDetailsView(APIView):
         return Response(data)
 
 
+
+class PredictedAuthFileDetailsView(APIView):
+    def get(self,request):
+        dir_name = auth_predicted_json_path
+        my_dict = {}
+        data = []
+        # Get list of all files only in the given directory
+        list_of_files = filter(os.path.isfile,glob.glob(dir_name + '*'))
+        # Sort list of files based on last modification time in ascending order
+        list_of_files = sorted(list_of_files,key = os.path.getmtime,reverse=True)
+        # Iterate over sorted list of files and print file path 
+        # along with last modification time of file 
+        for file_path in list_of_files:
+            timestamp_str = time.strftime( "%Y-%m-%d %H:%M:%S",
+                                            time.gmtime(os.path.getmtime(file_path))) 
+            my_dict = {
+                "date":timestamp_str,
+                "path":file_path
+            }
+            data.append(my_dict)
+        # return Response(my_dict)
+        return Response(data)
+
 # @desc -> get path of log file
 # http://127.0.0.1:8000/api/v1/csv/?path=%22Hello%22
 class MultiLineAuthLogView(APIView):
@@ -140,9 +163,9 @@ class MultiLineAuthLogView(APIView):
                     "json_path":json_file_path
                 })
             elif final_path.endswith('.csv'):
-                return Response ("Csv File")
+                return Response ("Csv File",status=status.HTTP_406_NOT_ACCEPTABLE)
             else:
-                return Response ("Not formated file")
+                return Response ("Not formated file",status=status.HTTP_406_NOT_ACCEPTABLE)
           
         except Exception as e:
             return Response({
