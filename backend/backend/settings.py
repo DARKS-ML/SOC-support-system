@@ -91,9 +91,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'soc_support_system',
-        'USER': 'iamdpk',
-        'PASSWORD': 'iamdpk',
-        'HOST': '172.17.0.2',
+        'USER': 'postgres',
+        'PASSWORD': 'iamrjn',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
