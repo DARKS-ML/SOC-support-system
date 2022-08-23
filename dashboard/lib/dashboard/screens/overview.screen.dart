@@ -1,46 +1,163 @@
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
-class OverViewScreen extends StatelessWidget {
+import '../Model/auth_log_model.dart';
+import '../services/auth_log_services.dart';
+
+class OverViewScreen extends StatefulWidget {
   const OverViewScreen({Key? key}) : super(key: key);
+
+  @override
+  State<OverViewScreen> createState() => _OverViewScreenState();
+}
+
+class _OverViewScreenState extends State<OverViewScreen> {
+  late List<AuthLogModel> authData;
+  late TooltipBehavior _tooltipBehavior;
+
+  @override
+  void initState() {
+    _tooltipBehavior = TooltipBehavior(
+        enable: true,
+        builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+            int seriesIndex) {
+          // log(data);
+          // log(message)
+
+          return SizedBox(
+              height: 50,
+              width: 100,
+              child: InkWell(
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const LoginPage(),
+                    //   ),
+                    // );
+                  },
+                  child: Text(
+                    "$pointIndex",
+                    style: const TextStyle(color: Colors.black),
+                  )));
+        });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              for (int i = 0; i < 4; i++)
-                Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  padding: EdgeInsets.all(6),
-                  margin: EdgeInsets.all(6),
-                  height: _size.height / 8,
-                  width: _size.width / 4.5,
-                  child: Text("Content ${i + 1}"),
-                ),
-            ],
+          SizedBox(
+            height: height * 0.80,
+            width: width,
+            // color: Colors.blue,
+            child: FutureBuilder(
+                future: readJsonAuthLog(),
+                builder: (context, data) {
+                  if (data.hasError) {
+                    return Center(
+                      child: Text("Error::::${data.error}"),
+                    );
+                  } else if (data.hasData) {
+                    authData = data.data as List<AuthLogModel>;
+
+                    log(authData.length.toString());
+                    if (kDebugMode) {
+                      print(authData[0].distance);
+                    }
+
+                    return Padding(
+                      padding: const EdgeInsets.all(50.0),
+                      child: SfSparkLineChart.custom(
+                        color: Colors.black,
+                        marker: const SparkChartMarker(
+                            displayMode: SparkChartMarkerDisplayMode.all,
+                            shape: SparkChartMarkerShape.circle),
+                        trackball: const SparkChartTrackball(
+                          activationMode: SparkChartActivationMode.tap,
+                          shouldAlwaysShow: true,
+                        ),
+                        axisLineDashArray: const <double>[0, 0],
+                        axisCrossesAt: 0.5,
+
+                        plotBand: const SparkChartPlotBand(start: 3, end: 10),
+
+                        xValueMapper: (int index) => authData[index].date,
+                        // Binding the y values
+                        yValueMapper: (int index) => authData[index].modZscore!,
+                        // Assigning the number of data.
+                        dataCount: 50,
+                      ),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
           ),
-          SizedBox(height: 40),
-          SizedBox(height: 40),
-          Text("Last Date  Overview"),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 20),
-            height: _size.height / 3.5,
-            color: Colors.green,
+          const SizedBox(
+            height: 100,
           ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 20),
-            height: _size.height / 3.5,
-            color: Colors.green,
+          SizedBox(
+            height: height * 0.80,
+            width: width,
+            // color: Colors.blue,
+            child: FutureBuilder(
+                future: readJsonAuthLog(),
+                builder: (context, data) {
+                  if (data.hasError) {
+                    return Center(
+                      child: Text("Error::::${data.error}"),
+                    );
+                  } else if (data.hasData) {
+                    authData = data.data as List<AuthLogModel>;
+
+                    log(authData.length.toString());
+                    if (kDebugMode) {
+                      print(authData[0].distance);
+                    }
+
+                    return Padding(
+                      padding: const EdgeInsets.all(50.0),
+                      child: SfCartesianChart(
+                        legend: Legend(isVisible: true),
+
+                        series: <ChartSeries>[
+                          ColumnSeries<AuthLogModel, String>(
+                            dataSource: authData,
+                            xValueMapper: (AuthLogModel m, index) => m.time,
+                            yValueMapper: (AuthLogModel m, index) => m.label,
+                          )
+                        ],
+                        primaryXAxis:
+                            CategoryAxis(title: AxisTitle(text: "label")),
+                        primaryYAxis:
+                            NumericAxis(title: AxisTitle(text: "time")),
+
+                        tooltipBehavior: _tooltipBehavior,
+                        // isTransposed: false,
+                        // enableAxisAnimation: false,
+                      ),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
           ),
         ],
       ),
