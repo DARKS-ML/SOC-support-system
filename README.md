@@ -1,6 +1,6 @@
 # SOC-support-system
 
-"install pipenv" 
+"""install pipenv
 GOTO base Project path ie, backend 
 $pipenv shell 
 install postgress and set as per backend/setting.py database str -->
@@ -56,3 +56,4 @@ this list out all urls -->
                     "json_path": "/home/iamdpk/Project Work/SOC-support-system/Predicted Results/Auth Log/json//auth_2022_07_04__23_03_08.json"
                 } 
             ^^^^^^ check this file path for   🤔
+"""
