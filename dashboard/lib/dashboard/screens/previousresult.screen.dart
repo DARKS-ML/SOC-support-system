@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dashboard/dashboard/screens/chart_details.auth.screen.dart';
+import 'package:dashboard/dashboard/screens/auth.chart_details.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -104,7 +104,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => ChartDetailsScreen(
+                            builder: (_) => AuthChartDetailsScreen(
                               fileName: finalDatasetName,
                             ),
                           ),

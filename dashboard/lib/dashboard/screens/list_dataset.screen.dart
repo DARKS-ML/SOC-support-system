@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dashboard/dashboard/screens/chart_details.auth.screen.dart';
+import 'package:dashboard/dashboard/screens/auth.chart_details.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import 'ids.chart_details.screen.dart';
 
 class ListDataSetScreen extends StatelessWidget {
   const ListDataSetScreen({Key? key}) : super(key: key);
@@ -107,16 +109,42 @@ fetchDataFromAPi({required Future future, required String socType}) {
                           jsonDecodedData['json_path'].toString();
                       final jsonPathName =
                           jsonFileNameOrigin.split("dashboard/")[1];
-                      print("ddddd $jsonPathName");
 
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ChartDetailsScreen(
-                            fileName: jsonPathName,
+                      if (socType == "auth") {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => AuthChartDetailsScreen(
+                              fileName: jsonPathName,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else if (socType == "ids") {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => IDSChartScreenDetails(),
+                          ),
+                        );
+                      } else {
+                        final Size size = MediaQuery.of(context).size;
+                        final snackBar = SnackBar(
+                          // width: size.width / 2.5,
+                          content: const Text(
+                            'Not Not Supported \n 😥!',
+                            textAlign: TextAlign.center,
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Colors.red,
+                          margin: EdgeInsets.fromLTRB(
+                            size.width - size.width / 2.4,
+                            0,
+                            10,
+                            size.height / 1.17,
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     } else {
                       final Size size = MediaQuery.of(context).size;
                       final snackBar = SnackBar(

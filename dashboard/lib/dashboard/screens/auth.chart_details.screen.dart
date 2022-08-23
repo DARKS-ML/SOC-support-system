@@ -11,16 +11,16 @@ import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import '../model/auth_log_model.dart';
 import '../services/auth_log_services.dart';
 
-class ChartDetailsScreen extends StatefulWidget {
+class AuthChartDetailsScreen extends StatefulWidget {
   final String fileName;
-  const ChartDetailsScreen({Key? key, required this.fileName})
+  const AuthChartDetailsScreen({Key? key, required this.fileName})
       : super(key: key);
 
   @override
-  State<ChartDetailsScreen> createState() => _ChartDetailsScreenState();
+  State<AuthChartDetailsScreen> createState() => _AuthChartDetailsScreenState();
 }
 
-class _ChartDetailsScreenState extends State<ChartDetailsScreen> {
+class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
   late List<AuthLogModel> authData;
   late TooltipBehavior _tooltipBehavior;
 
