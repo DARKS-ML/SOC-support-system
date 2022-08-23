@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dashboard/dashboard/screens/chart_details.screen.dart';
+import 'package:dashboard/dashboard/screens/chart_details.auth.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -94,44 +94,21 @@ fetchDataFromAPi({required Future future, required String socType}) {
                   itemBuilder: (context, index) {
                     final datasetPath = decodeData[index]["path"].toString();
                     final String finalDatasetName =
-                        datasetPath.split("SOC-support-system/")[1];
+                        datasetPath.split("dashboard/")[1];
                     final filecreatedDateTime = decodeData[index]["date"];
                     final filecreatedDate =
                         decodeData[index]['date'].toString().split(" ")[0];
                     bool isToday = filecreatedDate == todayDate;
                     return ListTile(
                       onTap: () async {
-                        final data = decodeData[index];
-                        // final dataTosend = json.encode(data);
-                        await predictData(
-                          dataTosend: data,
-                          socType: socType,
-                        ).then((value) async {
-                          if (value[0] == 200) {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => ChartDetailsScreen(),
-                              ),
-                            );
-                          } else {
-                            final Size size = MediaQuery.of(context).size;
-                            final snackBar = SnackBar(
-                              // width: size.width / 2.5,
-                              content: const Text('Only Select .log file'),
-                              behavior: SnackBarBehavior.floating,
-                              backgroundColor: Colors.red,
-                              margin: EdgeInsets.fromLTRB(
-                                size.width - size.width / 2.4,
-                                0,
-                                10,
-                                size.height / 1.17,
-                              ),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          }
-                        });
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ChartDetailsScreen(
+                              fileName: finalDatasetName,
+                            ),
+                          ),
+                        );
                       },
                       title: Text(
                         finalDatasetName,

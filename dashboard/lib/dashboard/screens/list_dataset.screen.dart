@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dashboard/dashboard/screens/chart_details.screen.dart';
+import 'package:dashboard/dashboard/screens/chart_details.auth.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -101,10 +101,20 @@ fetchDataFromAPi({required Future future, required String socType}) {
                     socType: socType,
                   ).then((value) async {
                     if (value[0] == 200) {
+                      final filename = value[1];
+                      final jsonDecodedData = json.decode(filename);
+                      final jsonFileNameOrigin =
+                          jsonDecodedData['json_path'].toString();
+                      final jsonPathName =
+                          jsonFileNameOrigin.split("dashboard/")[1];
+                      print("ddddd $jsonPathName");
+
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => ChartDetailsScreen(),
+                          builder: (_) => ChartDetailsScreen(
+                            fileName: jsonPathName,
+                          ),
                         ),
                       );
                     } else {

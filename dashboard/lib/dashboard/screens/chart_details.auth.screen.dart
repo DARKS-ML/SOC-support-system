@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -11,7 +12,9 @@ import '../model/auth_log_model.dart';
 import '../services/auth_log_services.dart';
 
 class ChartDetailsScreen extends StatefulWidget {
-  const ChartDetailsScreen({Key? key}) : super(key: key);
+  final String fileName;
+  const ChartDetailsScreen({Key? key, required this.fileName})
+      : super(key: key);
 
   @override
   State<ChartDetailsScreen> createState() => _ChartDetailsScreenState();
@@ -34,14 +37,7 @@ class _ChartDetailsScreenState extends State<ChartDetailsScreen> {
               height: 50,
               width: 100,
               child: InkWell(
-                  onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const LoginPage(),
-                    //   ),
-                    // );
-                  },
+                  onTap: () {},
                   child: Text(
                     "$pointIndex",
                     style: const TextStyle(color: Colors.black),
@@ -81,7 +77,7 @@ class _ChartDetailsScreenState extends State<ChartDetailsScreen> {
               width: width,
               // color: Colors.blue,
               child: FutureBuilder(
-                  future: readJsonAuthLog(),
+                  future: readJsonAuthLog(filename: widget.fileName),
                   builder: (context, data) {
                     if (data.hasError) {
                       return Center(
@@ -121,7 +117,28 @@ class _ChartDetailsScreenState extends State<ChartDetailsScreen> {
                       );
                     } else {
                       return const Center(
-                        child: CircularProgressIndicator(),
+                        child: LoadingIndicator(
+                            indicatorType: Indicator.lineScalePulseOutRapid,
+
+                            /// Required, The loading type of the widget
+                            colors: [
+                              Colors.black,
+                              Colors.grey,
+                              Colors.red,
+                              Colors.green
+                            ],
+
+                            /// Optional, The color collections
+                            strokeWidth: 2,
+
+                            /// Optional, The stroke of the line, only applicable to widget which contains line
+                            backgroundColor: Colors.transparent,
+
+                            /// Optional, Background of the widget
+                            pathBackgroundColor: Colors.black
+
+                            /// Optional, the stroke backgroundColor
+                            ),
                       );
                     }
                   }),

@@ -38,6 +38,7 @@ dependencies:
   side_bar_custom: ^1.0.3
   syncfusion_flutter_charts: ^20.2.44
   http: ^0.13.5
+  loading_indicator: ^3.1.0
 
 dev_dependencies:
   flutter_test:
