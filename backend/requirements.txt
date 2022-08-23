@@ -1,0 +1,11 @@
+django 
+djangorestframework 
+psycopg2-binary 
+djangorestframework-simplejwt 
+pickle-mixin 
+pandas 
+nltk 
+sklearn 
+pickle5 
+scipy 
+pytz 

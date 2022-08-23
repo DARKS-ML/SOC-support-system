@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'soc_support_system',
         'USER': 'iamdpk',
         'PASSWORD': 'iamdpk',
-        'HOST': 'localhost',
+        'HOST': '172.17.0.2',
         'PORT': '5432',
     }
 }

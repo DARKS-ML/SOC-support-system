@@ -1,4 +1,4 @@
-from traceback import print_tb
+# from traceback import print_tb
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -16,9 +16,9 @@ import os.path as path
 
 modulePath = os.path.dirname(__file__)
 base_path =  path.abspath(path.join(__file__ ,"../../.."))
-auth_model_path =base_path+'/Models Collection/Auth Log/'
-auth_predicted_csv_path = base_path+'/Predicted Results/Auth Log/csv/'
-auth_predicted_json_path = base_path+'/Predicted Results/Auth Log/json/'
+auth_model_path =base_path+'/Models Collection/auth/'
+auth_predicted_csv_path = base_path+'/dashboard/Predicted Results/Auth Log/csv/'
+auth_predicted_json_path = base_path+'/dashboard/Predicted Results/Auth Log/json/'
 dataset_collection = base_path+'/Dataset/auth/'
 
 # Create your views here.
