@@ -59,25 +59,25 @@ class IDSLogDataProcessing:
         df4 = df3.append(df1)
         return df4.sample(frac=1)
     
-    def plot_feature_importance(self,imp, names, threshold):
-        # convert both imp and names to np array in order
-        # to have 2 column dataframe
-        feature_imp = np.array(imp)
-        feature_names = np.array(names)
-        #create dataframe using a dictionary
-        data = {'feature_names':feature_names, 'feature_importance':feature_imp}
-        fi_df = pd.DataFrame(data)
+    # def plot_feature_importance(self,imp, names, threshold):
+    #     # convert both imp and names to np array in order
+    #     # to have 2 column dataframe
+    #     feature_imp = np.array(imp)
+    #     feature_names = np.array(names)
+    #     #create dataframe using a dictionary
+    #     data = {'feature_names':feature_names, 'feature_importance':feature_imp}
+    #     fi_df = pd.DataFrame(data)
 
-        #sort the df in descending order
-        fi_df.sort_values(by=['feature_importance'], ascending=False, inplace=True)
-        df_i = fi_df.loc[fi_df['feature_importance'] > threshold]
-        #barplot
-        plt.figure(figsize=(10,10))
-        sns.barplot(x=df_i['feature_importance'], y=df_i['feature_names'])
-        plt.title('FEATURE IMPORTANCE')
-        plt.xlabel('feature importance')
-        plt.ylabel('feature names')
-        return df_i
+    #     #sort the df in descending order
+    #     fi_df.sort_values(by=['feature_importance'], ascending=False, inplace=True)
+    #     df_i = fi_df.loc[fi_df['feature_importance'] > threshold]
+    #     #barplot
+    #     plt.figure(figsize=(10,10))
+    #     sns.barplot(x=df_i['feature_importance'], y=df_i['feature_names'])
+    #     plt.title('FEATURE IMPORTANCE')
+    #     plt.xlabel('feature importance')
+    #     plt.ylabel('feature names')
+    #     return df_i
 
       
 
