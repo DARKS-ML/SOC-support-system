@@ -2,8 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -99,57 +97,6 @@ class _OverViewScreenState extends State<OverViewScreen> {
                         yValueMapper: (int index) => authData[index].modZscore!,
                         // Assigning the number of data.
                         dataCount: 50,
-                      ),
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
-          ),
-          const SizedBox(
-            height: 100,
-          ),
-          SizedBox(
-            height: height * 0.80,
-            width: width,
-            // color: Colors.blue,
-            child: FutureBuilder(
-                future: readJsonAuthLog(),
-                builder: (context, data) {
-                  if (data.hasError) {
-                    return Center(
-                      child: Text("Error::::${data.error}"),
-                    );
-                  } else if (data.hasData) {
-                    authData = data.data as List<AuthLogModel>;
-
-                    log(authData.length.toString());
-                    if (kDebugMode) {
-                      print(authData[0].distance);
-                    }
-
-                    return Padding(
-                      padding: const EdgeInsets.all(50.0),
-                      child: SfCartesianChart(
-                        legend: Legend(isVisible: true),
-
-                        series: <ChartSeries>[
-                          ColumnSeries<AuthLogModel, String>(
-                            dataSource: authData,
-                            xValueMapper: (AuthLogModel m, index) => m.time,
-                            yValueMapper: (AuthLogModel m, index) => m.label,
-                          )
-                        ],
-                        primaryXAxis:
-                            CategoryAxis(title: AxisTitle(text: "label")),
-                        primaryYAxis:
-                            NumericAxis(title: AxisTitle(text: "time")),
-
-                        tooltipBehavior: _tooltipBehavior,
-                        // isTransposed: false,
-                        // enableAxisAnimation: false,
                       ),
                     );
                   } else {

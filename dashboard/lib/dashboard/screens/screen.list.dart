@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:side_bar_custom/side_bar_custom.dart';
 
+import 'list_dataset.dart';
 import 'overview.screen.dart';
 
 class DashboardScreenList {
   static final sidebarScreens = [
     OverViewScreen(),
-    const Center(
-      child: const Text("Others Fields"),
-    ),
+    ListDataSet(),
     const Logout(),
   ];
   static final sidebarScreensname = [
