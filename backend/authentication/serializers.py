@@ -11,12 +11,13 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['firstname','lastname','phone','email','password']
-
+       
     def validate(self, attrs):
         firstname = attrs.get('firstname', '')
         lastname = attrs.get('lastname', '')
         phone = attrs.get('phone', '')
         email = attrs.get('email', '')
+        return attrs
         
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
