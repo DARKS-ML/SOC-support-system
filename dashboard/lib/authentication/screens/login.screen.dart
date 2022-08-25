@@ -16,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisible = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -65,145 +66,186 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              child: Column(
-                children: [
-                  // Text(
-                  //   "Login \nTo\n Darks SoC System",
-                  //   textAlign: TextAlign.center,
-                  //   style: TextStyle(
-                  //       fontWeight: FontWeight.bold,
-                  //       fontSize: size.width * 0.015,
-                  //       color: Colors.black),
-                  // ),
-                  SizedBox(
-                    height: size.height * 0.09,
-                  ),
-                  SizedBox(
-                    height: 50,
-                    width: 300,
-                    child: TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: emailController,
-                      style: const TextStyle(color: Colors.blue),
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.person),
-                        label: const Text("Email"),
-                        filled: true,
-                        fillColor: Colors.grey.withOpacity(0.1),
-                        labelStyle: const TextStyle(
-                            color: Colors.black,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Text(
+                        "Login To Darks SoC System",
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                        contentPadding: const EdgeInsets.all(15),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
+                            fontSize: size.width * 0.015,
+                            color: Colors.grey),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
-                  SizedBox(
-                    height: 50,
-                    width: 300,
-                    child: TextField(
-                      controller: passwordController,
-                      style: const TextStyle(color: Colors.blue),
-                      obscureText: !_passwordVisible,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.password),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          onPressed: () {
-                            setState(
-                              () {
-                                _passwordVisible = !_passwordVisible;
-                              },
-                            );
-                          },
-                        ),
-                        label: const Text("Password"),
-                        filled: true,
-                        fillColor: Colors.grey.withOpacity(0.1),
-                        labelStyle: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                        contentPadding: const EdgeInsets.all(15),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.09,
-                  ),
-                  GestureDetector(
-                    onTap: () async {
-                      await login(
-                              email: emailController.text,
-                              password: passwordController.text)
-                          .then((value) async {
-                        if (value[0] == 200) {
-                          AuthService.loginService(context: context);
-                        } else {
-                          final Size size = MediaQuery.of(context).size;
-                          final snackBar = SnackBar(
-                            // width: size.width / 2.5,
-                            content: const Text(
-                              'Invalid credentials!',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 25),
-                            ),
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: Colors.red,
-                            margin: EdgeInsets.fromLTRB(
-                              size.width - size.width / 2.4,
-                              0,
-                              10,
-                              size.height / 1.17,
-                            ),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                          emailController.clear();
-                          passwordController.clear();
-                        }
-                      });
-                    },
-                    child: Container(
-                      width: size.width * 0.08,
+                    SizedBox(
                       height: size.height * 0.08,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.blue,
-                            offset: Offset(0.0, 0.5),
-                            blurRadius: 5.0,
-                          ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "login",
-                          style: TextStyle(
+                    ),
+                    SizedBox(
+                      height: 50,
+                      width: 300,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter email';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        controller: emailController,
+                        style: const TextStyle(color: Colors.blue),
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.email),
+                          label: const Text("Email"),
+                          filled: true,
+                          fillColor: Colors.grey.withOpacity(0.1),
+                          labelStyle: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20),
+                              fontSize: 16),
+                          contentPadding: const EdgeInsets.all(15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                         ),
                       ),
                     ),
-                  )
-                ],
+                    SizedBox(
+                      height: size.height * 0.05,
+                    ),
+                    SizedBox(
+                      height: 50,
+                      width: 300,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter password';
+                          }
+                          return null;
+                        },
+                        controller: passwordController,
+                        style: const TextStyle(color: Colors.blue),
+                        obscureText: !_passwordVisible,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.password),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(
+                                () {
+                                  _passwordVisible = !_passwordVisible;
+                                },
+                              );
+                            },
+                          ),
+                          label: const Text("Password"),
+                          filled: true,
+                          fillColor: Colors.grey.withOpacity(0.1),
+                          labelStyle: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                          contentPadding: const EdgeInsets.all(15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.height * 0.09,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        if (_formKey.currentState!.validate()) {
+                          AuthService.loginService(context: context);
+                        }
+
+                        // await login(
+                        //         email: emailController.text,
+                        //         password: passwordController.text)
+                        //     .then((value) async {
+                        //   if (value[0] == 200) {
+                        //     AuthService.loginService(context: context);
+                        //   } else {
+                        //     final Size size = MediaQuery.of(context).size;
+                        //     final snackBar = SnackBar(
+                        //       // width: size.width / 2.5,
+                        //       content: const Text(
+                        //         'Invalid credentials!',
+                        //         textAlign: TextAlign.center,
+                        //         style: TextStyle(fontSize: 25),
+                        //       ),
+                        //       behavior: SnackBarBehavior.floating,
+                        //       backgroundColor: Colors.red,
+                        //       margin: EdgeInsets.fromLTRB(
+                        //         size.width - size.width / 2.4,
+                        //         0,
+                        //         10,
+                        //         size.height / 1.17,
+                        //       ),
+                        //     );
+                        //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        //     emailController.clear();
+                        //     passwordController.clear();
+                        //   }
+                        // });
+                      },
+                      child: Container(
+                        // width: size.width * 0.08,
+                        // height: size.height * 0.08,
+                        width: 300,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blue,
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.blue,
+                              offset: Offset(0.0, 0.5),
+                              blurRadius: 5.0,
+                            ),
+                          ],
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "login",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Flexible(
+                              child: Text("Don't have  an account? ")),
+                          Flexible(
+                            child: TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, "/register");
+                                },
+                                child: const Text("Register")),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             )
           ],
