@@ -37,7 +37,7 @@ class ListDataSetScreen extends StatelessWidget {
                   context: context,
                   actions: [],
                   child: GlobalWidget.displayDialog(),
-                  widget: Text(""),
+                  widget: const Text(""),
                 );
               },
               icon: const Icon(
@@ -181,7 +181,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => IDSChartScreenDetails(),
+                            builder: (_) => const IDSChartScreenDetails(),
                           ),
                         );
                       } else {
@@ -227,7 +227,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                 ),
                 subtitle: Text(filecreatedDateTime),
                 trailing: isToday
-                    ? Icon(Icons.circle, size: 10, color: Colors.black)
+                    ? const Icon(Icons.circle, size: 10, color: Colors.black)
                     : null,
               );
             },

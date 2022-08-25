@@ -121,7 +121,7 @@ class _OverViewScreenState extends State<OverViewScreen> {
               enableAxisAnimation: true,
               tooltipBehavior: _tooltipBehavior,
               plotAreaBorderWidth: 0,
-              
+
               // primaryXAxis: CategoryAxis(
               //     // visibleMaximum: 10,
               //     // visibleMinimum: 7,

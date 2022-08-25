@@ -9,7 +9,7 @@ Future<List<AuthLogModel>> readJsonAuthLog({
 }) async {
   final jsondata = await root_bundle.rootBundle.loadString(
     // filename,
-    'Predicted Results/Auth Log/json/auth_2022_08_23__10_25_08.json',
+    'Predicted Results/Auth Log/json/auth_2022_08_25.json',
   );
   final list = json.decode(jsondata) as List<dynamic>;
 
