@@ -24,9 +24,13 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
   late List<AuthLogModel> authData;
   late TooltipBehavior _tooltipBehavior;
   List<AuthLogModel> barData = [];
+  int click = 0;
 
   @override
   void initState() {
+    // Timer.periodic(const Duration(milliseconds: 1), (timer) {
+    //   _updateDataSource(timer, i++);
+    // });
     _tooltipBehavior = TooltipBehavior(
         enable: true,
         builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
@@ -104,7 +108,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
               children: [
                 Center(
                   child: Container(
-                    height: height * 0.50,
+                    height: height * 0.40,
                     width: width,
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -195,10 +199,10 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
                 Container(
-                  height: height * 0.45,
+                  height: height * 0.55,
                   width: width,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -210,79 +214,142 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                         ),
                       ],
                       borderRadius: BorderRadius.circular(20)),
-                  child: FutureBuilder(
-                      future: readJsonAuthLog(filename: widget.fileName),
-                      builder: (context, data) {
-                        if (data.hasError) {
-                          return Center(
-                            child: Text("Error::::${data.error}"),
-                          );
-                        } else if (data.hasData) {
-                          authData = data.data as List<AuthLogModel>;
-                          for (var i = 0; i < 70; i++) {
-                            barData.add(authData[i]);
-                          }
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SfCartesianChart(
+                          series: <ChartSeries>[
+                            ColumnSeries<AuthLogModel, String>(
+                              dataSource: barData,
+                              xValueMapper: (AuthLogModel m, index) => m.time,
+                              yValueMapper: (AuthLogModel m, index) => m.label,
+                            )
+                          ],
+                          primaryXAxis: CategoryAxis(
+                              labelRotation: 45,
+                              title: AxisTitle(text: "Time")),
+                          primaryYAxis:
+                              NumericAxis(title: AxisTitle(text: "Label")),
 
-                          log(authData.length.toString());
-                          if (kDebugMode) {
-                            print(authData[0].distance);
-                          }
+                          tooltipBehavior: _tooltipBehavior,
+                          // isTransposed: false,
+                          // enableAxisAnimation: true,
+                        ),
+                      ),
+                      // FutureBuilder(
+                      //     future: readJsonAuthLog(filename: widget.fileName),
+                      //     builder: (context, data) {
+                      //       if (data.hasError) {
+                      //         return Center(
+                      //           child: Text("Error::::${data.error}"),
+                      //         );
+                      //       } else if (data.hasData) {
+                      //         authData = data.data as List<AuthLogModel>;
 
-                          return Padding(
-                            padding: const EdgeInsets.all(50.0),
-                            child: SfCartesianChart(
-                              series: <ChartSeries>[
-                                ColumnSeries<AuthLogModel, String>(
-                                  dataSource: barData,
-                                  xValueMapper: (AuthLogModel m, index) =>
-                                      m.time,
-                                  yValueMapper: (AuthLogModel m, index) =>
-                                      m.label,
-                                )
-                              ],
-                              primaryXAxis: CategoryAxis(
-                                  labelRotation: 45,
-                                  title: AxisTitle(text: "Time")),
-                              primaryYAxis:
-                                  NumericAxis(title: AxisTitle(text: "Label")),
+                      //         return Padding(
+                      //           padding: const EdgeInsets.all(50.0),
+                      //           child: SfCartesianChart(
+                      //             series: <ChartSeries>[
+                      //               ColumnSeries<AuthLogModel, String>(
+                      //                 dataSource: barData,
+                      //                 xValueMapper: (AuthLogModel m, index) =>
+                      //                     m.time,
+                      //                 yValueMapper: (AuthLogModel m, index) =>
+                      //                     m.label,
+                      //               )
+                      //             ],
+                      //             primaryXAxis: CategoryAxis(
+                      //                 labelRotation: 45,
+                      //                 title: AxisTitle(text: "Time")),
+                      //             primaryYAxis: NumericAxis(
+                      //                 title: AxisTitle(text: "Label")),
 
-                              tooltipBehavior: _tooltipBehavior,
-                              // isTransposed: false,
-                              enableAxisAnimation: true,
+                      //             tooltipBehavior: _tooltipBehavior,
+                      //             // isTransposed: false,
+                      //             enableAxisAnimation: true,
+                      //           ),
+                      //         );
+                      //       } else {
+                      //         return const Center(
+                      //           child: SizedBox(
+                      //             height: 100,
+                      //             width: 100,
+                      //             child: LoadingIndicator(
+                      //                 indicatorType:
+                      //                     Indicator.lineScalePulseOutRapid,
+
+                      //                 /// Required, The loading type of the widget
+                      //                 colors: [
+                      //                   Colors.black,
+                      //                   Colors.grey,
+                      //                   Colors.red,
+                      //                   Colors.green
+                      //                 ],
+
+                      //                 /// Optional, The color collections
+                      //                 strokeWidth: 2,
+
+                      //                 /// Optional, The stroke of the line, only applicable to widget which contains line
+                      //                 backgroundColor: Colors.transparent,
+
+                      //                 /// Optional, Background of the widget
+                      //                 pathBackgroundColor: Colors.black
+
+                      //                 /// Optional, the stroke backgroundColor
+                      //                 ),
+                      //           ),
+                      //         );
+                      //       }
+                      //     }),
+
+                      Positioned(
+                          right: width * 0.07,
+                          top: 10,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                updateBarData();
+                              });
+                            },
+                            child: const CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              child: Icon(Icons.add),
                             ),
-                          );
-                        } else {
-                          return const Center(
-                            child: SizedBox(
-                              height: 100,
-                              width: 100,
-                              child: LoadingIndicator(
-                                  indicatorType:
-                                      Indicator.lineScalePulseOutRapid,
-
-                                  /// Required, The loading type of the widget
-                                  colors: [
-                                    Colors.black,
-                                    Colors.grey,
-                                    Colors.red,
-                                    Colors.green
-                                  ],
-
-                                  /// Optional, The color collections
-                                  strokeWidth: 2,
-
-                                  /// Optional, The stroke of the line, only applicable to widget which contains line
-                                  backgroundColor: Colors.transparent,
-
-                                  /// Optional, Background of the widget
-                                  pathBackgroundColor: Colors.black
-
-                                  /// Optional, the stroke backgroundColor
-                                  ),
-                            ),
-                          );
-                        }
-                      }),
+                          )
+                          //  FloatingActionButton.small(
+                          //   backgroundColor: Colors.white,
+                          //   elevation: 10,
+                          //   onPressed: () async {
+                          //     setState(() {
+                          //       updateBarData();
+                          //     });
+                          //   },
+                          //   child: const Icon(
+                          //     Icons.add,
+                          //     color: Colors.black,
+                          //   ),
+                          // ),
+                          ),
+                      // Positioned(
+                      //   right: width * 0.13,
+                      //   top: 10,
+                      //   child: FloatingActionButton.small(
+                      //     backgroundColor: Colors.white,
+                      //     elevation: 10,
+                      //     onPressed: () {
+                      //       setState(() {
+                      //         updateBarData();
+                      //       });
+                      //     },
+                      //     child: const Icon(
+                      //       Icons.remove,
+                      //       color: Colors.black,
+                      //     ),
+                      //   ),
+                      // )
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -290,5 +357,22 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
         ),
       ),
     );
+  }
+
+  void updateBarData() {
+    int start = click;
+    log("click $start");
+    if (start < (authData.length) / 2 + 1) {
+      if (start == 0) {
+        barData = authData.sublist(start, start + 50);
+        click++;
+      } else {
+        barData = authData.sublist(start + 49, (start + 49) + 50);
+        click = start + 50;
+      }
+    } else {
+      log("data out of range");
+    }
+    log("length of plotted data ${barData.length}");
   }
 }
