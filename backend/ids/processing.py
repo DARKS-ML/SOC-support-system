@@ -138,14 +138,19 @@ class IDSLogDataProcessing:
     def createDirectoryAndFileAsPerModelName(self,ids_predicted_base_path,model_name,p_df):
         file_name =self.fileNameFormat(model_name)
         import os
+        import shutil
         parent_dir = ids_predicted_base_path 
 
         directory_name = model_name
         base_path =  os.path.join(parent_dir, directory_name)
+        if os.path.exists(base_path):
+            shutil.rmtree(base_path)
         os.mkdir(base_path)
 
         csv_f = "csv"
         csv_path = os.path.join(base_path,csv_f)
+        if os.path.exists(csv_path):
+                shutil.rmtree(csv_path)
         os.mkdir(csv_path)
 
         csv_file_path = f'{csv_path}/{file_name}.csv'
@@ -159,6 +164,8 @@ class IDSLogDataProcessing:
 
         json_f = "json"
         json_path = os.path.join(base_path,json_f)
+        if os.path.exists(json_path):
+                shutil.rmtree(json_path)
         os.mkdir(json_path)
 
         json_file_path = f'{json_path}/{file_name}.json'
