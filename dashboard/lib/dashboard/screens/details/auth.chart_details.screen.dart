@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
@@ -83,24 +84,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: FloatingActionButton(
-            onPressed: () => Navigator.pushReplacementNamed(
-              context,
-              '/dashboard',
-            ),
-            backgroundColor: Colors.white,
-            elevation: 5,
-            child: const Padding(
-              padding: EdgeInsets.only(left: 4),
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
+        floatingActionButton: GlobalWidget.displayBackButton(context: context),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -237,8 +221,6 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                           // enableAxisAnimation: true,
                         ),
                       ),
-                      
-                      
                     ],
                   ),
                 ),
