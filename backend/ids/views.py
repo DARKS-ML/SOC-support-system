@@ -74,7 +74,9 @@ class PredictedIDSFileDetailsView(APIView):
 class ListAllPredictedModelResult(APIView):
     def get(self,request):
 
-        path = "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/"
+        dir_name = ids_predicted_json_path
+        
+        path = dir_name
         def tree_path_json(path):
             dir_structure = {}
             base_name = os.path.basename(os.path.realpath(path))
