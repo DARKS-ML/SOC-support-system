@@ -47,11 +47,19 @@ class IDSLogDataProcessing:
 
     def dfAppendClean(self,csv_files):
         data =  pd.read_csv(csv_files)
+        data = data.drop(['Flow ID', ' Source IP', ' Source Port', ' Destination IP',' Protocol', ' Timestamp'], axis=1)
         # data = pd.DataFrame()
         data = data.fillna(0)
         # data[' Label'] = data[' Label'].str.replace(r'[^\w\s]+', '')
         data = data.replace([np.inf, -np.inf], 0)        
         return data
+
+    def timeIpPort(self,csv_files):
+        data = pd.read_csv(csv_files)
+        columns_name =[' Source IP',' Destination IP',' Protocol', ' Timestamp']
+        data = data[columns_name]
+        return data
+
     
     def combineDf(self,df1, df2, ifraction):
         n = int(((1-ifraction)/ifraction)*len(df1))
@@ -104,7 +112,7 @@ class IDSLogDataProcessing:
         return df1
 
 
-    def predict_ids_attack(self,df,model_name,loaded_feature,column_name):
+    def predict_ids_attack(self,df,model_name,loaded_feature,column_name,csf_file):
         updated_df = pd.DataFrame()
         updated_df= loaded_feature.copy()
         prob_column_name = column_name+"_prob"
@@ -115,7 +123,11 @@ class IDSLogDataProcessing:
         updated_df[column_name]=pred
 
         updated_df[prob_column_name]=pred_prob.tolist()
-   
+        new_df = pd.DataFrame()
+        new_df =self.timeIpPort(csf_file)
+
+        # [' Source IP',' Destination IP',' Protocol', ' Timestamp']
+        updated_df[['Source IP','Destination IP','Protocol', 'Timestamp']] =new_df[[' Source IP',' Destination IP',' Protocol', ' Timestamp']]
 
         return updated_df
 
