@@ -237,117 +237,8 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                           // enableAxisAnimation: true,
                         ),
                       ),
-                      // FutureBuilder(
-                      //     future: readJsonAuthLog(filename: widget.fileName),
-                      //     builder: (context, data) {
-                      //       if (data.hasError) {
-                      //         return Center(
-                      //           child: Text("Error::::${data.error}"),
-                      //         );
-                      //       } else if (data.hasData) {
-                      //         authData = data.data as List<AuthLogModel>;
-
-                      //         return Padding(
-                      //           padding: const EdgeInsets.all(50.0),
-                      //           child: SfCartesianChart(
-                      //             series: <ChartSeries>[
-                      //               ColumnSeries<AuthLogModel, String>(
-                      //                 dataSource: barData,
-                      //                 xValueMapper: (AuthLogModel m, index) =>
-                      //                     m.time,
-                      //                 yValueMapper: (AuthLogModel m, index) =>
-                      //                     m.label,
-                      //               )
-                      //             ],
-                      //             primaryXAxis: CategoryAxis(
-                      //                 labelRotation: 45,
-                      //                 title: AxisTitle(text: "Time")),
-                      //             primaryYAxis: NumericAxis(
-                      //                 title: AxisTitle(text: "Label")),
-
-                      //             tooltipBehavior: _tooltipBehavior,
-                      //             // isTransposed: false,
-                      //             enableAxisAnimation: true,
-                      //           ),
-                      //         );
-                      //       } else {
-                      //         return const Center(
-                      //           child: SizedBox(
-                      //             height: 100,
-                      //             width: 100,
-                      //             child: LoadingIndicator(
-                      //                 indicatorType:
-                      //                     Indicator.lineScalePulseOutRapid,
-
-                      //                 /// Required, The loading type of the widget
-                      //                 colors: [
-                      //                   Colors.black,
-                      //                   Colors.grey,
-                      //                   Colors.red,
-                      //                   Colors.green
-                      //                 ],
-
-                      //                 /// Optional, The color collections
-                      //                 strokeWidth: 2,
-
-                      //                 /// Optional, The stroke of the line, only applicable to widget which contains line
-                      //                 backgroundColor: Colors.transparent,
-
-                      //                 /// Optional, Background of the widget
-                      //                 pathBackgroundColor: Colors.black
-
-                      //                 /// Optional, the stroke backgroundColor
-                      //                 ),
-                      //           ),
-                      //         );
-                      //       }
-                      //     }),
-
-                      Positioned(
-                          right: width * 0.07,
-                          top: 10,
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                updateBarData();
-                              });
-                            },
-                            child: const CircleAvatar(
-                              backgroundColor: Colors.grey,
-                              child: Icon(Icons.add),
-                            ),
-                          )
-                          //  FloatingActionButton.small(
-                          //   backgroundColor: Colors.white,
-                          //   elevation: 10,
-                          //   onPressed: () async {
-                          //     setState(() {
-                          //       updateBarData();
-                          //     });
-                          //   },
-                          //   child: const Icon(
-                          //     Icons.add,
-                          //     color: Colors.black,
-                          //   ),
-                          // ),
-                          ),
-                      // Positioned(
-                      //   right: width * 0.13,
-                      //   top: 10,
-                      //   child: FloatingActionButton.small(
-                      //     backgroundColor: Colors.white,
-                      //     elevation: 10,
-                      //     onPressed: () {
-                      //       setState(() {
-                      //         updateBarData();
-                      //       });
-                      //     },
-                      //     child: const Icon(
-                      //       Icons.remove,
-                      //       color: Colors.black,
-                      //     ),
-                      //   ),
-                      // )
+                      
+                      
                     ],
                   ),
                 ),
@@ -359,20 +250,21 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
     );
   }
 
-  void updateBarData() {
-    int start = click;
-    log("click $start");
-    if (start < (authData.length) / 2 + 1) {
-      if (start == 0) {
-        barData = authData.sublist(start, start + 50);
-        click++;
-      } else {
-        barData = authData.sublist(start + 49, (start + 49) + 50);
-        click = start + 50;
-      }
-    } else {
-      log("data out of range");
-    }
-    log("length of plotted data ${barData.length}");
-  }
+  // void updateBarData() {
+  //   int start = click;
+  //   log("click $start");
+  //   if (start < (authData.length) / 2 + 1) {
+  //     if (start == 0) {
+  //       barData = authData.sublist(start, start + 50);
+  //       click++;
+  //     } else {
+  //       barData = authData.sublist(start + 49, (start + 49) + 50);
+  //       click = start + 50;
+  //     }
+  //   } else {
+  //     log("data out of range");
+  //   }
+  //   log("length of plotted data ${barData.length}");
+  // }
+
 }
