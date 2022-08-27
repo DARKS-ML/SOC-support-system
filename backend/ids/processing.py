@@ -141,7 +141,7 @@ class IDSLogDataProcessing:
         import shutil
         parent_dir = ids_predicted_base_path 
 
-        directory_name = model_name
+        directory_name = self.fileNameFormat(model_name)
         base_path =  os.path.join(parent_dir, directory_name)
         if os.path.exists(base_path):
             shutil.rmtree(base_path)
