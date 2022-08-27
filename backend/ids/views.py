@@ -112,75 +112,103 @@ class IDSLogView(APIView):
 
                 p_df = data.copy()
 
+                # create folder
+                import shutil
+                daywisefolderName = ref.fileNameFormat("ids")
+                daywisefolderPath =  os.path.join(ids_predicted_base_path, daywisefolderName)
+                if os.path.exists(daywisefolderPath):
+                    shutil.rmtree(daywisefolderPath)
+                os.mkdir(daywisefolderPath)
+                
+                
+            
+
                 model_name = "FTPPatator"
                 df_FTPPatator_benign = ref.load_feature_importance(data, ids_model_path+"df_FTPPatator_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_FTPPatator_benign_logic_model.sav", df_FTPPatator_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
             
                 model_name = "SSHPatator"
                 df_SSHPatator_benign = ref.load_feature_importance(data, ids_model_path+"df_SSHPatator_benign.sav")
                 p_df =  ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_SSHPatator_benign_logic_model.sav", df_SSHPatator_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+
                 
                 model_name="DoS_Slowhttptest"
                 df_DoS_Slowhttptest_benign = ref.load_feature_importance(data, ids_model_path+"df_DoS_Slowhttptest_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_Slowhttptest_benign_logic_model.sav", df_DoS_Slowhttptest_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
 
                 model_name="DoS_Hulk"
                 df_DoS_Hulk_benign = ref.load_feature_importance(data, ids_model_path+"df_DoS_Hulk_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_Hulk_benign_logic_model.sav", df_DoS_Hulk_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
 
                 model_name="DoS_GoldenEye"
                 df_DoS_GoldenEye_benign= ref.load_feature_importance(data, ids_model_path+"df_DoS_GoldenEye_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_GoldenEye_benign_logic_model.sav", df_DoS_GoldenEye_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
                 
                 model_name="Heartbleed"
                 df_Heartbleed_benign = ref.load_feature_importance(data, ids_model_path+"df_Heartbleed_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Heartbleed_benign_logic_model.sav", df_Heartbleed_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
 
                 model_name="Web_Attack_Brute_Force"
                 df_Web_Attack_Brute_Force_benign = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_Brute_Force_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_Brute_Force_benign_logic_model.sav", df_Web_Attack_Brute_Force_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
 
                 model_name="Web_Attack_XSS_benign"
                 df_Web_Attack_XSS = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_XSS_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_XSS_benign_logic_model.sav", df_Web_Attack_XSS,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
 
                 model_name="Web_Attack_Sql_Injection"
                 df_Web_Attack_Sql_Injection_benign = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_Sql_Injection_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_Sql_Injection_benign_logic_model.sav", df_Web_Attack_Sql_Injection_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
 
                 model_name="Infiltration"
                 df_Infiltration_benign = ref.load_feature_importance(data, ids_model_path+"df_Infiltration_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Infiltration_benign_logic_model.sav", df_Infiltration_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
                 
                 model_name="Bot"
                 df_Bot_benign = ref.load_feature_importance(data, ids_model_path+"df_Bot_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Bot_benign_logic_model.sav", df_Bot_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
 
                 model_name="PortScan"
                 df_PortScan_benign = ref.load_feature_importance(data, ids_model_path+"df_PortScan_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_PortScan_benign_logic_model.sav", df_PortScan_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
 
                 model_name="df_DDoS_benign"
                 df_DDoS_benign = ref.load_feature_importance(data, ids_model_path+"df_DDoS_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DDoS_benign_logic_model.sav", df_DDoS_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
 
                 model_name="df_Web_Attack"
                 df_Web_Attack_benign = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_benign.sav")
                 p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_benign_logic_model.sav", df_Web_Attack_benign,model_name,final_path)
-                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                ref.createModelCsvJsonFolder(daywisefolderPath,model_name,p_df)
+                # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
             
                 # p_df.to_csv(ids_predicted_csv_path+"sample.csv")
                 

@@ -134,6 +134,35 @@ class IDSLogDataProcessing:
 
     # def createDirectoryAndFileAsPerModelName(self,p_df,directory_name,ids_predicted_csv_path,ids_predicted_json_path,):
 
+    def createModelCsvJsonFolder(self,daywisefolderPath,model_name,p_df):
+        import shutil
+        modelFolderPath =  os.path.join(daywisefolderPath, model_name)
+        if os.path.exists(modelFolderPath):
+            shutil.rmtree(modelFolderPath)
+        os.mkdir(modelFolderPath)
+        csv_f = "csv"
+        csv_path = os.path.join(modelFolderPath,csv_f)
+        if os.path.exists(csv_path):
+            shutil.rmtree(csv_path)
+        os.mkdir(csv_path)
+        file_name =self.fileNameFormat(model_name)
+        csv_file_path = f'{csv_path}/{file_name}.csv'
+        p_df.to_csv(csv_file_path,index=False,header=True)
+
+        json_f = "json"
+        json_path = os.path.join(modelFolderPath,json_f)
+        if os.path.exists(json_path):
+            shutil.rmtree(json_path)
+        os.mkdir(json_path)
+
+        import json
+        json_data = self.convertCsvToJson(csv_file_path)
+        json_object = json.dumps(json_data, indent = 4)
+        json_file_path = f'{json_path}/{file_name}.json'
+        with open( json_file_path, "w") as outfile:
+            outfile.write(json_object)
+
+
 
     def createDirectoryAndFileAsPerModelName(self,ids_predicted_base_path,model_name,p_df):
         file_name =self.fileNameFormat(model_name)
