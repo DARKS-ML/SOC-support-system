@@ -16,8 +16,9 @@ import pickle
 
 base_path =  path.abspath(path.join(__file__ ,"../../.."))
 ids_model_path =base_path+'/Models Collection/ids/'
-ids_predicted_csv_path = base_path+'/dashboard/Predicted Results/ids/csv/'
-ids_predicted_json_path = base_path+'/dashboard/Predicted Results/ids/json/'
+ids_predicted_base_path = base_path+'/dashboard/Predicted Results/ids/'
+ids_predicted_csv_path = base_path+'/dashboard/Predicted Results/ids/'
+ids_predicted_json_path = base_path+'/dashboard/Predicted Results/ids/'
 dataset_collection = base_path+'/Dataset/ids/'
 
 # @desc -> get list of files from specific log containg directory  
@@ -68,6 +69,28 @@ class PredictedIDSFileDetailsView(APIView):
         return Response(data)
 
 
+
+# @desc -> list all directory and sub directory name 
+class ListAllPredictedModelResult(APIView):
+    def get(self,request):
+
+        path = "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/"
+        def tree_path_json(path):
+            dir_structure = {}
+            base_name = os.path.basename(os.path.realpath(path))
+            if os.path.isdir(path):
+                dir_structure[base_name] = [ tree_path_json(os.path.join(path, file_name))\
+                for file_name in os.listdir(path) ]
+            else:
+                return os.path.basename(path)
+            return dir_structure
+        data = tree_path_json(path)
+        return Response({
+            "data":data
+        })
+        
+
+    
 # Create your views here.
 class IDSLogView(APIView):
     def post(self,request):
@@ -87,72 +110,84 @@ class IDSLogView(APIView):
 
                 p_df = data.copy()
 
+                model_name = "FTPPatator"
                 df_FTPPatator_benign = ref.load_feature_importance(data, ids_model_path+"df_FTPPatator_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_FTPPatator_benign_logic_model.sav", df_FTPPatator_benign,"FTPPatator",p_df)
-                
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_FTPPatator_benign_logic_model.sav", df_FTPPatator_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
             
+                model_name = "SSHPatator"
                 df_SSHPatator_benign = ref.load_feature_importance(data, ids_model_path+"df_SSHPatator_benign.sav")
-                p_df =  ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_SSHPatator_benign_logic_model.sav", df_SSHPatator_benign,"SSHPatator",p_df)
-            
+                p_df =  ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_SSHPatator_benign_logic_model.sav", df_SSHPatator_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+                
+                model_name="DoS_Slowhttptest"
                 df_DoS_Slowhttptest_benign = ref.load_feature_importance(data, ids_model_path+"df_DoS_Slowhttptest_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_Slowhttptest_benign_logic_model.sav", df_DoS_Slowhttptest_benign,"DoS_Slowhttptest",p_df)
-                
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_Slowhttptest_benign_logic_model.sav", df_DoS_Slowhttptest_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+
+                model_name="DoS_Hulk"
                 df_DoS_Hulk_benign = ref.load_feature_importance(data, ids_model_path+"df_DoS_Hulk_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_Hulk_benign_logic_model.sav", df_DoS_Hulk_benign,"DoS_Hulk",p_df)
-                
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_Hulk_benign_logic_model.sav", df_DoS_Hulk_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+
+                model_name="DoS_GoldenEye"
                 df_DoS_GoldenEye_benign= ref.load_feature_importance(data, ids_model_path+"df_DoS_GoldenEye_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_GoldenEye_benign_logic_model.sav", df_DoS_GoldenEye_benign,"DoS_GoldenEye",p_df)
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_GoldenEye_benign_logic_model.sav", df_DoS_GoldenEye_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
                 
+                model_name="Heartbleed"
                 df_Heartbleed_benign = ref.load_feature_importance(data, ids_model_path+"df_Heartbleed_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Heartbleed_benign_logic_model.sav", df_Heartbleed_benign,"Heartbleed",p_df)
-                
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Heartbleed_benign_logic_model.sav", df_Heartbleed_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+
+                model_name="Web_Attack_Brute_Force"
                 df_Web_Attack_Brute_Force_benign = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_Brute_Force_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_Brute_Force_benign_logic_model.sav", df_Web_Attack_Brute_Force_benign,"Web_Attack_Brute_Force",p_df)
-                
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_Brute_Force_benign_logic_model.sav", df_Web_Attack_Brute_Force_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+
+                model_name="Web_Attack_XSS_benign"
                 df_Web_Attack_XSS = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_XSS_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_XSS_benign_logic_model.sav", df_Web_Attack_XSS,"Web_Attack_XSS_benign",p_df)
-                
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_XSS_benign_logic_model.sav", df_Web_Attack_XSS,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+
+                model_name="Web_Attack_Sql_Injection"
                 df_Web_Attack_Sql_Injection_benign = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_Sql_Injection_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_Sql_Injection_benign_logic_model.sav", df_Web_Attack_Sql_Injection_benign,"Web_Attack_Sql_Injection",p_df)
-                
-                # df_Infiltration_benign = pickle.load(open(ids_model_path+"IDS"+".sav", 'rb'))
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_Sql_Injection_benign_logic_model.sav", df_Web_Attack_Sql_Injection_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+
+                model_name="Infiltration"
                 df_Infiltration_benign = ref.load_feature_importance(data, ids_model_path+"df_Infiltration_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Infiltration_benign_logic_model.sav", df_Infiltration_benign,"Infiltration",p_df)
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Infiltration_benign_logic_model.sav", df_Infiltration_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
                 
+                model_name="Bot"
                 df_Bot_benign = ref.load_feature_importance(data, ids_model_path+"df_Bot_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Bot_benign_logic_model.sav", df_Bot_benign,"Bot",p_df)
-                
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Bot_benign_logic_model.sav", df_Bot_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+
+                model_name="PortScan"
                 df_PortScan_benign = ref.load_feature_importance(data, ids_model_path+"df_PortScan_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_PortScan_benign_logic_model.sav", df_PortScan_benign,"PortScan",p_df)
-                
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_PortScan_benign_logic_model.sav", df_PortScan_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+
+                model_name="df_DDoS_benign"
                 df_DDoS_benign = ref.load_feature_importance(data, ids_model_path+"df_DDoS_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DDoS_benign_logic_model.sav", df_DDoS_benign,"df_DDoS_benign",p_df)
-                
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DDoS_benign_logic_model.sav", df_DDoS_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
+
+                model_name="df_Web_Attack"
                 df_Web_Attack_benign = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_benign.sav")
-                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_benign_logic_model.sav", df_Web_Attack_benign,"df_Web_Attack",p_df)
-            
+                p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_benign_logic_model.sav", df_Web_Attack_benign,model_name)
+                ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
             
                 # p_df.to_csv(ids_predicted_csv_path+"sample.csv")
-                file_name =ref.fileNameFormat("ids")
-                csv_file_path = f'{ids_predicted_csv_path}{file_name}.csv'
-                p_df.to_csv(csv_file_path,index=False,header=True)
+                
 
-                import json
-                json_data = ref.convertCsvToJson(csv_file_path)
-
-
-                json_object = json.dumps(json_data, indent = 4)
-                file_name =ref.fileNameFormat("ids")
-                json_file_path = f'{ids_predicted_json_path}{file_name}.json'
-                with open( json_file_path, "w") as outfile:
-                    outfile.write(json_object)
-
-                print(data)
-                print(p_df)
-
+              
+                
                 return Response ({
-                            "csv_path":csv_file_path,
-                            "json_path":json_file_path
+                            "msg":"please visit",
+                            "base_path":ids_predicted_base_path
                         })
                 # ////////////////end ////////////////
 

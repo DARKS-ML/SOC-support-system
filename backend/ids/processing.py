@@ -104,12 +104,51 @@ class IDSLogDataProcessing:
         return df1
 
 
-    def predict_ids_attack(self,df,model_name,loaded_feature,column_name,updated_df):
+    def predict_ids_attack(self,df,model_name,loaded_feature,column_name):
+        updated_df = pd.DataFrame()
+        updated_df= loaded_feature.copy()
         prob_column_name = column_name+"_prob"
         predicted_result = pickle.load(open(model_name, 'rb'))
         pred = predicted_result.predict(loaded_feature)
+
         pred_prob = predicted_result.predict_proba(loaded_feature)
-        print(pred_prob)
         updated_df[column_name]=pred
+
         updated_df[prob_column_name]=pred_prob.tolist()
+   
+
         return updated_df
+
+
+    # def createDirectoryAndFileAsPerModelName(self,p_df,directory_name,ids_predicted_csv_path,ids_predicted_json_path,):
+
+
+    def createDirectoryAndFileAsPerModelName(self,ids_predicted_base_path,model_name,p_df):
+        file_name =self.fileNameFormat(model_name)
+        import os
+        parent_dir = ids_predicted_base_path 
+
+        directory_name = model_name
+        base_path =  os.path.join(parent_dir, directory_name)
+        os.mkdir(base_path)
+
+        csv_f = "csv"
+        csv_path = os.path.join(base_path,csv_f)
+        os.mkdir(csv_path)
+
+        csv_file_path = f'{csv_path}/{file_name}.csv'
+        p_df.to_csv(csv_file_path,index=False,header=True)
+
+        import json
+        json_data = self.convertCsvToJson(csv_file_path)
+
+
+        json_object = json.dumps(json_data, indent = 4)
+
+        json_f = "json"
+        json_path = os.path.join(base_path,json_f)
+        os.mkdir(json_path)
+
+        json_file_path = f'{json_path}/{file_name}.json'
+        with open( json_file_path, "w") as outfile:
+            outfile.write(json_object)
