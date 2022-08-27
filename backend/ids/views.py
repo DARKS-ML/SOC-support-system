@@ -16,8 +16,8 @@ import pickle
 
 base_path =  path.abspath(path.join(__file__ ,"../../.."))
 ids_model_path =base_path+'/Models Collection/ids/'
-ids_predicted_csv_path = base_path+'/dashboard/Predicted Results/ids/csv/'
-ids_predicted_json_path = base_path+'/dashboard/Predicted Results/ids/json/'
+ids_predicted_csv_path = base_path+'/dashboard/Predicted Results/ids/csv'
+ids_predicted_json_path = base_path+'/dashboard/Predicted Results/ids/json'
 dataset_collection = base_path+'/Dataset/ids/'
 
 # @desc -> get list of files from specific log containg directory  

@@ -17,8 +17,8 @@ import os.path as path
 modulePath = os.path.dirname(__file__)
 base_path =  path.abspath(path.join(__file__ ,"../../.."))
 auth_model_path =base_path+'/Models Collection/auth/'
-auth_predicted_csv_path = base_path+'/dashboard/Predicted Results/Auth Log/csv/'
-auth_predicted_json_path = base_path+'/dashboard/Predicted Results/Auth Log/json/'
+auth_predicted_csv_path = base_path+'/dashboard/Predicted Results/Auth Log/csv'
+auth_predicted_json_path = base_path+'/dashboard/Predicted Results/Auth Log/json'
 dataset_collection = base_path+'/Dataset/auth/'
 
 # Create your views here.

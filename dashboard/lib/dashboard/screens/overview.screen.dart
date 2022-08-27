@@ -5,9 +5,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../Model/auth_log_model.dart';
-import '../services/auth_log_services.dart';
 import 'package:flutter/services.dart' as root_bundle;
+
+import '../model/auth_log_model.dart';
 
 class OverViewScreen extends StatefulWidget {
   const OverViewScreen({Key? key}) : super(key: key);
