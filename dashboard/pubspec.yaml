@@ -66,7 +66,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - Predicted Results/Auth Log/json/
-    - Predicted Results/ids/json/
+    - Predicted Results/ids/
     - assets/img/
   #   - images/a_dot_ham.jpeg
 

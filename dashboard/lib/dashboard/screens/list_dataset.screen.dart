@@ -204,6 +204,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     } else {
+                      Navigator.pop(context);
                       final Size size = MediaQuery.of(context).size;
                       final snackBar = SnackBar(
                         // width: size.width / 2.5,

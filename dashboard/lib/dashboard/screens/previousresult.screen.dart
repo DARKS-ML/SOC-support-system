@@ -87,42 +87,46 @@ fetchDataFromAPi({required Future future, required String socType}) {
                     textAlign: TextAlign.center,
                   ),
                 )
-              : ListView.separated(
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(),
-                  itemCount: datasetLength,
-                  itemBuilder: (context, index) {
-                    final datasetPath = decodeData[index]["path"].toString();
-                    final String finalDatasetName =
-                        datasetPath.split("dashboard/")[1];
-                    final filecreatedDateTime = decodeData[index]["date"];
-                    final filecreatedDate =
-                        decodeData[index]['date'].toString().split(" ")[0];
-                    bool isToday = filecreatedDate == todayDate;
-                    return ListTile(
-                      onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => AuthChartDetailsScreen(
-                              fileName: finalDatasetName,
-                            ),
+              : socType == "ids"
+                  ? Text("data")
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      itemCount: datasetLength,
+                      itemBuilder: (context, index) {
+                        final datasetPath =
+                            decodeData[index]["path"].toString();
+                        final String finalDatasetName =
+                            datasetPath.split("dashboard/")[1];
+                        final filecreatedDateTime = decodeData[index]["date"];
+                        final filecreatedDate =
+                            decodeData[index]['date'].toString().split(" ")[0];
+                        bool isToday = filecreatedDate == todayDate;
+                        return ListTile(
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => AuthChartDetailsScreen(
+                                  fileName: finalDatasetName,
+                                ),
+                              ),
+                            );
+                          },
+                          title: Text(
+                            finalDatasetName,
+                            // textAlign: TextAlign.justify,
                           ),
+                          subtitle: Text(filecreatedDateTime),
+                          trailing: isToday
+                              ? Icon(Icons.circle,
+                                  size: 10, color: Colors.black)
+                              : null,
                         );
                       },
-                      title: Text(
-                        finalDatasetName,
-                        // textAlign: TextAlign.justify,
-                      ),
-                      subtitle: Text(filecreatedDateTime),
-                      trailing: isToday
-                          ? Icon(Icons.circle, size: 10, color: Colors.black)
-                          : null,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(),
                     );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
-                );
         } else {
           return const Center(
             child: CircularProgressIndicator(),
