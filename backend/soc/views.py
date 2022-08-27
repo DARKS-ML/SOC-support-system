@@ -17,8 +17,8 @@ import os.path as path
 modulePath = os.path.dirname(__file__)
 base_path =  path.abspath(path.join(__file__ ,"../../.."))
 auth_model_path =base_path+'/Models Collection/auth/'
-auth_predicted_csv_path = base_path+'/dashboard/Predicted Results/Auth Log/csv'
-auth_predicted_json_path = base_path+'/dashboard/Predicted Results/Auth Log/json'
+auth_predicted_csv_path = base_path+'/dashboard/Predicted Results/Auth Log/csv/'
+auth_predicted_json_path = base_path+'/dashboard/Predicted Results/Auth Log/json/'
 dataset_collection = base_path+'/Dataset/auth/'
 
 # Create your views here.
@@ -145,7 +145,7 @@ class MultiLineAuthLogView(APIView):
                 df_copy1['mod_zscore'] = mod_zscore.tolist()
 
                 file_name =ref.fileNameFormat("auth")
-                csv_file_path = f'{auth_predicted_csv_path}/{file_name}.csv'
+                csv_file_path = f'{auth_predicted_csv_path}{file_name}.csv'
                 df_copy1.to_csv(csv_file_path,index=False,header=True)
                 
                 import json
@@ -153,7 +153,7 @@ class MultiLineAuthLogView(APIView):
                 
                 json_object = json.dumps(json_data, indent = 4)
                 file_name =ref.fileNameFormat("auth")
-                json_file_path = f'{auth_predicted_json_path}/{file_name}.json'
+                json_file_path = f'{auth_predicted_json_path}{file_name}.json'
                 with open( json_file_path, "w") as outfile:
                     outfile.write(json_object)
                 

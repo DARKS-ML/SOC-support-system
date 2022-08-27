@@ -16,8 +16,8 @@ import pickle
 
 base_path =  path.abspath(path.join(__file__ ,"../../.."))
 ids_model_path =base_path+'/Models Collection/ids/'
-ids_predicted_csv_path = base_path+'/dashboard/Predicted Results/ids/csv'
-ids_predicted_json_path = base_path+'/dashboard/Predicted Results/ids/json'
+ids_predicted_csv_path = base_path+'/dashboard/Predicted Results/ids/csv/'
+ids_predicted_json_path = base_path+'/dashboard/Predicted Results/ids/json/'
 dataset_collection = base_path+'/Dataset/ids/'
 
 # @desc -> get list of files from specific log containg directory  
@@ -134,7 +134,7 @@ class IDSLogView(APIView):
             
                 # p_df.to_csv(ids_predicted_csv_path+"sample.csv")
                 file_name =ref.fileNameFormat("ids")
-                csv_file_path = f'{ids_predicted_csv_path}/{file_name}.csv'
+                csv_file_path = f'{ids_predicted_csv_path}{file_name}.csv'
                 p_df.to_csv(csv_file_path,index=False,header=True)
 
                 import json
@@ -143,7 +143,7 @@ class IDSLogView(APIView):
 
                 json_object = json.dumps(json_data, indent = 4)
                 file_name =ref.fileNameFormat("ids")
-                json_file_path = f'{ids_predicted_json_path}/{file_name}.json'
+                json_file_path = f'{ids_predicted_json_path}{file_name}.json'
                 with open( json_file_path, "w") as outfile:
                     outfile.write(json_object)
 
