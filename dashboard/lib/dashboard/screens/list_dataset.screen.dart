@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:loading_indicator/loading_indicator.dart';
 
+import '../services/auth_log_services.dart';
 import 'details/ids.chart_details.screen.dart';
 
 class ListDataSetScreen extends StatelessWidget {
@@ -152,20 +153,21 @@ fetchDataFromAPi({required Future future, required String socType}) {
                     ),
                   );
                   final data = decodeData[index];
-                  // final dataTosend = json.encode(data);
+                  log("ids dataset list$data");
                   await predictData(
                     dataTosend: data,
                     socType: socType,
                   ).then((value) async {
                     if (value[0] == 200) {
-                      final filename = value[1];
-                      final jsonDecodedData = json.decode(filename);
-                      final jsonFileNameOrigin =
-                          jsonDecodedData['json_path'].toString();
-                      final jsonPathName =
-                          jsonFileNameOrigin.split("dashboard/")[1];
-
                       if (socType == "auth") {
+                        final filename = value[1];
+                        final jsonDecodedData = json.decode(filename);
+                        final jsonFileNameOrigin =
+                            jsonDecodedData['json_path'].toString();
+                        final jsonPathName =
+                            jsonFileNameOrigin.split("dashboard/")[1];
+                        log(jsonFileNameOrigin.toString());
+
                         // Navigator.pop(context);
                         await Navigator.push(
                           context,
@@ -176,7 +178,13 @@ fetchDataFromAPi({required Future future, required String socType}) {
                           ),
                         );
                       } else if (socType == "ids") {
-                        // Navigator.pop(context);
+                        log("Your are in ids");
+                        DashBoardService.getPrevousPredictedResult(
+                          datasetname: "ids",
+                        ).then((value) {
+                          log("Response data ${json.decode(value)}");
+                          log(value.runtimeType.toString());
+                        });
 
                         await Navigator.push(
                           context,
@@ -303,6 +311,22 @@ Future predictData({
     rethrow;
   }
 }
+
+// Future IDSJson() async {
+//   try {
+//     final response = await http.get(Uri.parse(
+//       "http://127.0.0.1:8000/api/v1/ids/previous/",
+//     ));
+//     log(response.statusCode.toString());
+
+//     if (response.statusCode == 200) {
+//       var responseData = json.decode(response.body);
+//       return responseData;
+//     }
+//   } catch (e) {
+//     rethrow;
+//   }
+// }
 
 displayDialog({
   required BuildContext context,

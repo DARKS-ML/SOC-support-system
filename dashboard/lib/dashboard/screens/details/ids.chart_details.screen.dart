@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class IDSChartScreenDetails extends StatelessWidget {
   const IDSChartScreenDetails({Key? key}) : super(key: key);
@@ -24,7 +22,7 @@ class IDSChartScreenDetails extends StatelessWidget {
           ),
         ),
       ),
-      body: Text("IDS CHART SCREEN"),
+      body: const Text("IDS CHART SCREEN"),
     );
   }
 }
