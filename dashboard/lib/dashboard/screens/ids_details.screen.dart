@@ -1,5 +1,6 @@
 import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class IDSDetailsScreen extends StatelessWidget {
   const IDSDetailsScreen({Key? key}) : super(key: key);
@@ -19,13 +20,37 @@ class IDSDetailsScreen extends StatelessWidget {
             Container(
               height: 200,
               color: Colors.green,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 100,
-                itemBuilder: (BuildContext context, int index) {
-                  return Text("data");
+              child: FutureBuilder(
+                future: loadjsonData(),
+                // initialData: InitialData,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return Text("data");
+                  } else {
+                    return Text("${snapshot.data}");
+                  }
                 },
               ),
+              // child: ListView.builder(
+              //   scrollDirection: Axis.horizontal,
+              //   itemCount: 100,
+              //   itemBuilder: (BuildContext context, int index) {
+              //     return Column(
+              //       children: [
+              //         Container(
+              //           margin: const EdgeInsets.only(right: 10, bottom: 10),
+              //           color: Colors.yellow,
+              //           height: 50,
+              //           width: 20,
+              //         ),
+              //         RotatedBox(
+              //           quarterTurns: -1,
+              //           child: Text("data $index"),
+              //         )
+              //       ],
+              //     );
+              //   },
+              // ),
             ),
             Container(
               height: 200,
@@ -43,4 +68,11 @@ class IDSDetailsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+loadjsonData() async {
+  final data = await rootBundle.loadString(
+    "Predicted Results/ids/ids_2022_08_28/Bot/json/Bot_2022_08_28.json",
+  );
+  return data;
 }

@@ -68,6 +68,7 @@ flutter:
   assets:
     - Predicted Results/Auth Log/json/
     - Predicted Results/ids/
+    # - Predicted Results/ids/ids_2022_08_27/Bot/json/
     - assets/img/
   #   - images/a_dot_ham.jpeg
 
