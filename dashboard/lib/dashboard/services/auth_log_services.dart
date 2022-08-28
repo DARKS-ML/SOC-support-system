@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/services.dart' as root_bundle;
 
-import '../model/auth_log_model.dart';
+import '../model/auth_model/auth_log_model.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<AuthLogModel>> readJsonAuthLog({

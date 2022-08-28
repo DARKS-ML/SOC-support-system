@@ -10,7 +10,7 @@ import 'package:loading_indicator/loading_indicator.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import '../../model/auth_log_model.dart';
+import '../../model/auth_model/auth_log_model.dart';
 
 class AuthChartDetailsScreen extends StatefulWidget {
   final String fileName;

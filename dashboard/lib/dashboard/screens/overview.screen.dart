@@ -7,7 +7,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:flutter/services.dart' as root_bundle;
 
-import '../model/auth_log_model.dart';
+import '../model/auth_model/auth_log_model.dart';
 
 class OverViewScreen extends StatefulWidget {
   const OverViewScreen({Key? key}) : super(key: key);
