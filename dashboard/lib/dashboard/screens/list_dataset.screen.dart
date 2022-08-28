@@ -153,7 +153,6 @@ fetchDataFromAPi({required Future future, required String socType}) {
                     ),
                   );
                   final data = decodeData[index];
-                  log("ids dataset list$data");
                   await predictData(
                     dataTosend: data,
                     socType: socType,
@@ -166,7 +165,6 @@ fetchDataFromAPi({required Future future, required String socType}) {
                             jsonDecodedData['json_path'].toString();
                         final jsonPathName =
                             jsonFileNameOrigin.split("dashboard/")[1];
-                        log(jsonFileNameOrigin.toString());
 
                         // Navigator.pop(context);
                         await Navigator.push(
@@ -182,8 +180,24 @@ fetchDataFromAPi({required Future future, required String socType}) {
                         DashBoardService.getPrevousPredictedResult(
                           datasetname: "ids",
                         ).then((value) {
-                          log("Response data ${json.decode(value)}");
+                          DateTime now = DateTime.now();
+                          final todayDate =
+                              "${now.year.toString()}_${now.month.toString().padLeft(2, '0')}_${now.day.toString().padLeft(2, '0')}";
+                          log("Response data ${json.decode(value).runtimeType}");
                           log(value.runtimeType.toString());
+                          final decodeData = json.decode(value);
+                          final idsData = decodeData["data"]["ids"];
+                          final datasetLength = idsData.length;
+
+                          if (datasetLength != 1) {
+                            if (idsData.keysName == "ids_$todayDate") {
+                              log("success ids_$todayDate");
+                            }
+                          } else {
+                            final botDtata = idsData["ids_$todayDate"][0];
+                            log("Bot Datta$botDtata");
+                          }
+                          log(todayDate.toString());
                         });
 
                         await Navigator.push(

@@ -28,27 +28,30 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
   late TooltipBehavior _tooltipBehavior;
   Timer? timer;
   int data = 0;
+  bool isPlay = true;
   void _updateDataSource(Timer timer) {
-    // if(isCardView != null){
-    log(chartData.length.toString());
-    livePlot = chartData.sublist(data + 40, (data + 40) + 40);
+    if (isPlay) {
+      log(chartData.length.toString());
+      livePlot = chartData.sublist(data + 40, (data + 40) + 40);
 
-    // livePlot.add(chartData[i]);
-    log("length of liveplot dtata${livePlot.length}");
-    log("i ko lethgth$data");
-    if (livePlot.length == 40) {
-      // livePlot.removeAt(0);
-      _chartSeriesController?.updateDataSource(
-        addedDataIndexes: <int>[livePlot.length + 1],
-        // removedDataIndexes: <int>[0],
-      );
+      // livePlot.add(chartData[i]);
+      log("length of liveplot dtata${livePlot.length}");
+      log("i ko lethgth$data");
+      if (livePlot.length == 40) {
+        // livePlot.removeAt(0);
+        _chartSeriesController?.updateDataSource(
+          addedDataIndexes: <int>[livePlot.length + 1],
+          // removedDataIndexes: <int>[0],
+        );
+      } else {
+        _chartSeriesController?.updateDataSource(
+          addedDataIndexes: <int>[livePlot.length - 1],
+        );
+      }
+      data++;
     } else {
-      _chartSeriesController?.updateDataSource(
-        addedDataIndexes: <int>[livePlot.length - 1],
-      );
+      livePlot = livePlot;
     }
-    data++;
-    // }
   }
 
   Future loadAuthLog() async {
@@ -70,9 +73,9 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
   void initState() {
     log(widget.fileName);
     loadAuthLog();
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       _updateDataSource(timer);
-      setState(() {});
+      isPlay ? setState(() {}) : null;
     });
     _tooltipBehavior = TooltipBehavior(
         enable: true,
@@ -80,7 +83,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
             int seriesIndex) {
           return Expanded(
             child: SizedBox(
-              height: 120,
+              height: 150,
               width: 350,
               child: Padding(
                 padding:
@@ -100,6 +103,11 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                       ),
                       Text(
                         "IP:${data.ip.toString()}",
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "ModZScore:${data.modZscore.toString()}",
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -132,113 +140,127 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Center(
-                  child: Container(
-                    height: height * 0.40,
-                    width: width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.blue,
-                            offset: Offset(0.0, 1.0),
-                            blurRadius: 10.0,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(20)),
-
-                    // color: Colors.blue,
-                    child: FutureBuilder(
-                        future: getJsonFromAssets(filename: widget.fileName),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return SfCartesianChart(
-                              title: ChartTitle(text: "Live Plot"),
-                              enableAxisAnimation: true,
-                              // tooltipBehavior: _tooltipBehavior,
-                              enableMultiSelection: true,
-                              plotAreaBorderWidth: 0,
-                              primaryXAxis: CategoryAxis(
-                                  labelRotation: 90,
-                                  majorGridLines:
-                                      const MajorGridLines(width: 0),
-                                  isVisible: true),
-                              primaryYAxis: NumericAxis(
-                                  plotBands: <PlotBand>[
-                                    PlotBand(
-                                        isVisible: true,
-                                        start: 3,
-                                        end: 3.1,
-                                        color: Colors.red),
-                                  ],
-                                  labelIntersectAction:
-                                      AxisLabelIntersectAction.rotate45,
-                                  axisLine: const AxisLine(width: 0),
-                                  majorTickLines:
-                                      const MajorTickLines(size: 10)),
-                              series: <LineSeries<AuthLogModel, String>>[
-                                LineSeries<AuthLogModel, String>(
-                                  markerSettings: const MarkerSettings(
-                                    isVisible: true,
-                                  ),
-                                  // dataLabelSettings: DataLabelSettings(
-                                  //     isVisible: true,
-                                  //     builder: (dynamic data, dynamic point, dynamic series,
-                                  //         int pointIndex, int seriesIndex) {
-                                  //       return SizedBox(
-                                  //           height: 30,
-                                  //           width: 30,
-                                  //           child: data.modZscore > 5
-                                  //               ? const Text("threat")
-                                  //               : Container());
-                                  //     }),
-                                  onRendererCreated:
-                                      (ChartSeriesController controller) {
-                                    _chartSeriesController = controller;
-                                  },
-                                  dataSource: livePlot,
-                                  color: const Color.fromRGBO(192, 108, 132, 1),
-                                  xValueMapper: (AuthLogModel auth, _) =>
-                                      auth.time,
-                                  yValueMapper: (AuthLogModel auth, _) =>
-                                      auth.modZscore,
-                                  // animationDuration: 0,
-                                )
-                              ],
-                            );
-                          } else {
-                            return const Center(
-                              child: SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: LoadingIndicator(
-                                    indicatorType:
-                                        Indicator.lineScalePulseOutRapid,
-
-                                    /// Required, The loading type of the widget
-                                    colors: [
-                                      Colors.black,
-                                      Colors.grey,
-                                      Colors.red,
-                                      Colors.green
-                                    ],
-
-                                    /// Optional, The color collections
-                                    strokeWidth: 2,
-
-                                    /// Optional, The stroke of the line, only applicable to widget which contains line
-                                    backgroundColor: Colors.transparent,
-
-                                    /// Optional, Background of the widget
-                                    pathBackgroundColor: Colors.black
-
-                                    /// Optional, the stroke backgroundColor
-                                    ),
+                Stack(
+                  children: [
+                    Center(
+                      child: Container(
+                        height: height * 0.40,
+                        width: width,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.blue,
+                                offset: Offset(0.0, 1.0),
+                                blurRadius: 10.0,
                               ),
-                            );
-                          }
-                        }),
-                  ),
+                            ],
+                            borderRadius: BorderRadius.circular(20)),
+
+                        // color: Colors.blue,
+                        child: FutureBuilder(
+                            future:
+                                getJsonFromAssets(filename: widget.fileName),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return SfCartesianChart(
+                                  title: ChartTitle(
+                                      text: "Timestamp Vs ModZscore Plot"),
+                                  enableAxisAnimation: true,
+                                  tooltipBehavior: _tooltipBehavior,
+                                  enableMultiSelection: true,
+                                  plotAreaBorderWidth: 0,
+                                  primaryXAxis: CategoryAxis(
+                                      labelRotation: 90,
+                                      majorGridLines:
+                                          const MajorGridLines(width: 0),
+                                      isVisible: true),
+                                  primaryYAxis: NumericAxis(
+                                      plotBands: <PlotBand>[
+                                        PlotBand(
+                                            isVisible: true,
+                                            start: 3,
+                                            end: 3.1,
+                                            color: Colors.red),
+                                      ],
+                                      labelIntersectAction:
+                                          AxisLabelIntersectAction.rotate45,
+                                      axisLine: const AxisLine(width: 0),
+                                      majorTickLines:
+                                          const MajorTickLines(size: 10)),
+                                  series: <LineSeries<AuthLogModel, String>>[
+                                    LineSeries<AuthLogModel, String>(
+                                      markerSettings: const MarkerSettings(
+                                        isVisible: true,
+                                      ),
+
+                                      onRendererCreated:
+                                          (ChartSeriesController controller) {
+                                        _chartSeriesController = controller;
+                                      },
+                                      dataSource: livePlot,
+                                      color: const Color.fromRGBO(
+                                          192, 108, 132, 1),
+                                      xValueMapper: (AuthLogModel auth, _) =>
+                                          auth.time,
+                                      yValueMapper: (AuthLogModel auth, _) =>
+                                          auth.modZscore,
+                                      // animationDuration: 0,
+                                    )
+                                  ],
+                                );
+                              } else {
+                                return const Center(
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                    child: LoadingIndicator(
+                                        indicatorType:
+                                            Indicator.lineScalePulseOutRapid,
+
+                                        /// Required, The loading type of the widget
+                                        colors: [
+                                          Colors.black,
+                                          Colors.grey,
+                                          Colors.red,
+                                          Colors.green
+                                        ],
+
+                                        /// Optional, The color collections
+                                        strokeWidth: 2,
+
+                                        /// Optional, The stroke of the line, only applicable to widget which contains line
+                                        backgroundColor: Colors.transparent,
+
+                                        /// Optional, Background of the widget
+                                        pathBackgroundColor: Colors.black
+
+                                        /// Optional, the stroke backgroundColor
+                                        ),
+                                  ),
+                                );
+                              }
+                            }),
+                      ),
+                    ),
+                    Positioned(
+                        top: 10,
+                        right: width * 0.07,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              isPlay ? isPlay = false : isPlay = true;
+                            });
+                          },
+                          child: CircleAvatar(
+                            backgroundColor:
+                                (isPlay) ? Colors.red : Colors.blue,
+                            child: Icon(isPlay
+                                ? Icons.pause
+                                : Icons.play_arrow_outlined),
+                          ),
+                        ))
+                  ],
                 ),
                 const SizedBox(
                   height: 8,
