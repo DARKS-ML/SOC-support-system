@@ -84,7 +84,7 @@ class ListAllPredictedModelResult(APIView):
                 dir_structure[base_name] = [ tree_path_json(os.path.join(path, file_name))\
                 for file_name in os.listdir(path) ]
             else:
-                return os.path.basename(path)
+                return os.path.abspath(path)
             return dir_structure
         data = tree_path_json(path)
         return Response({
