@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+
+import '../screens/notification.screen.dart';
+import '../services/global.service.dart';
 
 class GlobalWidget {
   static displayDashboardAppbar({
@@ -93,7 +98,7 @@ class GlobalWidget {
     );
   }
 
-  static LoadingWidget({required BuildContext context}) {
+  static loadingWidget({required BuildContext context}) {
     return const Center(
       child: SizedBox(
         height: 100,
@@ -115,6 +120,133 @@ class GlobalWidget {
 
             /// Optional, the stroke backgroundColor
             ),
+      ),
+    );
+  }
+
+  // notification sidebar
+  static displayNotificationSideBar() {
+    return Drawer(
+      elevation: 16.0,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                "Notifications",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+            FutureBuilder(
+              future: GlobalalService.notification(),
+              builder: (context, snapshot) {
+                final loadingIndicator =
+                    GlobalWidget.displayDialogWithLoadingIndicator(
+                  isCenter: true,
+                );
+                try {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    final snapshotData = snapshot.data;
+                    final encodeSnapshotData = json.encode(snapshotData);
+                    final decodeSnapshotData = json.decode(encodeSnapshotData);
+                    final notificationData = decodeSnapshotData[1];
+                    final decodeNotificationData =
+                        json.decode(notificationData);
+                    final notification =
+                        decodeNotificationData['data']["Notification"];
+
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      itemCount: notification.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final notificationDateIndex = notification[index];
+                        final notificationDate = notificationDateIndex.keys;
+                        final lengthOfNotification = notification[0];
+                        final notificationKeyName = notificationDate
+                            .toString()
+                            .replaceAll("(", "")
+                            .replaceAll(")", "");
+                        final notificationName = notificationKeyName
+                            .toString()
+                            .replaceAll("notif_", "")
+                            .replaceAll("_", "-");
+                        final notificationList =
+                            notification[index][notificationKeyName];
+                        return ExpansionTile(
+                          title: Text(
+                            "$notificationName Notification",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${(notificationList.length / 2).toString().replaceAll(".0", "")} of notification",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w200,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          children: [
+                            for (int i = 0; i < notificationList.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: notificationList[i]
+                                        .toString()
+                                        .split("$notificationKeyName/")[1]
+                                        .endsWith(".json")
+                                    ? ListTile(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  NotificationScreen(
+                                                filePath: notificationList[i]
+                                                    .toString(),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        title: Text(
+                                          "${notificationList[i].toString().split("$notificationKeyName/")[1].split(".")[0].split("_")[0].toUpperCase()} log Anomaly",
+                                          style: const TextStyle(
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        trailing: const Icon(
+                                          Icons.arrow_forward_ios,
+                                          size: 15,
+                                          color: Colors.red,
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
+                              ),
+                          ],
+                        );
+                      },
+                    );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return loadingIndicator;
+                  } else {
+                    return const Center(
+                      child: Text("No Notification yet!"),
+                    );
+                  }
+                } catch (e) {
+                  return loadingIndicator;
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

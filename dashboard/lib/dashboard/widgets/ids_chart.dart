@@ -60,7 +60,7 @@ IDSChart(
                     series: getLineChartSeries,
                   );
                 } else {
-                  return GlobalWidget.LoadingWidget(context: context);
+                  return GlobalWidget.loadingWidget(context: context);
                 }
               }),
         ),

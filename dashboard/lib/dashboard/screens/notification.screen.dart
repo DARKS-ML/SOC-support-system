@@ -1,35 +1,43 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:json_table/json_table.dart';
 
-class NotificationScreen extends StatefulWidget {
+class NotificationScreen extends StatelessWidget {
   final String filePath;
   const NotificationScreen({Key? key, required this.filePath})
       : super(key: key);
 
   @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
-}
-
-class _NotificationScreenState extends State<NotificationScreen> {
-  // final String jsonSample = loadDataFromFile();
-  bool toggle = true;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        // toolbarHeight: 0,
+        title: const Text(
+          "Anomaly Data List",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        elevation: 1,
+      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
+      // floatingActionButton: ,
       body: FutureBuilder(
-          future: loadDataFromFile(filePath: widget.filePath),
+          future: loadDataFromFile(filePath: filePath),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final snapshotData = snapshot.data;
@@ -41,25 +49,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  child: toggle
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            JsonTable(
-                              json,
-                              showColumnToggle: true,
-                              allowRowHighlight: true,
-                              rowHighlightColor:
-                                  Colors.yellow[500]!.withOpacity(0.7),
-                              paginationRowCount: page1Data,
-                              onRowSelect: (index, map) {},
-                            ),
-                          ],
-                        )
-                      : Center(
-                          child: Text(getPrettyJSONString(jsonSample)),
-                        ),
+                child: JsonTable(
+                  json,
+                  showColumnToggle: true,
+                  allowRowHighlight: true,
+                  rowHighlightColor: Colors.yellow[500]!.withOpacity(0.7),
+                  paginationRowCount: page1Data,
+                  onRowSelect: (index, map) {},
                 ),
               );
             } else {
@@ -67,23 +63,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   isCenter: true);
             }
           }),
-      // floatingActionButton: FloatingActionButton(
-      //     child: const Icon(Icons.grid_on),
-      //     onPressed: () {
-      //       setState(
-      //         () {
-      //           toggle = !toggle;
-      //         },
-      //       );
-      //     }),
     );
   }
 
-  String getPrettyJSONString(jsonObject) {
-    JsonEncoder encoder = const JsonEncoder.withIndent('  ');
-    String jsonString = encoder.convert(json.decode(jsonObject));
-    return jsonString;
-  }
+  //   // String getPrettyJSONString(jsonObject) {
+//   //   JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+//   //   String jsonString = encoder.convert(json.decode(jsonObject));
+//   //   return jsonString;
+//   // }
 }
 
 loadDataFromFile({required String filePath}) async {

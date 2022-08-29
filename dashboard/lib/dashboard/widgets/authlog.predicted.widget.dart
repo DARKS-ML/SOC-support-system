@@ -66,16 +66,17 @@ displayAuthLogPredictedResultWidget({required BuildContext context}) {
                             bool isToday = filecreatedDate == todayDate;
                             return ListTile(
                               onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => AuthChartDetailsScreen(
-                                      fileName: finalDatasetName,
-                                    ),
-                                  ),
-                                );
+                                // await Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (_) => AuthChartDetailsScreen(
+                                //       fileName: finalDatasetName,
+                                //     ),
+                                //   ),
+                                // );
                               },
                               title: Text(
+                                // datasetPath,
                                 finalDatasetName,
                                 // textAlign: TextAlign.justify,
                               ),

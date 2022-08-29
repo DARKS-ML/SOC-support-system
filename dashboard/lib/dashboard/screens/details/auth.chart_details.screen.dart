@@ -209,7 +209,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                                   ],
                                 );
                               } else {
-                                return GlobalWidget.LoadingWidget(
+                                return GlobalWidget.loadingWidget(
                                     context: context);
                               }
                             }),
@@ -276,7 +276,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                             ],
                           );
                         } else {
-                          return GlobalWidget.LoadingWidget(context: context);
+                          return GlobalWidget.loadingWidget(context: context);
                         }
                       }),
                 ),
