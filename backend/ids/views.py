@@ -89,8 +89,25 @@ class ListAllPredictedModelResult(APIView):
                 return os.path.abspath(path)
             return dir_structure
         data = tree_path_json(path)
+        
+
+        # ==============================
+        #  all files at onces 
+        # --------------------------------
+        files_list = []
+        root = ids_predicted_json_path
+        for path, subdirs, files in os.walk(root):
+            for name in files:
+                paths_list = os.path.join(path, name)
+                if paths_list.endswith(".json"):
+                    files_list.append(paths_list)
+
+        # ==============================
+
+
         return Response({
-            "data":data
+            "files":files_list,
+            "data":data,
         })
         
 
