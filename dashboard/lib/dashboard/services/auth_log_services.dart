@@ -6,9 +6,7 @@ import 'package:flutter/services.dart' as root_bundle;
 import '../model/auth_model/auth_log_model.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<AuthLogModel>> readJsonAuthLog({
-  required String filename,
-}) async {
+Future<List<AuthLogModel>> readJsonAuthLog({required String filename}) async {
   final jsondata = await root_bundle.rootBundle.loadString(
     // filename,
     'Predicted Results/Auth Log/json/auth_2022_08_23__09_53_13.json',
@@ -32,7 +30,6 @@ class DashBoardService {
   }
 
 // authentication predicted data
-
   static Future authPredictData({required dataTosend}) async {
     try {
       final response = await http.post(

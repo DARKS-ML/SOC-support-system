@@ -152,6 +152,7 @@ class MultiLineAuthLogView(APIView):
                 # =======================================#
                 #       Notification related work
                 # =======================================#
+                import json
 
                 df_nf = pd.read_csv(csv_file_path)
                 notif = df_nf.loc[df_nf['mod_zscore'] <= 3]
@@ -168,12 +169,13 @@ class MultiLineAuthLogView(APIView):
                 notification_name = ref.fileNameFormat("auth")
                 notif_csv_file_path = f'{notification_date_path}/{notification_name}.csv'
                 notif.to_csv(notif_csv_file_path,index=False,header=True)
-
-
+                json_data = ref.convertCsvToJson(csv_file_path)
+                json_object = json.dumps(json_data, indent = 4)
+                notif_json_file_path = f'{notification_date_path}/{notification_name}.json'
+                with open(notif_json_file_path, "w") as outfile:
+                    outfile.write(json_object)
                 
 
-                
-                import json
                 json_data = ref.convertCsvToJson(csv_file_path)
                 
                 json_object = json.dumps(json_data, indent = 4)

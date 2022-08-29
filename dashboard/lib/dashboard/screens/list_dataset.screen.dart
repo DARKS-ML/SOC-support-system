@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dashboard/dashboard/screens/details/auth.chart_details.screen.dart';
+import 'package:dashboard/dashboard/screens/notification.screen.dart';
+import 'package:dashboard/dashboard/services/global.service.dart';
 import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +14,128 @@ import '../services/auth_log_services.dart';
 import 'details/ids.chart_details.screen.dart';
 
 class ListDataSetScreen extends StatelessWidget {
-  const ListDataSetScreen({Key? key}) : super(key: key);
+  ListDataSetScreen({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: GlobalWidget.displayDashboardAppbar(),
+      appBar: GlobalWidget.displayDashboardAppbar(scaffoldKey: _scaffoldKey),
+      endDrawer: Drawer(
+        elevation: 16.0,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              FutureBuilder(
+                future: GlobalalService.notification(),
+                builder: (context, snapshot) {
+                  final loadingIndicator =
+                      GlobalWidget.displayDialogWithLoadingIndicator(
+                    isCenter: true,
+                  );
+                  try {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      final snapshotData = snapshot.data;
+                      final encodeSnapshotData = json.encode(snapshotData);
+                      final decodeSnapshotData =
+                          json.decode(encodeSnapshotData);
+                      final notificationData = decodeSnapshotData[1];
+                      final decodeNotificationData =
+                          json.decode(notificationData);
+                      final notification =
+                          decodeNotificationData['data']["Notification"];
+
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemCount: notification.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final notificationDateIndex = notification[index];
+                          final notificationDate = notificationDateIndex.keys;
+                          final lengthOfNotification = notification[0];
+                          final notificationKeyName = notificationDate
+                              .toString()
+                              .replaceAll("(", "")
+                              .replaceAll(")", "");
+                          final notificationName = notificationKeyName
+                              .toString()
+                              .replaceAll("notif_", "")
+                              .replaceAll("_", "-");
+                          final notificationList =
+                              notification[index][notificationKeyName];
+                          return ExpansionTile(
+                            title: Text(
+                              "$notificationName Notification",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              "${notificationList.length} of notification",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w200,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            children: [
+                              for (int i = 0; i < notificationList.length; i++)
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: notificationList[i]
+                                          .toString()
+                                          .split("$notificationKeyName/")[1]
+                                          .endsWith(".json")
+                                      ? ListTile(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) =>
+                                                    NotificationScreen(
+                                                  filePath: notificationList[i]
+                                                      .toString(),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          title: Text(
+                                            "${notificationList[i].toString().split("$notificationKeyName/")[1].split(".")[0].split("_")[0].toUpperCase()} log Anomaly",
+                                            style: const TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          trailing: const Icon(
+                                            Icons.arrow_forward_ios,
+                                            size: 15,
+                                            color: Colors.red,
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
+                                ),
+                            ],
+                          );
+                        },
+                      );
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return loadingIndicator;
+                    } else {
+                      return const Center(
+                        child: Text("No Notification yet!"),
+                      );
+                    }
+                  } catch (e) {
+                    return loadingIndicator;
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Row(
           children: [
@@ -225,7 +341,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
           );
         } else {
           return Center(
-            child: GlobalWidget.displayDialog(),
+            child: GlobalWidget.displayDialogWithLoadingIndicator(),
           );
         }
       } catch (e) {
@@ -272,10 +388,7 @@ buildDataSetContainer({required Size size, required String datasetName}) {
 
 // ///////////////////////////////////////////
 
-Future predictData({
-  required dataTosend,
-  required String socType,
-}) async {
+Future predictData({required dataTosend, required String socType}) async {
   try {
     final response = await http.post(
       Uri.parse(

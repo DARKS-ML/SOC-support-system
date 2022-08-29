@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 class GlobalWidget {
-  static displayDashboardAppbar() {
+  static displayDashboardAppbar({
+    required GlobalKey<ScaffoldState> scaffoldKey,
+  }) {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 1,
@@ -17,7 +19,9 @@ class GlobalWidget {
         CircleAvatar(
           backgroundColor: Colors.black,
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              scaffoldKey.currentState!.openEndDrawer();
+            },
             icon: const Icon(
               Icons.notification_add,
               color: Colors.yellow,
@@ -33,8 +37,12 @@ class GlobalWidget {
     );
   }
 
-  static displayDialog({double height = 50, double width = 50}) {
-    return SizedBox(
+  static displayDialogWithLoadingIndicator({
+    double height = 50,
+    double width = 50,
+    bool isCenter = false,
+  }) {
+    final loadingIndicator = SizedBox(
       height: height,
       width: width,
       child: const LoadingIndicator(
@@ -55,6 +63,13 @@ class GlobalWidget {
           /// Optional, the stroke backgroundColor
           ),
     );
+    if (isCenter) {
+      return Center(
+        child: loadingIndicator,
+      );
+    } else {
+      return loadingIndicator;
+    }
   }
 
   static displayBackButton({required BuildContext context}) {

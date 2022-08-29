@@ -11,7 +11,7 @@ class PreviousPredictResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: GlobalWidget.displayDashboardAppbar(),
+      // appBar: GlobalWidget.displayDashboardAppbar(),
       body: SingleChildScrollView(
         child: Row(
           children: [
