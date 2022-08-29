@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:dashboard/dashboard/screens/ids_details.screen.dart';
+import 'package:dashboard/dashboard/screens/details/ids.chart_details.screen.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/details/auth.chart_details.screen.dart';
 import '../services/auth_log_services.dart';
 
 displayIdsLogPredictedResultWidget({required BuildContext context}) {
@@ -78,7 +77,10 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => IDSDetailsScreen()),
+                                      builder: (_) =>
+                                          const IDSChartDetailsScreen(
+                                            fileName: "",
+                                          )),
                                 );
                               },
                               title: Text("$keysName : Prediction Result"),
