@@ -29,7 +29,7 @@ class GlobalWidget {
             },
             icon: const Icon(
               Icons.notification_add,
-              color: Colors.yellow,
+              color: Colors.white,
             ),
           ),
         ),

@@ -25,18 +25,19 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
   List<AuthLogModel> livePlot = [];
   ChartSeriesController? _chartSeriesController;
   late TooltipBehavior _tooltipBehavior;
+
   Timer? timer;
   int data = 0;
   bool isPlay = true;
   void _updateDataSource(Timer timer) {
     if (isPlay) {
       log(chartData.length.toString());
-      livePlot = chartData.sublist(data + 40, (data + 40) + 40);
+      livePlot = chartData.sublist(data + 50, (data + 50) + 50);
 
       // livePlot.add(chartData[i]);
       log("length of liveplot dtata${livePlot.length}");
       log("i ko lethgth$data");
-      if (livePlot.length == 40) {
+      if (livePlot.length == 50) {
         // livePlot.removeAt(0);
         _chartSeriesController?.updateDataSource(
           addedDataIndexes: <int>[livePlot.length + 1],
@@ -76,7 +77,13 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
       _updateDataSource(timer);
       isPlay ? setState(() {}) : null;
     });
-    _tooltipBehavior = TooltipBehavior(
+    _tooltipBehavior = onLiveHover();
+
+    super.initState();
+  }
+
+  TooltipBehavior onLiveHover() {
+    return TooltipBehavior(
         enable: true,
         builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
             int seriesIndex) {
@@ -121,8 +128,6 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
             ),
           );
         });
-
-    super.initState();
   }
 
   @override
@@ -143,7 +148,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                   children: [
                     Center(
                       child: Container(
-                        height: height * 0.40,
+                        height: height * 0.50,
                         width: width,
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -170,11 +175,19 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                                   enableMultiSelection: true,
                                   plotAreaBorderWidth: 0,
                                   primaryXAxis: CategoryAxis(
-                                      labelRotation: 90,
+                                      title: AxisTitle(
+                                          text: "Timestamp",
+                                          textStyle: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      labelRotation: 70,
                                       majorGridLines:
                                           const MajorGridLines(width: 0),
                                       isVisible: true),
                                   primaryYAxis: NumericAxis(
+                                      title: AxisTitle(
+                                          text: "ModZscore",
+                                          textStyle: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
                                       plotBands: <PlotBand>[
                                         PlotBand(
                                             isVisible: true,
@@ -276,7 +289,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                             ],
                           );
                         } else {
-                          return GlobalWidget.loadingWidget(context: context);
+                          return GlobalWidget.LoadingWidget(context: context);
                         }
                       }),
                 ),
