@@ -16,10 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from soc import urls
+from soc.views import NotificationResult
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/',include('authentication.urls')),
     path('api/v1/auth/',include('soc.urls')),
-     path('api/v1/ids/',include('ids.urls')),
+    path('api/v1/ids/',include('ids.urls')),
+
+    # Notification
+    # path("predict/",MultiLineAuthLogView.as_view(),name="predict"),
+    path("api/v1/notification/",NotificationResult.as_view(),name="notification"),
 ]

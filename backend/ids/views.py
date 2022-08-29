@@ -20,6 +20,7 @@ ids_model_path =base_path+'/Models Collection/ids/'
 ids_predicted_base_path = base_path+'/dashboard/Predicted Results/ids/'
 ids_predicted_csv_path = base_path+'/dashboard/Predicted Results/ids/'
 ids_predicted_json_path = base_path+'/dashboard/Predicted Results/ids/'
+notification_path = base_path+'/dashboard/Predicted Results/'
 dataset_collection = base_path+'/Dataset/ids/'
 
 # @desc -> get list of files from specific log containg directory  
@@ -102,7 +103,7 @@ class IDSLogView(APIView):
         try:
             final_path = request_data["path"]
             if final_path.endswith('.log'):
-                return Response("Log File")
+                return Response("Log File",status=status.HTTP_406_NOT_ACCEPTABLE)
             elif final_path.endswith('.csv'):
                 # ////////////////start ////////////////
                 ref = IDSLogDataProcessing()

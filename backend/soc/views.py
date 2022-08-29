@@ -19,6 +19,7 @@ base_path =  path.abspath(path.join(__file__ ,"../../.."))
 auth_model_path =base_path+'/Models Collection/auth/'
 auth_predicted_csv_path = base_path+'/dashboard/Predicted Results/Auth Log/csv/'
 auth_predicted_json_path = base_path+'/dashboard/Predicted Results/Auth Log/json/'
+notification_path = base_path+'/dashboard/Predicted Results/'
 dataset_collection = base_path+'/Dataset/auth/'
 
 # Create your views here.
@@ -113,7 +114,7 @@ class MultiLineAuthLogView(APIView):
     def get(self,request):
         return Response({
             "msg":"enter your file path"
-        })
+        },status=status.HTTP_404_NOT_FOUND)
 # here /home/iamdpk/Project Work/SOC-support-system/Dataset/auth.log
     def post(self,request):
         request_data =  request.data
@@ -147,6 +148,30 @@ class MultiLineAuthLogView(APIView):
                 file_name =ref.fileNameFormat("auth")
                 csv_file_path = f'{auth_predicted_csv_path}{file_name}.csv'
                 df_copy1.to_csv(csv_file_path,index=False,header=True)
+
+                # =======================================#
+                #       Notification related work
+                # =======================================#
+
+                df_nf = pd.read_csv(csv_file_path)
+                notif = df_nf.loc[df_nf['mod_zscore'] <= 3]
+                # cretae base Notification folder ->done
+                notf_base_path = os.path.join(notification_path,"Notification")
+                if not os.path.exists(notf_base_path):             
+                    os.makedirs(notf_base_path)
+
+                notification_date = ref.fileNameFormat("notif")
+                notification_date_path = os.path.join(notf_base_path,notification_date)
+                if not os.path.exists(notification_date_path):             
+                    os.makedirs(notification_date_path)
+                
+                notification_name = ref.fileNameFormat("auth")
+                notif_csv_file_path = f'{notification_date_path}/{notification_name}.csv'
+                notif.to_csv(notif_csv_file_path,index=False,header=True)
+
+
+                
+
                 
                 import json
                 json_data = ref.convertCsvToJson(csv_file_path)
@@ -170,6 +195,29 @@ class MultiLineAuthLogView(APIView):
         except Exception as e:
             return Response({
              "error":   e
-            })
+            },tatus=status.HTTP_412_PRECONDITION_FAILED)
 
-    
+
+# @desc -> list all directory and sub directory name 
+class NotificationResult(APIView):
+    def get(self,request):
+
+        dir_name = notification_path+"Notification/"
+        
+        path = dir_name
+        def tree_path_json(path):
+            dir_structure = {}
+            base_name = os.path.basename(os.path.realpath(path))
+            if os.path.isdir(path):
+                dir_structure[base_name] = [ tree_path_json(os.path.join(path, file_name))\
+                for file_name in os.listdir(path) ]
+            else:
+                return os.path.abspath(path)
+            return dir_structure
+        data = tree_path_json(path)
+        return Response({
+            "data":data
+        })
+        
+
+   
