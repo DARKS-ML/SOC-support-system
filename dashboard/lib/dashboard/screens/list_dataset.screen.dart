@@ -19,41 +19,7 @@ class ListDataSetScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1,
-        title: const Text(
-          "Soc DashBoard",
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          CircleAvatar(
-            backgroundColor: Colors.black,
-            child: IconButton(
-              onPressed: () {
-                displayDialog(
-                  context: context,
-                  actions: [],
-                  child: GlobalWidget.displayDialog(),
-                  widget: const Text(""),
-                );
-              },
-              icon: const Icon(
-                Icons.notification_add,
-                color: Colors.yellow,
-              ),
-            ),
-          ),
-          const SizedBox(width: 20),
-          const CircleAvatar(
-            backgroundColor: Colors.black,
-          ),
-          const SizedBox(width: 30)
-        ],
-      ),
+      appBar: GlobalWidget.displayDashboardAppbar(),
       body: SingleChildScrollView(
         child: Row(
           children: [
