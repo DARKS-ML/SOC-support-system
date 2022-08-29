@@ -59,6 +59,7 @@ class ListDataSetScreen extends StatelessWidget {
                               .toString()
                               .replaceAll("(", "")
                               .replaceAll(")", "");
+
                           final notificationName = notificationKeyName
                               .toString()
                               .replaceAll("notif_", "")

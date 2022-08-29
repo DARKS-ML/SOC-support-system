@@ -25,18 +25,19 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
   List<AuthLogModel> livePlot = [];
   ChartSeriesController? _chartSeriesController;
   late TooltipBehavior _tooltipBehavior;
+
   Timer? timer;
   int data = 0;
   bool isPlay = true;
   void _updateDataSource(Timer timer) {
     if (isPlay) {
       log(chartData.length.toString());
-      livePlot = chartData.sublist(data + 40, (data + 40) + 40);
+      livePlot = chartData.sublist(data + 50, (data + 50) + 50);
 
       // livePlot.add(chartData[i]);
       log("length of liveplot dtata${livePlot.length}");
       log("i ko lethgth$data");
-      if (livePlot.length == 40) {
+      if (livePlot.length == 50) {
         // livePlot.removeAt(0);
         _chartSeriesController?.updateDataSource(
           addedDataIndexes: <int>[livePlot.length + 1],
@@ -76,7 +77,13 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
       _updateDataSource(timer);
       isPlay ? setState(() {}) : null;
     });
-    _tooltipBehavior = TooltipBehavior(
+    _tooltipBehavior = onLiveHover();
+
+    super.initState();
+  }
+
+  TooltipBehavior onLiveHover() {
+    return TooltipBehavior(
         enable: true,
         builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
             int seriesIndex) {
@@ -121,8 +128,6 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
             ),
           );
         });
-
-    super.initState();
   }
 
   @override
@@ -143,7 +148,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                   children: [
                     Center(
                       child: Container(
-                        height: height * 0.40,
+                        height: height * 0.50,
                         width: width,
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -170,11 +175,19 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                                   enableMultiSelection: true,
                                   plotAreaBorderWidth: 0,
                                   primaryXAxis: CategoryAxis(
-                                      labelRotation: 90,
+                                      title: AxisTitle(
+                                          text: "Timestamp",
+                                          textStyle: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      labelRotation: 70,
                                       majorGridLines:
                                           const MajorGridLines(width: 0),
                                       isVisible: true),
                                   primaryYAxis: NumericAxis(
+                                      title: AxisTitle(
+                                          text: "ModZscore",
+                                          textStyle: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
                                       plotBands: <PlotBand>[
                                         PlotBand(
                                             isVisible: true,
@@ -237,48 +250,193 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                 const SizedBox(
                   height: 8,
                 ),
-                Container(
-                  height: height * 0.55,
-                  width: width,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.blue,
-                          offset: Offset(0.0, 1.0),
-                          blurRadius: 10.0,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(20)),
-                  child: FutureBuilder(
-                      future: getJsonFromAssets(filename: widget.fileName),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return SfCartesianChart(
-                            title: ChartTitle(text: "Histogram Chart"),
-                            legend: Legend(isVisible: true),
-                            series: <ChartSeries>[
-                              HistogramSeries<AuthLogModel, num>(
-                                  dataLabelSettings: const DataLabelSettings(
-                                      angle: 45, isVisible: true),
-                                  name: "Histogram",
-                                  dataSource: chartData,
-                                  yValueMapper: (AuthLogModel auth, _) =>
-                                      auth.label,
-                                  binInterval: 1,
-                                  showNormalDistributionCurve: true,
-                                  spacing: 0,
-                                  // animationDelay: ,
-                                  enableTooltip: true,
-                                  curveColor:
-                                      const Color.fromRGBO(192, 108, 132, 1),
-                                  borderWidth: 3),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: height * 0.50,
+                        width: width * 0.5,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.blue,
+                                offset: Offset(0.0, 1.0),
+                                blurRadius: 10.0,
+                              ),
                             ],
-                          );
-                        } else {
-                          return GlobalWidget.LoadingWidget(context: context);
-                        }
-                      }),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: FutureBuilder(
+                            future:
+                                getJsonFromAssets(filename: widget.fileName),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return SfCartesianChart(
+                                  enableAxisAnimation: true,
+                                  title: ChartTitle(text: "Histogram Chart"),
+                                  legend: Legend(
+                                      isVisible: true,
+                                      toggleSeriesVisibility: true),
+                                  series: <ChartSeries>[
+                                    HistogramSeries<AuthLogModel, num>(
+                                        dataLabelSettings:
+                                            const DataLabelSettings(
+                                                angle: 45, isVisible: true),
+                                        name: "Histogram",
+                                        dataSource: chartData,
+                                        yValueMapper: (AuthLogModel auth, _) =>
+                                            auth.label,
+                                        binInterval: 1,
+                                        showNormalDistributionCurve: true,
+                                        spacing: 0,
+                                        // animationDelay: ,
+                                        enableTooltip: true,
+                                        curveColor: const Color.fromRGBO(
+                                            192, 108, 132, 1),
+                                        borderWidth: 3),
+                                  ],
+                                );
+                              } else {
+                                return GlobalWidget.LoadingWidget(
+                                    context: context);
+                              }
+                            }),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: height * 0.5,
+                        width: width * 0.477,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.blue,
+                                offset: Offset(0.0, 1.0),
+                                blurRadius: 10.0,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(20)),
+                        child: FutureBuilder(
+                            future:
+                                getJsonFromAssets(filename: widget.fileName),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: DataTable(
+                                    columnSpacing: 7,
+                                    horizontalMargin: 6,
+                                    columns: const <DataColumn>[
+                                      DataColumn(
+                                        label: Text(
+                                          'Label',
+                                          style: TextStyle(
+                                              fontStyle: FontStyle.italic),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Text(
+                                          'Event',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontStyle: FontStyle.italic),
+                                        ),
+                                      ),
+                                    ],
+                                    rows: const <DataRow>[
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Text('0')),
+                                          DataCell(Text(
+                                              ' fatal: Read from socket failed: Connection reset by peer [preauth]',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                        ],
+                                      ),
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Text('1')),
+                                          DataCell(Text(
+                                              'pam_unix(cron:session): session closed for user root',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                        ],
+                                      ),
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Text('2')),
+                                          DataCell(Text(
+                                              ' Received disconnect from 187.12.249.74: 11: Bye Bye [preauth]',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                        ],
+                                      ),
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Text('3')),
+                                          DataCell(Text(
+                                              '  Invalid user admin from 187.12.249.74',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                        ],
+                                      ),
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Text('4')),
+                                          DataCell(Text(
+                                              ' input_userauth_request: invalid user admin [preauth]',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                        ],
+                                      ),
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Text('5')),
+                                          DataCell(Text(
+                                              'reverse mapping checking getaddrinfo for 118.11.26.218.internet.sx.cn [218.26.11.118] failed - POSSIBLE BREAK-IN ATTEMPT!',
+                                              style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 12,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                        ],
+                                      ),
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Text('6')),
+                                          DataCell(Text(
+                                              ' Disconnecting: Too many authentication failures for root [preauth]',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                return GlobalWidget.LoadingWidget(
+                                    context: context);
+                              }
+                            }),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
