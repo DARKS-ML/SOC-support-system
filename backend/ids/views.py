@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status,viewsets
 
 from .processing import IDSLogDataProcessing
 import pandas as pd
@@ -224,17 +225,19 @@ class IDSLogView(APIView):
             else:
                 return Response({
              "error":   "file is not accepted (only .log and .csv)"
-            })
-            return Response(final_path)
+            },
+            status=status.HTTP_406_NOT_ACCEPTABLE)
+            return Response(final_path,status=status.HTTP_406_NOT_ACCEPTABLE)
 
         except :
             return Response({
              "error":   "path required"
-            })
+            },status=status.HTTP_406_NOT_ACCEPTABLE)
 
         return Response({
              "error":   "path is not valid input"
-            })
+            },
+            status=status.HTTP_406_NOT_ACCEPTABLE)
 
     # def post(self,request):
     #     requested_data = request.data
