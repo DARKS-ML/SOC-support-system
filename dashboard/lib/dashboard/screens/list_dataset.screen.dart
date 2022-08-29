@@ -6,7 +6,6 @@ import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:loading_indicator/loading_indicator.dart';
 
 import '../services/auth_log_services.dart';
 import 'details/ids.chart_details.screen.dart';
@@ -111,30 +110,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                     barrierDismissible: false,
                     context: context,
                     actions: [],
-                    child: const Center(
-                      child: LoadingIndicator(
-                          indicatorType: Indicator.lineScalePulseOutRapid,
-
-                          /// Required, The loading type of the widget
-                          colors: [
-                            Colors.black,
-                            Colors.grey,
-                            Colors.red,
-                            Colors.green
-                          ],
-
-                          /// Optional, The color collections
-                          strokeWidth: 2,
-
-                          /// Optional, The stroke of the line, only applicable to widget which contains line
-                          backgroundColor: Colors.transparent,
-
-                          /// Optional, Background of the widget
-                          pathBackgroundColor: Colors.black
-
-                          /// Optional, the stroke backgroundColor
-                          ),
-                    ),
+                    child: GlobalWidget.LoadingWidget(context: context),
                     widget: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,12 +163,20 @@ fetchDataFromAPi({required Future future, required String socType}) {
                           log(value.runtimeType.toString());
                           final decodeData = json.decode(value);
                           final idsData = decodeData["data"]["ids"];
-                          final datasetLength = idsData.length;
+                          int datasetLength = idsData.length;
+                          log(datasetLength.toString());
 
                           if (datasetLength != 1) {
-                            if (idsData.keysName == "ids_$todayDate") {
-                              log("success ids_$todayDate");
-                            }
+                            idsData.forEach((key) {
+                              if ("${key.keys}" == "(ids_$todayDate)") {
+                                final bot = key.values
+                                    .toString()
+                                    .replaceAll('(', '')
+                                    .replaceAll(')', '');
+
+                                log("length${bot.length}");
+                              }
+                            });
                           } else {
                             final botDtata = idsData["ids_$todayDate"][0];
                             log("Bot Datta$botDtata");
@@ -203,7 +187,9 @@ fetchDataFromAPi({required Future future, required String socType}) {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => const IDSChartScreenDetails(),
+                            builder: (_) => const IDSChartDetailsScreen(
+                              fileName: "",
+                            ),
                           ),
                         );
                       } else {
