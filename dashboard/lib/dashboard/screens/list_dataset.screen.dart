@@ -197,7 +197,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Processing..../n"),
+                        const Text("Processing...."),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacementNamed(
@@ -263,6 +263,32 @@ fetchDataFromAPi({required Future future, required String socType}) {
                           final webAttackFile =
                               "Predicted Results/ids/ids_$todayDate/df_Web_Attack/json/df_Web_Attack_$todayDate.json";
 
+                          final dosGlodenFile =
+                              "Predicted Results/ids/ids_$todayDate/DoS_GoldenEye/json/DoS_GoldenEye_$todayDate.json";
+                          final dosHulkFile =
+                              "Predicted Results/ids/ids_$todayDate/DoS_Hulk/json/DoS_Hulk_$todayDate.json";
+                          final slowHttpFile =
+                              "Predicted Results/ids/ids_$todayDate/DoS_Slowhttptest/json/DoS_Slowhttptest_$todayDate.json";
+                          final ftpPatatorFile =
+                              "Predicted Results/ids/ids_$todayDate/FTPPatator/json/FTPPatator_$todayDate.json";
+                          final heartbleedFile =
+                              "Predicted Results/ids/ids_$todayDate/Heartbleed/json/Heartbleed_$todayDate.json";
+                          final infiltrationfile =
+                              "Predicted Results/ids/ids_$todayDate/Infiltration/json/Infiltration_$todayDate.json";
+                          final portScanFile =
+                              "Predicted Results/ids/ids_$todayDate/PortScan/json/PortScan_$todayDate.json";
+
+                          final sshPatatorFile =
+                              "Predicted Results/ids/ids_$todayDate/SSHPatator/json/SSHPatator_$todayDate.json";
+
+                          final bruteForceFile =
+                              "Predicted Results/ids/ids_$todayDate/Web_Attack_Brute_Force/json/Web_Attack_Brute_Force_$todayDate.json";
+
+                          final sqlInjection =
+                              "Predicted Results/ids/ids_$todayDate/Web_Attack_Sql_Injection/json/Web_Attack_Sql_Injection_$todayDate.json";
+                          final webXssfile =
+                              "Predicted Results/ids/ids_$todayDate/Web_Attack_XSS_benign/json/Web_Attack_XSS_benign_$todayDate.json";
+
                           // log(value.runtimeType.toString());
                           // final decodeData = json.decode(value);
                           // final idsData = decodeData["files"];
@@ -298,6 +324,19 @@ fetchDataFromAPi({required Future future, required String socType}) {
                             MaterialPageRoute(
                               builder: (_) => IDSChartDetailsScreen(
                                 botfileName: botFile,
+                                ddosName: ddosBenignFile,
+                                webAttackName: webAttackFile,
+                                goldenEyeName: dosGlodenFile,
+                                hulkName: dosHulkFile,
+                                slowHttpName: slowHttpFile,
+                                ftpPatatorName: ftpPatatorFile,
+                                heartBleedName: heartbleedFile,
+                                infiltrationName: infiltrationfile,
+                                portScanName: portScanFile,
+                                sshPatatorName: sshPatatorFile,
+                                webBruteForceName: bruteForceFile,
+                                webSqlInjectionName: sqlInjection,
+                                webXSSName: webXssfile,
                               ),
                             ),
                           );
