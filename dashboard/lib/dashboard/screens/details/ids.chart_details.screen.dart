@@ -3,18 +3,47 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dashboard/dashboard/model/ids_model/ids_bot_model.dart';
 import 'package:dashboard/dashboard/widgets/ids_chart.dart';
 import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 class IDSChartDetailsScreen extends StatefulWidget {
-  final String fileName;
-  const IDSChartDetailsScreen({Key? key, required this.fileName})
-      : super(key: key);
+  final String botfileName;
+  // final String ddosName;
+  // final String webAttackName;
+  // final String goldenEyeName;
+  // final String hulkName;
+  // final String slowHttpName;
+  // final String ftpPatatorName;
+  // final String heartBleedName;
+  // final String infiltrationName;
+  // final String portScanName;
+  // final String sshPatatorName;
+  // final String webBruteForceName;
+  // final String webSqlInjectionName;
+  // final String webXSSName;
+
+  const IDSChartDetailsScreen({
+    Key? key,
+    required this.botfileName,
+    // required this.ddosName,
+    // required this.webAttackName,
+    // required this.goldenEyeName,
+    // required this.hulkName,
+    // required this.slowHttpName,
+    // required this.ftpPatatorName,
+    // required this.heartBleedName,
+    // required this.infiltrationName,
+    // required this.portScanName,
+    // required this.sshPatatorName,
+    // required this.webBruteForceName,
+    // required this.webSqlInjectionName,
+    // required this.webXSSName
+  }) : super(key: key);
 
   @override
   State<IDSChartDetailsScreen> createState() => _IDSChartDetailsScreenState();
@@ -55,19 +84,28 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 
   Future loadIDSBotLog() async {
     final String jsonString =
-        await getJsonFromAssets(filename: widget.fileName);
+        await loadDataFromFile(filename: widget.botfileName);
     final dynamic jsonResponse = json.decode(jsonString);
     for (Map<String, dynamic> i in jsonResponse) {
       chartData.add(IDSBotModel.fromJson(i));
     }
   }
 
-  Future<String> getJsonFromAssets({
-    required String filename,
-  }) async {
-    return await rootBundle.loadString(
-        // filename
-        "Predicted Results/ids/ids_2022_08_28/Bot/json/Bot_2022_08_28.json");
+  // Future<String> getJsonFromAssets({
+  //   required String filename,
+  // }) async {
+  //   return await rootBundle.loadString(
+  //       // filename
+  //       "Predicted Results/ids/ids_2022_08_28/Bot/json/Bot_2022_08_28.json");
+  // }
+
+  Future<String> loadDataFromFile({required String filename}) async {
+    String path = filename;
+    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
+    File f = File(path);
+    final input = await f.readAsString();
+
+    return input;
   }
 
   void PausePlayButton() {
@@ -104,7 +142,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
               children: [
                 IDSChart(
                   context: context,
-                  future: getJsonFromAssets(filename: ""),
+                  future: loadDataFromFile(filename: widget.botfileName),
                   tooltipBehavior: _tooltipBehavior,
                   getLineChartSeries: getBotChart(),
                   isPlay: isPlay,
@@ -116,148 +154,148 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                 ),
                 IDSChart(
                   context: context,
-                  future: getJsonFromAssets(filename: ""),
+                  future: loadDataFromFile(filename: widget.botfileName),
                   tooltipBehavior: _tooltipBehavior,
                   getLineChartSeries: getBotChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
                   title: 'IDS Bot',
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                IDSChart(
-                  context: context,
-                  future: getJsonFromAssets(filename: ""),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getBotChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'IDS Bot',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // IDSChart(
+                //   context: context,
+                //   future: getJsonFromAssets(filename: ""),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getBotChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'IDS Bot',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
               ],
             ),
           ),
@@ -278,7 +316,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         },
         dataSource: liveBot,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (IDSBotModel bot, _) => bot.destinationPort,
+        xValueMapper: (IDSBotModel bot, _) => bot.timestamp,
         yValueMapper: (IDSBotModel bot, _) => bot.bot == "Bot" ? 1 : -1,
         // animationDuration: 0,
       )

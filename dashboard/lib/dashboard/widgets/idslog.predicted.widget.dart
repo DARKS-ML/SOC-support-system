@@ -74,14 +74,14 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
 
                             return ListTile(
                               onTap: () async {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          const IDSChartDetailsScreen(
-                                            fileName: "",
-                                          )),
-                                );
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (_) =>
+                                //           const IDSChartDetailsScreen(
+                                //             fileName: "",
+                                //           )),
+                                // );
                               },
                               title: Text("$keysName : Prediction Result"),
                               // subtitle: Text('$keysName'),

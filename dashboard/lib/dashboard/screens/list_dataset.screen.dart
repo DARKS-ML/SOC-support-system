@@ -13,16 +13,16 @@ import '../services/auth_log_services.dart';
 import 'details/ids.chart_details.screen.dart';
 
 class ListDataSetScreen extends StatelessWidget {
-  ListDataSetScreen({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  const ListDataSetScreen({Key? key}) : super(key: key);
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      key: _scaffoldKey,
+      // key: _scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: GlobalWidget.displayDashboardAppbar(scaffoldKey: _scaffoldKey),
+      // appBar: GlobalWidget.displayDashboardAppbar(scaffoldKey: _scaffoldKey),
       endDrawer: Drawer(
         elevation: 16.0,
         child: SingleChildScrollView(
@@ -197,7 +197,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Processing....\n"),
+                        const Text("Processing..../n"),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacementNamed(
@@ -237,49 +237,77 @@ fetchDataFromAPi({required Future future, required String socType}) {
                         log("Your are in ids");
                         DashBoardService.getPrevousPredictedResult(
                           datasetname: "ids",
-                        ).then((value) {
+                        ).then((value) async {
                           DateTime now = DateTime.now();
                           final todayDate =
                               "${now.year.toString()}_${now.month.toString().padLeft(2, '0')}_${now.day.toString().padLeft(2, '0')}";
                           log("Response data ${json.decode(value).runtimeType}");
-                          log(value.runtimeType.toString());
-                          final decodeData = json.decode(value);
-                          final idsData = decodeData["data"]["ids"];
-                          int datasetLength = idsData.length;
-                          log(datasetLength.toString());
 
-                          if (datasetLength != 1) {
-                            idsData.forEach((key) {
-                              if ("${key.keys}" == "(ids_$todayDate)") {
-                                final bot = key.values
-                                    .toString()
-                                    .replaceAll('(', '')
-                                    .replaceAll(')', '');
+                          // Predicted Results/ids/ids_2022_08_28/df_Web_Attack/json/df_Web_Attack_2022_08_28.json
+                          // Predicted Results/ids/ids_2022_08_28/DoS_GoldenEye/json/DoS_GoldenEye_2022_08_28.json
+                          // Predicted Results/ids/ids_2022_08_28/DoS_Hulk/json/DoS_Hulk_2022_08_28.json
+                          // Predicted Results/ids/ids_2022_08_28/DoS_Slowhttptest/json/DoS_Slowhttptest_2022_08_28.json
+                          // Predicted Results/ids/ids_2022_08_28/FTPPatator/json/FTPPatator_2022_08_28.json
+                          // Predicted Results/ids/ids_2022_08_28/Heartbleed/json/Heartbleed_2022_08_28.json
+                          // Predicted Results/ids/ids_2022_08_28/Infiltration/json/Infiltration_2022_08_28.json
+                          // Predicted Results/ids/ids_2022_08_28/PortScan/json/PortScan_2022_08_28.json
+                          //Predicted Results/ids/ids_2022_08_28/SSHPatator/json/SSHPatator_2022_08_28.json
+                          //Predicted Results/ids/ids_2022_08_28/Web_Attack_Brute_Force/json/Web_Attack_Brute_Force_2022_08_28.json
+                          //Predicted Results/ids/ids_2022_08_28/Web_Attack_Sql_Injection/json/Web_Attack_Sql_Injection_2022_08_28.json
+                          // Predicted Results/ids/ids_2022_08_28/Web_Attack_XSS_benign/json/Web_Attack_XSS_benign_2022_08_28.json
 
-                                log("length${bot.length}");
-                              }
-                            });
-                          } else {
-                            final botDtata = idsData["ids_$todayDate"][0];
-                            log("Bot Datta$botDtata");
-                          }
-                          log(todayDate.toString());
-                        });
+                          final botFile =
+                              "Predicted Results/ids/ids_$todayDate/Bot/json/Bot_$todayDate.json";
+                          final ddosBenignFile =
+                              "Predicted Results/ids/ids_$todayDate/df_DDoS_benign/json/df_DDoS_benign_$todayDate.json";
+                          final webAttackFile =
+                              "Predicted Results/ids/ids_$todayDate/df_Web_Attack/json/df_Web_Attack_$todayDate.json";
 
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const IDSChartDetailsScreen(
-                              fileName: "",
+                          // log(value.runtimeType.toString());
+                          // final decodeData = json.decode(value);
+                          // final idsData = decodeData["files"];
+                          // int datasetLength = idsData.length;
+
+                          // log(idsData[0].toString());
+                          // for (var i = 0; i < datasetLength; i++) {
+                          //   final botfile = idsData[index]
+                          //       .toString()
+                          //       .split("ids_2022_08_28")[1];
+                          //   log("Bot File is $botfile");
+                          // }
+
+                          // if (datasetLength != 1) {
+                          //   idsData.forEach((key) {
+                          //     if ("${key.keys}" == "(ids_$todayDate)") {
+                          //       final bot = key.values
+                          //           .toString()
+                          //           .replaceAll('(', '')
+                          //           .replaceAll(')', '');
+
+                          //       log("length${bot.length}");
+                          //     }
+                          //   });
+                          // } else {
+                          //   final botDtata = idsData["ids_$todayDate"][0];
+                          //   log("Bot Datta$botDtata");
+                          // }
+                          // log(todayDate.toString());
+
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => IDSChartDetailsScreen(
+                                botfileName: botFile,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        });
                       } else {
                         final Size size = MediaQuery.of(context).size;
                         final snackBar = SnackBar(
                           // width: size.width / 2.5,
                           content: const Text(
-                            'Not Not Supported \n 😥!',
+                            'Not Not Supported /n 😥!',
                             textAlign: TextAlign.center,
                           ),
                           behavior: SnackBarBehavior.floating,
