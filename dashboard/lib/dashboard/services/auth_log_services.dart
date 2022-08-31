@@ -18,7 +18,7 @@ Future<List<AuthLogModel>> readJsonAuthLog({required String filename}) async {
 
 class DashBoardService {
   // fetch dataset from the api
-  static Future getPrevousPredictedResult({required String datasetname}) async {
+  static Future getPreviousPredictedResult({required String datasetname}) async {
     try {
       final response = await http.get(
         Uri.parse("http://127.0.0.1:8000/api/v1/$datasetname/previous/"),

@@ -3,11 +3,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 import '../../model/auth_model/auth_log_model.dart';
 
@@ -63,15 +63,23 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
     }
   }
 
-  Future<String> getJsonFromAssets({
-    required String filename,
-  }) async {
-    return await rootBundle.loadString(filename);
+  Future<String> getJsonFromAssets({required String filename}) async {
+    String path = filename;
+    File f = File(path);
+    final input = await f.readAsString();
+
+    return input;
   }
+
+  // Future<String> getJsonFromAssets({
+  //   required String filename,
+  // }) async {
+  //   return await rootBundle.loadString(filename);
+  // }
 
   @override
   void initState() {
-    log(widget.fileName);
+    log("File name${widget.fileName}");
     loadAuthLog();
     timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       _updateDataSource(timer);

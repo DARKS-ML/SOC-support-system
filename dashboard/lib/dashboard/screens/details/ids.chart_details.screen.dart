@@ -99,7 +99,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   bool isPlay = true;
   void _updateDataSource(Timer timer) {
     if (isPlay) {
-      // log(chartData.length.toString());
       liveBot = chartData.sublist(data + 40, (data + 40) + 40);
       liveDdosData = ddosData.sublist(data + 40, (data + 40) + 40);
       livewebAttackData = webAttackData.sublist(data + 40, (data + 40) + 40);
@@ -117,8 +116,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
       livesqlInjectionData =
           sqlInjectionData.sublist(data + 40, (data + 40) + 40);
       livewebXssData = webXssData.sublist(data + 40, (data + 40) + 40);
-
-      log("ddos${livewebBruteForceData.length}");
 
       // livePlot.add(chartData[i]);
       // log("length of liveplot dtata${liveBot.length}");
@@ -152,7 +149,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 
   Future<String> loadDataFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -162,7 +158,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 //ddos
   Future<String> loadDDosFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -180,7 +175,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 
   Future<String> loadWebFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -199,7 +193,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 // Dos GoldenEye
   Future<String> loadGoldenFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -218,7 +211,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 
   Future<String> loadHulkFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -236,7 +228,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 //Slow Http
   Future<String> loadSlowHttpFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -251,11 +242,10 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
       slowHttpData.add(DoSSlowhttptestModel.fromJson(i));
     }
   }
-  //FTP Patator
 
+  //FTP Patator
   Future<String> loadFtpPatatorFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -270,11 +260,10 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
       ftpPatatorData.add(FTPPatatorModel.fromJson(i));
     }
   }
-//Heart Bleed
 
+//Heart Bleed
   Future<String> loadHeartbleedFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -293,7 +282,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   //Infiltration
   Future<String> loadinfiltrationFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -312,7 +300,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   //PortScan
   Future<String> loadPortScanFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -331,7 +318,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   //ssh Patator
   Future<String> loadsshPatatorFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -350,7 +336,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   //Web Attack Brute Force
   Future<String> loadBruteForceFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -369,7 +354,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 //Sql Injection
   Future<String> loadSqlInjectionFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -388,7 +372,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 //Web Xss
   Future<String> loadWebXssFromFile({required String filename}) async {
     String path = filename;
-    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
     File f = File(path);
     final input = await f.readAsString();
 
@@ -732,7 +715,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
   //Slow Http
-
   List<LineSeries<DoSSlowhttptestModel, String>> getSlowHttpChart() {
     return <LineSeries<DoSSlowhttptestModel, String>>[
       LineSeries<DoSSlowhttptestModel, String>(

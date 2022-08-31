@@ -29,7 +29,7 @@ displayAuthLogPredictedResultWidget({required BuildContext context}) {
             borderRadius: BorderRadius.circular(4),
           ),
           child: FutureBuilder(
-            future: DashBoardService.getPrevousPredictedResult(
+            future: DashBoardService.getPreviousPredictedResult(
               datasetname: "auth",
             ),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -64,16 +64,19 @@ displayAuthLogPredictedResultWidget({required BuildContext context}) {
                                 .toString()
                                 .split(" ")[0];
                             bool isToday = filecreatedDate == todayDate;
+
+                            final authDatasetFile =
+                                datasetPath.replaceAll('\\', "/");
                             return ListTile(
                               onTap: () async {
-                                // await Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (_) => AuthChartDetailsScreen(
-                                //       fileName: finalDatasetName,
-                                //     ),
-                                //   ),
-                                // );
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => AuthChartDetailsScreen(
+                                      fileName: authDatasetFile,
+                                    ),
+                                  ),
+                                );
                               },
                               title: Text(
                                 // datasetPath,

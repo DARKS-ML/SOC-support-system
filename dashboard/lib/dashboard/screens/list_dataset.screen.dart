@@ -235,7 +235,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                         );
                       } else if (socType == "ids") {
                         log("Your are in ids");
-                        DashBoardService.getPrevousPredictedResult(
+                        DashBoardService.getPreviousPredictedResult(
                           datasetname: "ids",
                         ).then((value) async {
                           DateTime now = DateTime.now();
