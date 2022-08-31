@@ -112,17 +112,35 @@ class IDSLogDataProcessing:
         return df1
 
 
-    def predict_ids_attack(self,df,model_name,loaded_feature,column_name,csf_file):
+    def predict_ids_attack(self,model_name,loaded_feature,column_name,csf_file):
         updated_df = pd.DataFrame()
         updated_df= loaded_feature.copy()
         prob_column_name = column_name+"_prob"
-        predicted_result = pickle.load(open(model_name, 'rb'))
+
+        predicted_result = pickle.load(open(model_name+"logic_model.sav", 'rb'))
+        predicted_result_nn = pickle.load(open(model_name+"nn_model.sav", 'rb'))
+        predicted_result_sgd = pickle.load(open(model_name+"sgd_model.sav", 'rb'))
+        # predicted_result_sgd = pickle.load(open(model_name+"xgb_model.sav", 'rb'))
+
+
         pred = predicted_result.predict(loaded_feature)
+        pred_nn = predicted_result_nn.predict(loaded_feature)
+        pred_sgd = predicted_result_sgd.predict(loaded_feature)
 
         pred_prob = predicted_result.predict_proba(loaded_feature)
-        updated_df[column_name]=pred
+        pred_prob_nn = predicted_result_nn.predict_proba(loaded_feature)
+        # pred_prob_sgd = predicted_result_sgd.predict_proba(loaded_feature)
 
-        updated_df[prob_column_name]=pred_prob.tolist()
+        updated_df[column_name+"_logic"]=pred
+        updated_df[column_name+"_nn"] =pred_nn
+        updated_df[column_name+"_sgd"] =pred_sgd
+
+        updated_df[prob_column_name+"_logic"]=pred_prob.tolist()
+        updated_df[prob_column_name+"_nn"]=pred_prob_nn.tolist()
+        # updated_df[prob_column_name+"_sgd"]=pred_prob_sgd.tolist()
+
+
+
         new_df = pd.DataFrame()
         new_df =self.timeIpPort(csf_file)
 
