@@ -43,7 +43,7 @@ IDSChart(
                     enableMultiSelection: true,
                     plotAreaBorderWidth: 0,
                     primaryXAxis: CategoryAxis(
-                        labelRotation: 90,
+                        labelRotation: 20,
                         majorGridLines: const MajorGridLines(width: 0),
                         isVisible: true),
                     primaryYAxis: NumericAxis(

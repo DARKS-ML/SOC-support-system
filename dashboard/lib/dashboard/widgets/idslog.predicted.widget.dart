@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:dashboard/dashboard/screens/details/ids.chart_details.screen.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/details/ids.chart_details.screen.dart';
 import '../services/auth_log_services.dart';
 
 displayIdsLogPredictedResultWidget({required BuildContext context}) {
@@ -29,7 +29,7 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
             borderRadius: BorderRadius.circular(4),
           ),
           child: FutureBuilder(
-            future: DashBoardService.getPrevousPredictedResult(
+            future: DashBoardService.getPreviousPredictedResult(
               datasetname: "ids",
             ),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -42,7 +42,7 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
                   DateTime now = DateTime.now();
                   final todayDate =
                       "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
-                  return 1 <= 0
+                  return datasetLength <= 0
                       ? const Center(
                           child: Text(
                             "No Previous Prediction\n yet!",
@@ -65,22 +65,64 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
                                 .replaceAll(
                                   "ids_",
                                   "",
-                                )
-                                .replaceAll(
-                                  "_",
-                                  "-",
                                 );
                             bool isToday = todayDate == keysName;
 
+                            final botFile =
+                                "Predicted Results/ids/ids_$keysName/Bot/json/Bot_$keysName.json";
+                            final ddosBenignFile =
+                                "Predicted Results/ids/ids_$keysName/df_DDoS_benign/json/df_DDoS_benign_$keysName.json";
+                            final webAttackFile =
+                                "Predicted Results/ids/ids_$keysName/df_Web_Attack/json/df_Web_Attack_$keysName.json";
+
+                            final dosGlodenFile =
+                                "Predicted Results/ids/ids_$keysName/DoS_GoldenEye/json/DoS_GoldenEye_$keysName.json";
+                            final dosHulkFile =
+                                "Predicted Results/ids/ids_$keysName/DoS_Hulk/json/DoS_Hulk_$keysName.json";
+                            final slowHttpFile =
+                                "Predicted Results/ids/ids_$keysName/DoS_Slowhttptest/json/DoS_Slowhttptest_$keysName.json";
+                            final ftpPatatorFile =
+                                "Predicted Results/ids/ids_$keysName/FTPPatator/json/FTPPatator_$keysName.json";
+                            final heartbleedFile =
+                                "Predicted Results/ids/ids_$keysName/Heartbleed/json/Heartbleed_$keysName.json";
+                            final infiltrationfile =
+                                "Predicted Results/ids/ids_$keysName/Infiltration/json/Infiltration_$keysName.json";
+                            final portScanFile =
+                                "Predicted Results/ids/ids_$keysName/PortScan/json/PortScan_$keysName.json";
+
+                            final sshPatatorFile =
+                                "Predicted Results/ids/ids_$keysName/SSHPatator/json/SSHPatator_$keysName.json";
+
+                            final bruteForceFile =
+                                "Predicted Results/ids/ids_$keysName/Web_Attack_Brute_Force/json/Web_Attack_Brute_Force_$keysName.json";
+
+                            final sqlInjection =
+                                "Predicted Results/ids/ids_$keysName/Web_Attack_Sql_Injection/json/Web_Attack_Sql_Injection_$keysName.json";
+                            final webXssfile =
+                                "Predicted Results/ids/ids_$keysName/Web_Attack_XSS_benign/json/Web_Attack_XSS_benign_$keysName.json";
+
                             return ListTile(
                               onTap: () async {
-                                Navigator.push(
+                                await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) =>
-                                          const IDSChartDetailsScreen(
-                                            fileName: "",
-                                          )),
+                                    builder: (_) => IDSChartDetailsScreen(
+                                      botfileName: botFile,
+                                      ddosName: ddosBenignFile,
+                                      webAttackName: webAttackFile,
+                                      goldenEyeName: dosGlodenFile,
+                                      hulkName: dosHulkFile,
+                                      slowHttpName: slowHttpFile,
+                                      ftpPatatorName: ftpPatatorFile,
+                                      heartBleedName: heartbleedFile,
+                                      infiltrationName: infiltrationfile,
+                                      portScanName: portScanFile,
+                                      sshPatatorName: sshPatatorFile,
+                                      webBruteForceName: bruteForceFile,
+                                      webSqlInjectionName: sqlInjection,
+                                      webXSSName: webXssfile,
+                                    ),
+                                  ),
                                 );
                               },
                               title: Text("$keysName : Prediction Result"),

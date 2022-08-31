@@ -3,11 +3,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 import '../../model/auth_model/auth_log_model.dart';
 
@@ -63,15 +63,23 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
     }
   }
 
-  Future<String> getJsonFromAssets({
-    required String filename,
-  }) async {
-    return await rootBundle.loadString(filename);
+  Future<String> getJsonFromAssets({required String filename}) async {
+    String path = filename;
+    File f = File(path);
+    final input = await f.readAsString();
+
+    return input;
   }
+
+  // Future<String> getJsonFromAssets({
+  //   required String filename,
+  // }) async {
+  //   return await rootBundle.loadString(filename);
+  // }
 
   @override
   void initState() {
-    log(widget.fileName);
+    log("File name${widget.fileName}");
     loadAuthLog();
     timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       _updateDataSource(timer);
@@ -168,8 +176,8 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 return SfCartesianChart(
-                                  title: ChartTitle(
-                                      text: "Timestamp Vs ModZscore Plot"),
+                                  title:
+                                      ChartTitle(text: "Timestamp Vs Distance"),
                                   enableAxisAnimation: true,
                                   tooltipBehavior: _tooltipBehavior,
                                   enableMultiSelection: true,
@@ -185,7 +193,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                                       isVisible: true),
                                   primaryYAxis: NumericAxis(
                                       title: AxisTitle(
-                                          text: "ModZscore",
+                                          text: "Distance",
                                           textStyle: const TextStyle(
                                               fontWeight: FontWeight.bold)),
                                       plotBands: <PlotBand>[
@@ -216,7 +224,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                                       xValueMapper: (AuthLogModel auth, _) =>
                                           auth.time,
                                       yValueMapper: (AuthLogModel auth, _) =>
-                                          auth.modZscore,
+                                          auth.distance,
                                       // animationDuration: 0,
                                     )
                                   ],
@@ -251,7 +259,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                   height: 8,
                 ),
                 Container(
-                  height: height * 0.55,
+                  height: height * 0.48,
                   width: width,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -279,7 +287,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                                   yValueMapper: (AuthLogModel auth, _) =>
                                       auth.label,
                                   binInterval: 1,
-                                  showNormalDistributionCurve: true,
+                                  // showNormalDistributionCurve: true,
                                   spacing: 0,
                                   // animationDelay: ,
                                   enableTooltip: true,
@@ -289,7 +297,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                             ],
                           );
                         } else {
-                          return GlobalWidget.LoadingWidget(context: context);
+                          return GlobalWidget.loadingWidget(context: context);
                         }
                       }),
                 ),
