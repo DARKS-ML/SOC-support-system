@@ -128,7 +128,8 @@ class IDSLogView(APIView):
 
                 data =ref.dfAppendClean(final_path)
 
-                data = data.drop(' Label',axis=1)
+                if ' Label' in data.columns:
+                    data = data.drop(' Label',axis=1)
 
                 p_df = data.copy()
 

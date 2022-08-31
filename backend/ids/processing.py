@@ -47,7 +47,9 @@ class IDSLogDataProcessing:
 
     def dfAppendClean(self,csv_files):
         data =  pd.read_csv(csv_files)
-        data = data.drop(['Flow ID', ' Source IP', ' Source Port', ' Destination IP',' Protocol', ' Timestamp'], axis=1)
+        column_to_remove = ['Flow ID', ' Source IP', ' Source Port', ' Destination IP',' Protocol', ' Timestamp']
+        if set(column_to_remove).issubset(data.columns):
+            data = data.drop(column_to_remove, axis=1)
         # data = pd.DataFrame()
         data = data.fillna(0)
         # data[' Label'] = data[' Label'].str.replace(r'[^\w\s]+', '')
