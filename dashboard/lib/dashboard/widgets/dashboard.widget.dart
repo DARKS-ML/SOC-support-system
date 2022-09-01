@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -8,24 +9,48 @@ import '../services/global.service.dart';
 
 class GlobalWidget {
   static displayDashboardAppbar({
-    required GlobalKey<ScaffoldState> scaffoldKey,
+    required BuildContext context,
   }) {
+    DateTime dateTime = DateTime.now();
+    DateTime now = DateTime.now();
+    final todayDate =
+        "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+
+    final _size = MediaQuery.of(context).size;
+    Timer.periodic(Duration(seconds: 1), (timer) {});
+
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 1,
-      title: const Text(
-        "Soc DashBoard",
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
+      title: Row(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Soc DashBoard",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(
+            width: _size.width / 2.75,
+          ),
+          Text(
+            "${todayDate} ",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
       actions: [
         CircleAvatar(
           backgroundColor: Colors.black,
           child: IconButton(
             onPressed: () {
-              scaffoldKey.currentState!.openEndDrawer();
+              // scaffoldKey.currentState!.openEndDrawer();
             },
             icon: const Icon(
               Icons.notification_add,

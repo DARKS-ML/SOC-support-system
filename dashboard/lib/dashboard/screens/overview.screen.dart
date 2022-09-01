@@ -19,29 +19,6 @@ class _OverViewScreenState extends State<OverViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        // toolbarHeight: 0,
-        title: const Text(
-          "Anomaly Data List",
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        elevation: 1,
-      ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-      // floatingActionButton: ,
       body: GlobalWidget.displayNotificationSideBar(),
     );
   }

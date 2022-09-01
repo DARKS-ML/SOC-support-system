@@ -1,4 +1,5 @@
 import 'package:dashboard/dashboard/screens/main/screen.list.dart';
+import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:side_bar_custom/side_bar_custom.dart';
 
@@ -8,6 +9,7 @@ class DashBoardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: GlobalWidget.displayDashboardAppbar(context: context),
       body: SideBar(
         config: config,
         items: DashboardScreenList.sidebarScreensname,

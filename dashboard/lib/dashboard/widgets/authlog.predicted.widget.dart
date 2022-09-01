@@ -65,15 +65,15 @@ displayAuthLogPredictedResultWidget({required BuildContext context}) {
                                 .split(" ")[0];
                             bool isToday = filecreatedDate == todayDate;
 
-                            final authDatasetFile =
-                                datasetPath.replaceAll('\\', "/");
+                            // final authDatasetFile =
+                            //     datasetPath.replaceAll('\\', "/");
                             return ListTile(
                               onTap: () async {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => AuthChartDetailsScreen(
-                                      fileName: authDatasetFile,
+                                      fileName: datasetPath,
                                     ),
                                   ),
                                 );
