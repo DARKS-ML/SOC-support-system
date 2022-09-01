@@ -1,4 +1,5 @@
 
+from xmlrpc.client import ResponseError
 import pandas as pd
 import os
 import csv 
@@ -11,6 +12,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import SGDClassifier
 from sklearn.linear_model import LogisticRegression
+from rest_framework.response import Response
+from rest_framework import status
+
 import  pickle
 
 from pytz import timezone 
@@ -46,15 +50,32 @@ class IDSLogDataProcessing:
             outfile.write(json_object)
 
     def dfAppendClean(self,csv_files):
-        data =  pd.read_csv(csv_files)
-        column_to_remove = ['Flow ID', ' Source IP', ' Source Port', ' Destination IP',' Protocol', ' Timestamp']
-        if set(column_to_remove).issubset(data.columns):
-            data = data.drop(column_to_remove, axis=1)
-        # data = pd.DataFrame()
-        data = data.fillna(0)
-        # data[' Label'] = data[' Label'].str.replace(r'[^\w\s]+', '')
-        data = data.replace([np.inf, -np.inf], 0)        
-        return data
+        try:
+            data =  pd.read_csv(csv_files)
+            column_to_remove = ['Flow ID', 'Source IP', 'Source Port', 'Destination IP','Protocol', 'Timestamp']
+            if set(column_to_remove).issubset(data.columns):
+                data = data.drop(column_to_remove, axis=1)
+
+            column_to_remove = ['Flow ID', ' Source IP', ' Source Port', ' Destination IP',' Protocol', ' Timestamp']
+            if set(column_to_remove).issubset(data.columns):
+                data = data.drop(column_to_remove, axis=1)
+            # data = pd.DataFrame()
+            data = data.fillna(0)
+            # data[' Label'] = data[' Label'].str.replace(r'[^\w\s]+', '')
+            data = data.replace([np.inf, -np.inf], 0) 
+            if ' Label' in data.columns:
+                data = data.drop(' Label',axis=1)  
+
+            if 'Label' in data.columns:
+                data = data.drop(' Label',axis=1)  
+
+            return data
+        except Exception as e:
+            return Response({
+                "error":e   
+            },
+             status=status.HTTP_400_BAD_REQUEST
+            )
 
     def timeIpPort(self,csv_files):
         data = pd.read_csv(csv_files)
@@ -69,36 +90,6 @@ class IDSLogDataProcessing:
         df4 = df3.append(df1)
         return df4.sample(frac=1)
     
-    # def plot_feature_importance(self,imp, names, threshold):
-    #     # convert both imp and names to np array in order
-    #     # to have 2 column dataframe
-    #     feature_imp = np.array(imp)
-    #     feature_names = np.array(names)
-    #     #create dataframe using a dictionary
-    #     data = {'feature_names':feature_names, 'feature_importance':feature_imp}
-    #     fi_df = pd.DataFrame(data)
-
-    #     #sort the df in descending order
-    #     fi_df.sort_values(by=['feature_importance'], ascending=False, inplace=True)
-    #     df_i = fi_df.loc[fi_df['feature_importance'] > threshold]
-    #     #barplot
-    #     plt.figure(figsize=(10,10))
-    #     sns.barplot(x=df_i['feature_importance'], y=df_i['feature_names'])
-    #     plt.title('FEATURE IMPORTANCE')
-    #     plt.xlabel('feature importance')
-    #     plt.ylabel('feature names')
-    #     return df_i
-
-      
-
-    # def trainPlot(self,df, threshold, path, df_name):
-    #     rfc_model = RandomForestClassifier(n_estimators=100, max_depth=5)
-    #     X = df.drop(columns=['Label'])
-    #     y = df['Label']
-    #     rfc_model.fit(X,y)
-    #     pickle.dump(rfc_model, open(path + str(df_name) +'.sav', 'wb'))
-    #     df = plot_feature_importance(rfc_model.feature_importances_,X.columns,threshold)
-    #     return df
     def load_feature_importance(self,df,model_name):
         load_model = pickle.load(open(model_name, 'rb'))
         imp = load_model.feature_importances_
@@ -107,6 +98,7 @@ class IDSLogDataProcessing:
         feature_imp = np.array(imp)
         feature_names = np.array(names)
         data1 = {'feature_names':feature_names, 'feature_importance':feature_imp}
+
         fi_df = pd.DataFrame(data1)
         fi_df.sort_values(by=['feature_importance'], ascending=False, inplace=True)
         df_i = fi_df.head(10)
@@ -119,27 +111,56 @@ class IDSLogDataProcessing:
         updated_df= loaded_feature.copy()
         prob_column_name = column_name+"_prob"
 
-        predicted_result = pickle.load(open(model_name+"logic_model.sav", 'rb'))
-        predicted_result_nn = pickle.load(open(model_name+"nn_model.sav", 'rb'))
-        predicted_result_sgd = pickle.load(open(model_name+"sgd_model.sav", 'rb'))
-        # predicted_result_sgd = pickle.load(open(model_name+"xgb_model.sav", 'rb'))
+        # logic model
+        try:
+            predicted_result_logic = pickle.load(open(model_name+"logic_model.sav", 'rb'))
+            pred_logic = predicted_result_logic.predict(loaded_feature)
+            pred_prob_logic = predicted_result_logic.predict_proba(loaded_feature)
+
+            updated_df[column_name+"_logic"]=pred_logic
+            x,y = zip(*pred_prob_logic.tolist())
+            updated_df[prob_column_name+"_logic"]=y
+        except Exception as e:
+            print(e)
 
 
-        pred = predicted_result.predict(loaded_feature)
-        pred_nn = predicted_result_nn.predict(loaded_feature)
-        pred_sgd = predicted_result_sgd.predict(loaded_feature)
+        # newral network
+        try:
+            predicted_result_nn = pickle.load(open(model_name+"nn_model.sav", 'rb'))
+            pred_nn = predicted_result_nn.predict(loaded_feature)
+            pred_prob_nn = predicted_result_nn.predict_proba(loaded_feature)
 
-        pred_prob = predicted_result.predict_proba(loaded_feature)
-        pred_prob_nn = predicted_result_nn.predict_proba(loaded_feature)
-        # pred_prob_sgd = predicted_result_sgd.predict_proba(loaded_feature)
+            updated_df[column_name+"_nn"]=pred_nn
+            x,y = zip(*pred_prob_nn.tolist())
+            updated_df[prob_column_name+"_nn"]=y
+        except Exception as e:
+            print(e)
+        
+        
+        # # sgd network
+        try:
+            predicted_result_sgd = pickle.load(open(model_name+"sgd_model.sav", 'rb'))
+            pred_sgd = predicted_result_sgd.predict(loaded_feature)
+            # pred_prob_sgd = predicted_result_sgd.predict_proba(loaded_feature)
 
-        updated_df[column_name+"_logic"]=pred
-        updated_df[column_name+"_nn"] =pred_nn
-        updated_df[column_name+"_sgd"] =pred_sgd
+            updated_df[column_name+"_sgd"]=pred_sgd
+            # updated_df[prob_column_name+"_sgd"]=pred_prob_sgd.tolist()
+        except Exception as e:
+            print(e)
 
-        updated_df[prob_column_name+"_logic"]=pred_prob.tolist()
-        updated_df[prob_column_name+"_nn"]=pred_prob_nn.tolist()
-        # updated_df[prob_column_name+"_sgd"]=pred_prob_sgd.tolist()
+
+         # xgb network
+        try:
+            predicted_result_xgb = pickle.load(open(model_name+"xgb_model.sav", 'rb'))
+            pred_xgb = predicted_result_xgb.predict(loaded_feature)
+            pred_prob_xgb = predicted_result_xgb.predict_proba(loaded_feature)
+
+            updated_df[column_name+"_xgb"]=pred_xgb
+            x,y = zip(*pred_prob_xgb.tolist())
+            updated_df[prob_column_name+"_xgb"]=y
+
+        except Exception as e:
+            print(e) 
 
 
 
