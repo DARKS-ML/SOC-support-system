@@ -45,8 +45,8 @@ class IDSBotModel {
     bwdPacketLengthMax = json['Bwd Packet Length Max'];
     averagePacketSize = json[' Average Packet Size'];
     packetLengthMean = json[' Packet Length Mean'];
-    bot = json['Bot'];
-    botProb = json['Bot_prob'];
+    bot = json['Bot_logic'];
+    botProb = json['Bot_prob_logic'];
     sourceIP = json['Source IP'];
     destinationIP = json['Destination IP'];
     protocol = json['Protocol'];

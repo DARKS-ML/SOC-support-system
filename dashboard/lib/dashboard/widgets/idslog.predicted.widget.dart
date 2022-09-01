@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
@@ -58,58 +59,56 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
                                 .keys
                                 .toString()
                                 .replaceAll("(", "")
-                                .replaceAll(
-                                  ")",
-                                  "",
-                                )
-                                .replaceAll(
-                                  "ids_",
-                                  "",
-                                );
+                                .replaceAll(")", "")
+                                .toString();
                             bool isToday = todayDate == keysName;
 
                             final botFile =
-                                "Predicted Results/ids/ids_$keysName/Bot/json/Bot_$keysName.json";
+                                "Predicted Results/ids/$keysName/Bot/json/Bot_$keysName.json";
                             final ddosBenignFile =
-                                "Predicted Results/ids/ids_$keysName/df_DDoS_benign/json/df_DDoS_benign_$keysName.json";
-                            final webAttackFile =
-                                "Predicted Results/ids/ids_$keysName/df_Web_Attack/json/df_Web_Attack_$keysName.json";
+                                "Predicted Results/ids/$keysName/df_DDoS_benign/json/df_DDoS_benign_$keysName.json";
+                            // final webAttackFile =
+                            //     "Predicted Results/ids/$keysName/df_Web_Attack/json/df_Web_Attack_$keysName.json";
 
                             final dosGlodenFile =
-                                "Predicted Results/ids/ids_$keysName/DoS_GoldenEye/json/DoS_GoldenEye_$keysName.json";
+                                "Predicted Results/ids/$keysName/DoS_GoldenEye/json/DoS_GoldenEye_$keysName.json";
                             final dosHulkFile =
-                                "Predicted Results/ids/ids_$keysName/DoS_Hulk/json/DoS_Hulk_$keysName.json";
+                                "Predicted Results/ids/$keysName/DoS_Hulk/json/DoS_Hulk_$keysName.json";
                             final slowHttpFile =
-                                "Predicted Results/ids/ids_$keysName/DoS_Slowhttptest/json/DoS_Slowhttptest_$keysName.json";
+                                "Predicted Results/ids/$keysName/DoS_Slowhttptest/json/DoS_Slowhttptest_$keysName.json";
                             final ftpPatatorFile =
-                                "Predicted Results/ids/ids_$keysName/FTPPatator/json/FTPPatator_$keysName.json";
+                                "Predicted Results/ids/$keysName/FTPPatator/json/FTPPatator_$keysName.json";
                             final heartbleedFile =
-                                "Predicted Results/ids/ids_$keysName/Heartbleed/json/Heartbleed_$keysName.json";
+                                "Predicted Results/ids/$keysName/Heartbleed/json/Heartbleed_$keysName.json";
                             final infiltrationfile =
-                                "Predicted Results/ids/ids_$keysName/Infiltration/json/Infiltration_$keysName.json";
+                                "Predicted Results/ids/$keysName/Infiltration/json/Infiltration_$keysName.json";
                             final portScanFile =
-                                "Predicted Results/ids/ids_$keysName/PortScan/json/PortScan_$keysName.json";
+                                "Predicted Results/ids/$keysName/PortScan/json/PortScan_$keysName.json";
 
                             final sshPatatorFile =
-                                "Predicted Results/ids/ids_$keysName/SSHPatator/json/SSHPatator_$keysName.json";
+                                "Predicted Results/ids/$keysName/SSHPatator/json/SSHPatator_$keysName.json";
 
                             final bruteForceFile =
-                                "Predicted Results/ids/ids_$keysName/Web_Attack_Brute_Force/json/Web_Attack_Brute_Force_$keysName.json";
+                                "Predicted Results/ids/$keysName/Web_Attack_Brute_Force/json/Web_Attack_Brute_Force_$keysName.json";
 
                             final sqlInjection =
-                                "Predicted Results/ids/ids_$keysName/Web_Attack_Sql_Injection/json/Web_Attack_Sql_Injection_$keysName.json";
+                                "Predicted Results/ids/$keysName/Web_Attack_Sql_Injection/json/Web_Attack_Sql_Injection_$keysName.json";
                             final webXssfile =
-                                "Predicted Results/ids/ids_$keysName/Web_Attack_XSS_benign/json/Web_Attack_XSS_benign_$keysName.json";
+                                "Predicted Results/ids/$keysName/Web_Attack_XSS_benign/json/Web_Attack_XSS_benign_$keysName.json";
 
                             return ListTile(
                               onTap: () async {
+                                // log(idsData[0][keys1][2][key2][0]["json"]
+                                //     .toString());
+                                // log(idsData[keys1].toString());
+
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => IDSChartDetailsScreen(
                                       botfileName: botFile,
                                       ddosName: ddosBenignFile,
-                                      webAttackName: webAttackFile,
+                                      // webAttackName: webAttackFile,
                                       goldenEyeName: dosGlodenFile,
                                       hulkName: dosHulkFile,
                                       slowHttpName: slowHttpFile,

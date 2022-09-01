@@ -176,7 +176,7 @@ class IDSLogDataProcessing:
 
     # def createDirectoryAndFileAsPerModelName(self,p_df,directory_name,ids_predicted_csv_path,ids_predicted_json_path,):
 
-    def createModelCsvJsonFolder(self,daywisefolderPath,model_name,p_df):
+    def createModelCsvJsonFolder(self,daywisefolderPath,model_name,p_df,daywisefolderName):
         import shutil
         modelFolderPath =  os.path.join(daywisefolderPath, model_name)
         if os.path.exists(modelFolderPath):
@@ -187,7 +187,8 @@ class IDSLogDataProcessing:
         if os.path.exists(csv_path):
             shutil.rmtree(csv_path)
         os.mkdir(csv_path)
-        file_name =self.fileNameFormat(model_name)
+        # file_name =self.fileNameFormat(model_name)
+        file_name =model_name+"_"+daywisefolderName
         csv_file_path = f'{csv_path}/{file_name}.csv'
         p_df.to_csv(csv_file_path,index=False,header=True)
 

@@ -238,10 +238,14 @@ fetchDataFromAPi({required Future future, required String socType}) {
                         DashBoardService.getPreviousPredictedResult(
                           datasetname: "ids",
                         ).then((value) async {
-                          DateTime now = DateTime.now();
-                          final todayDate =
-                              "${now.year.toString()}_${now.month.toString().padLeft(2, '0')}_${now.day.toString().padLeft(2, '0')}";
-                          log("Response data ${json.decode(value).runtimeType}");
+                          final folderName = finalDatasetName
+                              .split("Dataset/ids/")[1]
+                              .split(".csv")[0];
+
+                          // DateTime now = DateTime.now();
+                          // final todayDate =
+                          //     "${now.year.toString()}_${now.month.toString().padLeft(2, '0')}_${now.day.toString().padLeft(2, '0')}";
+                          // log("Response data ${json.decode(value).runtimeType}");
 
                           // Predicted Results/ids/ids_2022_08_28/df_Web_Attack/json/df_Web_Attack_2022_08_28.json
                           // Predicted Results/ids/ids_2022_08_28/DoS_GoldenEye/json/DoS_GoldenEye_2022_08_28.json
@@ -257,37 +261,37 @@ fetchDataFromAPi({required Future future, required String socType}) {
                           // Predicted Results/ids/ids_2022_08_28/Web_Attack_XSS_benign/json/Web_Attack_XSS_benign_2022_08_28.json
 
                           final botFile =
-                              "Predicted Results/ids/ids_$todayDate/Bot/json/Bot_$todayDate.json";
+                              "Predicted Results/ids/$folderName/Bot/json/Bot_$folderName.json";
                           final ddosBenignFile =
-                              "Predicted Results/ids/ids_$todayDate/df_DDoS_benign/json/df_DDoS_benign_$todayDate.json";
-                          final webAttackFile =
-                              "Predicted Results/ids/ids_$todayDate/df_Web_Attack/json/df_Web_Attack_$todayDate.json";
+                              "Predicted Results/ids/$folderName/df_DDoS_benign/json/df_DDoS_benign_$folderName.json";
+                          // final webAttackFile =
+                          //     "Predicted Results/ids/$folderName/df_Web_Attack/json/df_Web_Attack_$folderName.json";
 
                           final dosGlodenFile =
-                              "Predicted Results/ids/ids_$todayDate/DoS_GoldenEye/json/DoS_GoldenEye_$todayDate.json";
+                              "Predicted Results/ids/$folderName/DoS_GoldenEye/json/DoS_GoldenEye_$folderName.json";
                           final dosHulkFile =
-                              "Predicted Results/ids/ids_$todayDate/DoS_Hulk/json/DoS_Hulk_$todayDate.json";
+                              "Predicted Results/ids/$folderName/DoS_Hulk/json/DoS_Hulk_$folderName.json";
                           final slowHttpFile =
-                              "Predicted Results/ids/ids_$todayDate/DoS_Slowhttptest/json/DoS_Slowhttptest_$todayDate.json";
+                              "Predicted Results/ids/$folderName/DoS_Slowhttptest/json/DoS_Slowhttptest_$folderName.json";
                           final ftpPatatorFile =
-                              "Predicted Results/ids/ids_$todayDate/FTPPatator/json/FTPPatator_$todayDate.json";
+                              "Predicted Results/ids/$folderName/FTPPatator/json/FTPPatator_$folderName.json";
                           final heartbleedFile =
-                              "Predicted Results/ids/ids_$todayDate/Heartbleed/json/Heartbleed_$todayDate.json";
+                              "Predicted Results/ids/$folderName/Heartbleed/json/Heartbleed_$folderName.json";
                           final infiltrationfile =
-                              "Predicted Results/ids/ids_$todayDate/Infiltration/json/Infiltration_$todayDate.json";
+                              "Predicted Results/ids/$folderName/Infiltration/json/Infiltration_$folderName.json";
                           final portScanFile =
-                              "Predicted Results/ids/ids_$todayDate/PortScan/json/PortScan_$todayDate.json";
+                              "Predicted Results/ids/$folderName/PortScan/json/PortScan_$folderName.json";
 
                           final sshPatatorFile =
-                              "Predicted Results/ids/ids_$todayDate/SSHPatator/json/SSHPatator_$todayDate.json";
+                              "Predicted Results/ids/$folderName/SSHPatator/json/SSHPatator_$folderName.json";
 
                           final bruteForceFile =
-                              "Predicted Results/ids/ids_$todayDate/Web_Attack_Brute_Force/json/Web_Attack_Brute_Force_$todayDate.json";
+                              "Predicted Results/ids/$folderName/Web_Attack_Brute_Force/json/Web_Attack_Brute_Force_$folderName.json";
 
                           final sqlInjection =
-                              "Predicted Results/ids/ids_$todayDate/Web_Attack_Sql_Injection/json/Web_Attack_Sql_Injection_$todayDate.json";
+                              "Predicted Results/ids/$folderName/Web_Attack_Sql_Injection/json/Web_Attack_Sql_Injection_$folderName.json";
                           final webXssfile =
-                              "Predicted Results/ids/ids_$todayDate/Web_Attack_XSS_benign/json/Web_Attack_XSS_benign_$todayDate.json";
+                              "Predicted Results/ids/$folderName/Web_Attack_XSS_benign/json/Web_Attack_XSS_benign_$folderName.json";
 
                           // log(value.runtimeType.toString());
                           // final decodeData = json.decode(value);
@@ -317,7 +321,8 @@ fetchDataFromAPi({required Future future, required String socType}) {
                           //   final botDtata = idsData["ids_$todayDate"][0];
                           //   log("Bot Datta$botDtata");
                           // }
-                          // log(todayDate.toString());
+                          // log(bruteForceFile);
+                          // log(webXssfile);
 
                           await Navigator.push(
                             context,
@@ -325,7 +330,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                               builder: (_) => IDSChartDetailsScreen(
                                 botfileName: botFile,
                                 ddosName: ddosBenignFile,
-                                webAttackName: webAttackFile,
+                                // webAttackName: webAttackFile,
                                 goldenEyeName: dosGlodenFile,
                                 hulkName: dosHulkFile,
                                 slowHttpName: slowHttpFile,

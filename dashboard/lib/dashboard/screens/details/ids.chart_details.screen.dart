@@ -28,7 +28,7 @@ import '../../model/ids_model/Web_Attack_Brute_Force_model.dart';
 class IDSChartDetailsScreen extends StatefulWidget {
   final String botfileName;
   final String ddosName;
-  final String webAttackName;
+  // final String webAttackName;
   final String goldenEyeName;
   final String hulkName;
   final String slowHttpName;
@@ -45,7 +45,7 @@ class IDSChartDetailsScreen extends StatefulWidget {
       {Key? key,
       required this.botfileName,
       required this.ddosName,
-      required this.webAttackName,
+      // required this.webAttackName,
       required this.goldenEyeName,
       required this.hulkName,
       required this.slowHttpName,
@@ -177,22 +177,22 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
   //web attack
 
-  Future<String> loadWebFromFile({required String filename}) async {
-    String path = filename;
-    File f = File(path);
-    final input = await f.readAsString();
+  // Future<String> loadWebFromFile({required String filename}) async {
+  //   String path = filename;
+  //   File f = File(path);
+  //   final input = await f.readAsString();
 
-    return input;
-  }
+  //   return input;
+  // }
 
-  Future loadIDSwebLog() async {
-    final String jsonString =
-        await loadWebFromFile(filename: widget.webAttackName);
-    final dynamic jsonResponse = json.decode(jsonString);
-    for (Map<String, dynamic> i in jsonResponse) {
-      webAttackData.add(WebAttackModel.fromJson(i));
-    }
-  }
+  // Future loadIDSwebLog() async {
+  //   final String jsonString =
+  //       await loadWebFromFile(filename: widget.webAttackName);
+  //   final dynamic jsonResponse = json.decode(jsonString);
+  //   for (Map<String, dynamic> i in jsonResponse) {
+  //     webAttackData.add(WebAttackModel.fromJson(i));
+  //   }
+  // }
 
 // Dos GoldenEye
   Future<String> loadGoldenFromFile({required String filename}) async {
@@ -401,7 +401,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   void initState() {
     loadIDSBotLog();
     loadIDSDDOSLog();
-    loadIDSwebLog();
+    // loadIDSwebLog();
     loadIDSGlodenLog();
     loadIDSHulkLog();
     loadIDSSLowHttpLog();
@@ -460,18 +460,18 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                IDSChart(
-                  context: context,
-                  future: loadWebFromFile(filename: widget.webAttackName),
-                  tooltipBehavior: _tooltipBehavior,
-                  getLineChartSeries: getWebAttackChart(),
-                  isPlay: isPlay,
-                  buttonFunction: PausePlayButton,
-                  title: 'Web Attack',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+                // IDSChart(
+                //   context: context,
+                //   future: loadWebFromFile(filename: widget.webAttackName),
+                //   tooltipBehavior: _tooltipBehavior,
+                //   getLineChartSeries: getWebAttackChart(),
+                //   isPlay: isPlay,
+                //   buttonFunction: PausePlayButton,
+                //   title: 'Web Attack',
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
                 IDSChart(
                   context: context,
                   future: loadGoldenFromFile(filename: widget.goldenEyeName),
@@ -657,25 +657,25 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
 //web attack
-  List<LineSeries<WebAttackModel, String>> getWebAttackChart() {
-    return <LineSeries<WebAttackModel, String>>[
-      LineSeries<WebAttackModel, String>(
-        markerSettings: const MarkerSettings(
-          isVisible: true,
-        ),
+  // List<LineSeries<WebAttackModel, String>> getWebAttackChart() {
+  //   return <LineSeries<WebAttackModel, String>>[
+  //     LineSeries<WebAttackModel, String>(
+  //       markerSettings: const MarkerSettings(
+  //         isVisible: true,
+  //       ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
-        dataSource: livewebAttackData,
-        color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (WebAttackModel bot, _) => bot.timestamp,
-        yValueMapper: (WebAttackModel bot, _) =>
-            bot.dfWebAttack == "BENIGN" ? -1 : 1,
-        // animationDuration: 0,
-      )
-    ];
-  }
+  //       // onRendererCreated: (ChartSeriesController controller) {
+  //       //   _chartSeriesController = controller;
+  //       // },
+  //       dataSource: livewebAttackData,
+  //       color: const Color.fromRGBO(192, 108, 132, 1),
+  //       xValueMapper: (WebAttackModel bot, _) => bot.timestamp,
+  //       yValueMapper: (WebAttackModel bot, _) =>
+  //           bot.dfWebAttack == "BENIGN" ? -1 : 1,
+  //       // animationDuration: 0,
+  //     )
+  //   ];
+  // }
 
   //Gloden EYE
   List<LineSeries<DoSGoldenEyeModel, String>> getGoldenEyeChart() {

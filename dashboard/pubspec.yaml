@@ -69,7 +69,7 @@ flutter:
   assets:
     - Predicted Results/Auth Log/json/
     - Predicted Results/ids/
-    - Predicted Results/ids/ids_2022_08_28/Bot/json/
+    # - Predicted Results/ids/ids_2022_08_28/Bot/json/
     # - Predicted Results/ids/ids_2022_08_27/Bot/json/
     # - Predicted Results/Notification/notif_2022_08_28/
     - assets/img/
