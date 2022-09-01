@@ -11,6 +11,8 @@ import pandas as pd
 import glob
 import os
 import time
+import json
+
 
 import os.path as path
 
@@ -149,13 +151,24 @@ class MultiLineAuthLogView(APIView):
                 csv_file_path = f'{auth_predicted_csv_path}{file_name}.csv'
                 df_copy1.to_csv(csv_file_path,index=False,header=True)
 
+
+                # prediction event 
+                json_data = ref.convertCsvToJson(csv_file_path)
+                
+                json_object = json.dumps(json_data, indent = 4)
+                file_name =ref.fileNameFormat("auth")
+                json_file_path = f'{auth_predicted_json_path}{file_name}.json'
+                with open( json_file_path, "w") as outfile:
+                    outfile.write(json_object)
+
                 # =======================================#
                 #       Notification related work
                 # =======================================#
-                import json
 
                 df_nf = pd.read_csv(csv_file_path)
                 notif = df_nf.loc[df_nf['mod_zscore'] <= 3]
+                notif['event'] = notif['event'].str.replace("\n","")
+                
                 # cretae base Notification folder ->done
                 notf_base_path = os.path.join(notification_path,"Notification")
                 if not os.path.exists(notf_base_path):             
@@ -166,29 +179,30 @@ class MultiLineAuthLogView(APIView):
                 if not os.path.exists(notification_date_path):             
                     os.makedirs(notification_date_path)
                 
-                notification_name = ref.fileNameFormat("auth")
+                notification_name = ref.fileNameFormat("notf_auth")
                 notif_csv_file_path = f'{notification_date_path}/{notification_name}.csv'
                 notif.to_csv(notif_csv_file_path,index=False,header=True)
-                json_data = ref.convertCsvToJson(csv_file_path)
-                json_object = json.dumps(json_data, indent = 4)
+
+                notif_json_data = ref.convertCsvToJson(notif_csv_file_path)
+                notf_json_object = json.dumps(notif_json_data, indent = 4)
+
                 notif_json_file_path = f'{notification_date_path}/{notification_name}.json'
                 with open(notif_json_file_path, "w") as outfile:
-                    outfile.write(json_object)
-                
+                    outfile.write(notf_json_object)
 
-                json_data = ref.convertCsvToJson(csv_file_path)
-                
-                json_object = json.dumps(json_data, indent = 4)
-                file_name =ref.fileNameFormat("auth")
-                json_file_path = f'{auth_predicted_json_path}{file_name}.json'
-                with open( json_file_path, "w") as outfile:
-                    outfile.write(json_object)
+
+                # =======================================#
+                #       Notification related work End
+                # =======================================#
+
+               
                 
 
                 return Response ({
                     "csv_path":csv_file_path,
                     "json_path":json_file_path
                 })
+
             elif final_path.endswith('.csv'):
                 return Response ("Csv File",status=status.HTTP_406_NOT_ACCEPTABLE)
             else:
