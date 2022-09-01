@@ -234,40 +234,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      AuthService.registerService(context: context);
+                      // AuthService.registerService(context: context);
 
-                      // await register(
-                      //   firstname: firstnameController.text,
-                      //   lastname: lastnameController.text,
-                      //   phone: phoneController.text,
-                      //   email: emailController.text,
-                      //   password: passwordController.text,
-                      // ).then((value) async {
-                      //   if (value[0] == 200) {
-                      //     AuthService.registerService(context: context);
-                      //   } else {
-                      //     final Size size = MediaQuery.of(context).size;
-                      //     final snackBar = SnackBar(
-                      //       // width: size.width / 2.5,
-                      //       content: const Text(
-                      //         'Invalid credentials!',
-                      //         textAlign: TextAlign.center,
-                      //         style: TextStyle(fontSize: 25),
-                      //       ),
-                      //       behavior: SnackBarBehavior.floating,
-                      //       backgroundColor: Colors.red,
-                      //       margin: EdgeInsets.fromLTRB(
-                      //         size.width - size.width / 2.4,
-                      //         0,
-                      //         10,
-                      //         size.height / 1.17,
-                      //       ),
-                      //     );
-                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      //     emailController.clear();
-                      //     passwordController.clear();
-                      //   }
-                      // });
+                      await register(
+                        firstname: firstnameController.text,
+                        lastname: lastnameController.text,
+                        phone: phoneController.text,
+                        email: emailController.text,
+                        password: passwordController.text,
+                      ).then((value) async {
+                        if (value[0] == 200) {
+                          AuthService.loginService(context: context);
+                        } else {
+                          final Size size = MediaQuery.of(context).size;
+                          final snackBar = SnackBar(
+                            // width: size.width / 2.5,
+                            content: Text(
+                              '${value[1]}',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 25),
+                            ),
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.red,
+                            margin: EdgeInsets.fromLTRB(
+                              size.width - size.width / 2.4,
+                              0,
+                              10,
+                              size.height / 1.17,
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          emailController.clear();
+                          passwordController.clear();
+                        }
+                      });
                     },
                     child: Container(
                       // width: size.width * 0.08,

@@ -16,54 +16,61 @@ IDSChart(
   final width = MediaQuery.of(context).size.width;
   return Stack(
     children: [
-      Center(
-        child: Container(
-          height: height * 0.40,
-          width: width,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.blue,
-                  offset: Offset(0.0, 1.0),
-                  blurRadius: 10.0,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(20)),
+      Container(
+        height: height * 0.40,
+        width: width,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.blue,
+                offset: Offset(0.0, 1.0),
+                blurRadius: 10.0,
+              ),
+            ],
+            borderRadius: BorderRadius.circular(20)),
 
-          // color: Colors.blue,
-          child: FutureBuilder(
-              future: future,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return SfCartesianChart(
-                    title: ChartTitle(text: title),
-                    enableAxisAnimation: true,
-                    tooltipBehavior: tooltipBehavior,
-                    enableMultiSelection: true,
-                    plotAreaBorderWidth: 0,
-                    primaryXAxis: CategoryAxis(
-                        labelRotation: 20,
-                        majorGridLines: const MajorGridLines(width: 0),
-                        isVisible: true),
-                    primaryYAxis: NumericAxis(
-                        plotBands: <PlotBand>[
-                          PlotBand(
-                              isVisible: true,
-                              start: 3,
-                              end: 3.1,
-                              color: Colors.red),
-                        ],
-                        labelIntersectAction: AxisLabelIntersectAction.rotate45,
-                        axisLine: const AxisLine(width: 0),
-                        majorTickLines: const MajorTickLines(size: 10)),
-                    series: getLineChartSeries,
-                  );
-                } else {
-                  return GlobalWidget.loadingWidget(context: context);
-                }
-              }),
-        ),
+        // color: Colors.blue,
+        child: FutureBuilder(
+            future: future,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return SfCartesianChart(
+                  title: ChartTitle(text: title),
+                  enableAxisAnimation: true,
+                  tooltipBehavior: tooltipBehavior,
+                  enableMultiSelection: true,
+                  plotAreaBorderWidth: 0,
+                  primaryXAxis: CategoryAxis(
+                      title: AxisTitle(
+                          text: "Timestamp",
+                          textStyle:
+                              const TextStyle(fontWeight: FontWeight.bold)),
+                      labelRotation: 20,
+                      majorGridLines: const MajorGridLines(width: 0),
+                      isVisible: true),
+                  primaryYAxis: NumericAxis(
+                      title: AxisTitle(
+                          text: "Probabilty",
+                          textStyle:
+                              const TextStyle(fontWeight: FontWeight.bold)),
+                      plotBands: <PlotBand>[
+                        PlotBand(
+                            isVisible: true,
+                            start: 0.02,
+                            end: 0.02,
+                            borderWidth: 2,
+                            color: Colors.black),
+                      ],
+                      labelIntersectAction: AxisLabelIntersectAction.rotate45,
+                      axisLine: const AxisLine(width: 0),
+                      majorTickLines: const MajorTickLines(size: 10)),
+                  series: getLineChartSeries,
+                );
+              } else {
+                return GlobalWidget.loadingWidget(context: context);
+              }
+            }),
       ),
       Positioned(
           top: 10,

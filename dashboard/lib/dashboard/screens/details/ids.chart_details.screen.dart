@@ -16,6 +16,7 @@ import 'package:dashboard/dashboard/model/ids_model/dos_GoldenEye_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/dos_Hulk_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/dos_SlowHttp_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/ids_bot_model.dart';
+import 'package:dashboard/dashboard/screens/details/filter_csv.dart';
 import 'package:dashboard/dashboard/widgets/ids_chart.dart';
 import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   List<IDSBotModel> liveBot = [];
   List<DDoSBenignModel> ddosData = [];
   List<DDoSBenignModel> liveDdosData = [];
-
   List<DoSGoldenEyeModel> dosGoldenData = [];
   List<DoSGoldenEyeModel> livedosGoldenData = [];
   List<DoSHulkModel> dosHulkData = [];
@@ -89,8 +89,21 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   List<WebAttackSqlInjectionModel> livesqlInjectionData = [];
   List<WebAttackXSSbenignModel> webXssData = [];
   List<WebAttackXSSbenignModel> livewebXssData = [];
-  ChartSeriesController? _chartSeriesController;
-  late TooltipBehavior _tooltipBehavior;
+  // ChartSeriesController? _chartSeriesController;
+  late TooltipBehavior _tooltipBehavior1;
+  late TooltipBehavior _tooltipBehavior2;
+  late TooltipBehavior _tooltipBehavior3;
+  late TooltipBehavior _tooltipBehavior4;
+  late TooltipBehavior _tooltipBehavior5;
+  late TooltipBehavior _tooltipBehavior6;
+  late TooltipBehavior _tooltipBehavior7;
+  late TooltipBehavior _tooltipBehavior8;
+  late TooltipBehavior _tooltipBehavior9;
+  late TooltipBehavior _tooltipBehavior10;
+  late TooltipBehavior _tooltipBehavior11;
+  late TooltipBehavior _tooltipBehavior12;
+  late TooltipBehavior _tooltipBehavior13;
+
   Timer? timer;
   int data = 0;
   bool isPlay = true;
@@ -171,24 +184,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
       ddosData.add(DDoSBenignModel.fromJson(i));
     }
   }
-  //web attack
-
-  // Future<String> loadWebFromFile({required String filename}) async {
-  //   String path = filename;
-  //   File f = File(path);
-  //   final input = await f.readAsString();
-
-  //   return input;
-  // }
-
-  // Future loadIDSwebLog() async {
-  //   final String jsonString =
-  //       await loadWebFromFile(filename: widget.webAttackName);
-  //   final dynamic jsonResponse = json.decode(jsonString);
-  //   for (Map<String, dynamic> i in jsonResponse) {
-  //     webAttackData.add(WebAttackModel.fromJson(i));
-  //   }
-  // }
 
 // Dos GoldenEye
   Future<String> loadGoldenFromFile({required String filename}) async {
@@ -413,7 +408,19 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
       _updateDataSource(timer);
       isPlay ? setState(() {}) : null;
     });
-    _tooltipBehavior = hoverBot();
+    _tooltipBehavior1 = hoverBot();
+    _tooltipBehavior2 = hoverDdos();
+    _tooltipBehavior3 = hoverGoldenEye();
+    _tooltipBehavior4 = hoverHulk();
+    _tooltipBehavior5 = hoverSlowHttp();
+    _tooltipBehavior6 = hoverFTP();
+    _tooltipBehavior7 = hoverHeartBleed();
+    _tooltipBehavior8 = hoverInfiltration();
+    _tooltipBehavior9 = hoverPortScan();
+    _tooltipBehavior10 = hoverSSH();
+    _tooltipBehavior11 = hoverWebForce();
+    _tooltipBehavior12 = hoverWebSql();
+    _tooltipBehavior13 = hoverWebXss();
 
     super.initState();
   }
@@ -435,7 +442,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                 IDSChart(
                   context: context,
                   future: loadDataFromFile(filename: widget.botfileName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior1,
                   getLineChartSeries: getBotChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -447,7 +454,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                 IDSChart(
                   context: context,
                   future: loadDDosFromFile(filename: widget.ddosName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior2,
                   getLineChartSeries: getDDosChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -456,22 +463,10 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                // IDSChart(
-                //   context: context,
-                //   future: loadWebFromFile(filename: widget.webAttackName),
-                //   tooltipBehavior: _tooltipBehavior,
-                //   getLineChartSeries: getWebAttackChart(),
-                //   isPlay: isPlay,
-                //   buttonFunction: PausePlayButton,
-                //   title: 'Web Attack',
-                // ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
                 IDSChart(
                   context: context,
                   future: loadGoldenFromFile(filename: widget.goldenEyeName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior3,
                   getLineChartSeries: getGoldenEyeChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -483,7 +478,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                 IDSChart(
                   context: context,
                   future: loadHulkFromFile(filename: widget.hulkName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior4,
                   getLineChartSeries: getHulkChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -495,7 +490,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                 IDSChart(
                   context: context,
                   future: loadSlowHttpFromFile(filename: widget.slowHttpName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior5,
                   getLineChartSeries: getSlowHttpChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -508,7 +503,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   context: context,
                   future:
                       loadFtpPatatorFromFile(filename: widget.ftpPatatorName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior6,
                   getLineChartSeries: getFtpPatatorChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -521,7 +516,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   context: context,
                   future:
                       loadHeartbleedFromFile(filename: widget.heartBleedName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior7,
                   getLineChartSeries: getHeartbleedChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -534,7 +529,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   context: context,
                   future: loadinfiltrationFromFile(
                       filename: widget.infiltrationName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior8,
                   getLineChartSeries: getInfiltrationChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -546,7 +541,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                 IDSChart(
                   context: context,
                   future: loadPortScanFromFile(filename: widget.portScanName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior9,
                   getLineChartSeries: getPortScanChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -559,7 +554,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   context: context,
                   future:
                       loadsshPatatorFromFile(filename: widget.sshPatatorName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior10,
                   getLineChartSeries: getsshPatatorChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -572,7 +567,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   context: context,
                   future: loadBruteForceFromFile(
                       filename: widget.webBruteForceName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior11,
                   getLineChartSeries: getwebBruteForceChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -585,7 +580,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   context: context,
                   future: loadSqlInjectionFromFile(
                       filename: widget.webSqlInjectionName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior12,
                   getLineChartSeries: getsqlInjectionChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -597,7 +592,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                 IDSChart(
                   context: context,
                   future: loadWebXssFromFile(filename: widget.webXSSName),
-                  tooltipBehavior: _tooltipBehavior,
+                  tooltipBehavior: _tooltipBehavior13,
                   getLineChartSeries: getwebXssChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
@@ -619,9 +614,9 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
           isVisible: true,
         ),
 
-        onRendererCreated: (ChartSeriesController controller) {
-          _chartSeriesController = controller;
-        },
+        // onRendererCreated: (ChartSeriesController controller) {
+        //   _chartSeriesController = controller;
+        // },
         dataSource: liveBot,
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (IDSBotModel bot, _) => bot.timestamp,
@@ -898,13 +893,25 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 
   TooltipBehavior hoverBot() {
     return TooltipBehavior(
-        enable: true,
-        builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
-            int seriesIndex) {
-          return Expanded(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: InkWell(
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => CSVScreen(
+                    title: "Bot Data List",
+                    filePath: widget.botfileName,
+                  ),
+                ),
+              );
+            },
             child: SizedBox(
-              height: 100,
-              width: 300,
+              height: 110,
+              width: 270,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -912,44 +919,535 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Timestamp:${data.timestamp.toString()}",
+                        "Source IP:${data.sourceIP.toString()}",
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "Source Ip:${data.sourceIP.toString()}",
+                        "Destination Ip:${data.destinationIP.toString()}",
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
-                      Expanded(
-                        child: Text(
-                          "Probability:${data.botProb.toString()}",
-                          style: const TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
+                      Text(
+                        "Probability:${data.botProbXgb.toString()}",
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Destination Port:${data.destinationPort.toString()}",
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ]),
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
-  // void updateBarData() {
-  //   int start = click;
-  //   log("click $start");
-  //   if (start < (authData.length) / 2 + 1) {
-  //     if (start == 0) {
-  //       barData = authData.sublist(start, start + 50);
-  //       click++;
-  //     } else {
-  //       barData = authData.sublist(start + 49, (start + 49) + 50);
-  //       click = start + 50;
-  //     }
-  //   } else {
-  //     log("data out of range");
-  //   }
-  //   log("length of plotted data ${barData.length}");
-  // }
+  TooltipBehavior hoverDdos() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 110,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.dfDDoSBenignProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
+  TooltipBehavior hoverGoldenEye() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 110,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.doSGoldenEyeProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Port:${data.destinationPort.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  TooltipBehavior hoverHulk() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 110,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.doSHulkProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Port:${data.destinationPort.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  TooltipBehavior hoverSlowHttp() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 100,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.doSSlowhttptestProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    // Text(
+                    //   "Destination Port:${data.destinationPort.toString()}",
+                    //   style: const TextStyle(
+                    //       color: Colors.white, fontWeight: FontWeight.bold),
+                    // ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  TooltipBehavior hoverFTP() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 110,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.fTPPatatorProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Port:${data.destinationPort.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  TooltipBehavior hoverHeartBleed() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 100,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination IP:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.heartbleedProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    // Text(
+                    //   "Destination Port:${data.destinationPort.toString()}",
+                    //   style: const TextStyle(
+                    //       color: Colors.white, fontWeight: FontWeight.bold),
+                    // ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  TooltipBehavior hoverInfiltration() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 100,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.infiltrationProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    // Text(
+                    //   "Destination Port:${data.destinationPort.toString()}",
+                    //   style: const TextStyle(
+                    //       color: Colors.white, fontWeight: FontWeight.bold),
+                    // ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  TooltipBehavior hoverPortScan() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 100,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.portScanProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    // Text(
+                    //   "Destination Port:${data.destinationPort.toString()}",
+                    //   style: const TextStyle(
+                    //       color: Colors.white, fontWeight: FontWeight.bold),
+                    // ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  TooltipBehavior hoverSSH() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 110,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.sSHPatatorProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Port:${data.destinationPort.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  TooltipBehavior hoverWebForce() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 110,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.webAttackBruteForceProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Port:${data.destinationPort.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  TooltipBehavior hoverWebSql() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 110,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.webAttackSqlInjectionProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Port:${data.destinationPort.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  TooltipBehavior hoverWebXss() {
+    return TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Expanded(
+          child: SizedBox(
+            height: 100,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.webAttackXSSBenignProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    // Text(
+                    //   "Destination Port:${data.destinationPort.toString()}",
+                    //   style: const TextStyle(
+                    //       color: Colors.white, fontWeight: FontWeight.bold),
+                    // ),
+                  ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

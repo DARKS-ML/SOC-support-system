@@ -16,8 +16,8 @@ class GlobalWidget {
     final todayDate =
         "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
 
-    final _size = MediaQuery.of(context).size;
-    Timer.periodic(Duration(seconds: 1), (timer) {});
+    final size = MediaQuery.of(context).size;
+    Timer.periodic(const Duration(seconds: 1), (timer) {});
 
     return AppBar(
       automaticallyImplyLeading: false,
@@ -26,7 +26,7 @@ class GlobalWidget {
       title: Row(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             "Soc DashBoard",
             style: TextStyle(
               color: Colors.black,
@@ -34,11 +34,11 @@ class GlobalWidget {
             ),
           ),
           SizedBox(
-            width: _size.width / 2.75,
+            width: size.width / 2.75,
           ),
           Text(
-            "${todayDate} ",
-            style: TextStyle(
+            "$todayDate ",
+            style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
             ),
@@ -221,7 +221,7 @@ class GlobalWidget {
                               padding: const EdgeInsets.only(left: 8.0),
                               child: notificationList[i]
                                       .toString()
-                                      .split("$notificationKeyName/")[1]
+                                      .split("$notificationKeyName/")[0]
                                       .endsWith(".json")
                                   ? ListTile(
                                       onTap: () {
@@ -236,7 +236,7 @@ class GlobalWidget {
                                         );
                                       },
                                       title: Text(
-                                        "${notificationList[i].toString().split("$notificationKeyName/")[1].split(".")[0].split("_")[1].toUpperCase()} log Anomaly",
+                                        "${notificationList[i].toString().split("$notificationKeyName/")[0].split(".")[0].split("_")[1].toUpperCase()} log Anomaly",
                                         style: const TextStyle(
                                           color: Colors.red,
                                         ),

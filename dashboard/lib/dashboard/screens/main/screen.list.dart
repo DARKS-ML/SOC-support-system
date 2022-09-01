@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:side_bar_custom/side_bar_custom.dart';
 
 import '../list_dataset.screen.dart';
@@ -14,23 +15,23 @@ class DashboardScreenList {
   ];
   static final sidebarScreensname = [
     SideBarItem(
-      text: "Dashboard",
-      icon: Icons.dashboard,
+      text: "Home",
+      icon: FontAwesomeIcons.house,
       tooltipText: "DashBoard",
     ),
     SideBarItem(
       text: "Previous Predict",
-      icon: Icons.skip_previous,
+      icon: FontAwesomeIcons.diagramPredecessor,
       tooltipText: "Previous Result Page",
     ),
     SideBarItem(
       text: "Overview",
-      icon: Icons.all_inclusive,
+      icon: FontAwesomeIcons.filterCircleDollar,
       tooltipText: "Auth Anomoly CSV",
     ),
     SideBarItem(
       text: "Logout",
-      icon: Icons.exit_to_app,
+      icon: FontAwesomeIcons.rightFromBracket,
       tooltipText: "Log Out",
     ),
   ];
