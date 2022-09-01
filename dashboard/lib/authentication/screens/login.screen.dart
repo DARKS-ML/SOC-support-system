@@ -36,13 +36,13 @@ class _LoginScreenState extends State<LoginScreen> {
             const Text(
               "...",
               style: TextStyle(
-                fontSize: 55,
+                fontSize: 60,
                 fontWeight: FontWeight.bold,
                 color: Colors.green,
               ),
             ),
             SizedBox(
-              height: size.height * 0.10,
+              height: size.height * 0.09,
             ),
             const CircleAvatar(
               backgroundColor: Colors.black,
@@ -74,12 +74,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Text(
-                        "Login To Darks SoC System",
+                        "Welcome to Darks SOC",
                         textAlign: TextAlign.start,
                         style: TextStyle(
+                            decorationColor: Colors.deepOrange,
+                            letterSpacing: 1.5,
+                            fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
                             fontSize: size.width * 0.015,
-                            color: Colors.grey),
+                            color: const Color(0xff007bff)),
                       ),
                     ),
                     SizedBox(
@@ -100,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: const TextStyle(color: Colors.blue),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.email),
-                          label: const Text("Email"),
+                          label: const Text("Username/Email"),
                           filled: true,
                           fillColor: Colors.grey.withOpacity(0.1),
                           labelStyle: const TextStyle(

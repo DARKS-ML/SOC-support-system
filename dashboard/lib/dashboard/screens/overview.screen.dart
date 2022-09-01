@@ -1,13 +1,10 @@
-import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:json_table/json_table.dart';
 
-import 'package:flutter/services.dart' as root_bundle;
-
-import '../model/auth_model/auth_log_model.dart';
+import '../widgets/dashboard.widget.dart';
 
 class OverViewScreen extends StatefulWidget {
   const OverViewScreen({Key? key}) : super(key: key);
@@ -17,177 +14,75 @@ class OverViewScreen extends StatefulWidget {
 }
 
 class _OverViewScreenState extends State<OverViewScreen> {
-  late List<AuthLogModel> authData;
-  late TooltipBehavior _tooltipBehavior;
-  ChartSeriesController? _chartSeriesController;
-  List<AuthLogModel> data = [];
-  Timer? timer;
-  int i = 40;
-
-  Future<List<AuthLogModel>?> readLocalJsonAuthLog({
-    required String filename,
-  }) async {
-    final jsondata = await root_bundle.rootBundle.loadString(
-      // filename,
-      'Predicted Results/Auth Log/json/auth_2022_08_23__12_48_10.json',
-    );
-    final list = json.decode(jsondata) as List<dynamic>;
-    authData = list.map((e) => AuthLogModel.fromJson(e)).toList();
-    return authData;
-  }
-
-  void _updateDataSource(Timer timer, int i) async {
-    data.add(authData[i]);
-    log(data.length.toString());
-    log(i.toString());
-    if (data.length == 40) {
-      data.removeAt(0);
-      _chartSeriesController!.updateDataSource(
-        addedDataIndexes: [data.length - 1],
-        removedDataIndexes: [0],
-      );
-    } else {
-      _chartSeriesController!.updateDataSource(
-        addedDataIndexes: [data.length - 1],
-      );
-    }
-  }
-
-  @override
-  void initState() {
-    readLocalJsonAuthLog(filename: "");
-    Timer.periodic(const Duration(milliseconds: 500), (timer) {
-      _updateDataSource(timer, i++);
-    });
-    _tooltipBehavior = TooltipBehavior(
-        enable: true,
-        builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
-            int seriesIndex) {
-          return Expanded(
-            child: SizedBox(
-              height: 120,
-              width: 350,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Date:${data.date.toString()}",
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Time:${data.time.toString()}",
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "IP:${data.ip.toString()}",
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      Expanded(
-                          child: Text(
-                        "Event:${data.event.toString()}",
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      )),
-                    ]),
-              ),
-            ),
-          );
-        });
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    data.clear();
-    _chartSeriesController = null;
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    readLocalJsonAuthLog(filename: "");
-    final Size size = MediaQuery.of(context).size;
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: FloatingActionButton(
-          onPressed: () => Navigator.pushReplacementNamed(
-            context,
-            '/dashboard',
-          ),
-          backgroundColor: Colors.white,
-          elevation: 5,
-          child: const Padding(
-            padding: EdgeInsets.only(left: 4),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
           ),
         ),
+        backgroundColor: Colors.white,
+        // toolbarHeight: 0,
+        title: const Text(
+          "Anomaly Data List",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        elevation: 1,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Center(
-                child: Container(
-                  height: height * 0.40,
-                  width: width,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.blue,
-                          offset: Offset(0.0, 1.0),
-                          blurRadius: 10.0,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(20)),
-                  child: SfCartesianChart(
-                    enableAxisAnimation: true,
-                    tooltipBehavior: _tooltipBehavior,
-                    plotAreaBorderWidth: 0,
-                    primaryXAxis: CategoryAxis(
-                        labelRotation: 45,
-                        majorGridLines: const MajorGridLines(width: 0),
-                        isVisible: true),
-                    series: <LineSeries<AuthLogModel, String>>[
-                      LineSeries<AuthLogModel, String>(
-                        onRendererCreated: (ChartSeriesController controller) {
-                          _chartSeriesController = controller;
-                        },
-                        dataSource: data,
-                        color: const Color.fromRGBO(192, 108, 132, 1),
-                        xValueMapper: (AuthLogModel auth, _) => auth.time,
-                        yValueMapper: (AuthLogModel auth, _) => auth.modZscore,
-                      )
-                    ],
+      // floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
+      // floatingActionButton: ,
+      body: SizedBox(
+        width: size.width,
+        height: double.infinity,
+        child: FutureBuilder(
+            future: loadDataFromFile(filePath: ""),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final snapshotData = snapshot.data;
+
+                final jsonSample = "$snapshotData";
+                var json = jsonDecode(jsonSample);
+                final totalDataLength = json.length;
+                int page1Data = totalDataLength > 20 ? 20 : json.length;
+
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.all(16.0),
+                  child: JsonTable(
+                    json,
+                    showColumnToggle: true,
+                    allowRowHighlight: true,
+                    rowHighlightColor: Colors.yellow[500]!.withOpacity(0.7),
+                    paginationRowCount: page1Data,
+                    onRowSelect: (index, map) {},
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-            ],
-          ),
-        ),
+                );
+              } else {
+                return GlobalWidget.displayDialogWithLoadingIndicator(
+                    isCenter: true);
+              }
+            }),
       ),
     );
   }
+}
+
+loadDataFromFile({required String filePath}) async {
+  String path =
+      "Predicted Results/Notification/notif_2022_08_31/auth_2022_08_31.json";
+  // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
+  File f = File(path);
+  final input = await f.readAsString();
+
+  return input;
 }

@@ -42,6 +42,7 @@ dependencies:
   fl_chart: ^0.55.1
   csv: ^5.0.1
   json_table: ^2.0.1
+  google_fonts:
 
 dev_dependencies:
   flutter_test:

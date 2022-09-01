@@ -64,6 +64,7 @@ class NotificationScreen extends StatelessWidget {
             }
           }),
     );
+  
   }
 
   //   // String getPrettyJSONString(jsonObject) {

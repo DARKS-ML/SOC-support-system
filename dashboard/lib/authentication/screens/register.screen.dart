@@ -45,7 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             SizedBox(
-              height: size.height * 0.10,
+              height: size.height * 0.08,
             ),
             const CircleAvatar(
               backgroundColor: Colors.black,
@@ -70,14 +70,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ],
               ),
               child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Create your account",
-                    textAlign: TextAlign.left,
+                    // textAlign: TextAlign.left,
                     style: TextStyle(
+                        decorationColor: Colors.deepOrange,
+                        letterSpacing: 1.5,
+                        fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.bold,
                         fontSize: size.width * 0.015,
-                        color: Colors.grey),
+                        color: const Color(0xff007bff)),
                   ),
                   SizedBox(
                     height: size.height * 0.02,
@@ -272,7 +276,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       width: 300,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue,
+                        color: const Color(0xff007bff),
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.grey,
