@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'authentication',
     'soc',
     'ids',
-    'firewall'
 ]
 
 MIDDLEWARE = [

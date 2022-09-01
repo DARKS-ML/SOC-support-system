@@ -122,7 +122,7 @@ class IDSLogView(APIView):
             if final_path.endswith('.log'):
                 return Response("Log File",status=status.HTTP_406_NOT_ACCEPTABLE)
             elif final_path.endswith('.csv'):
-                # filewiseFolder = final_path.split("/ids/")[1].replace(".csv","")
+                filewiseFolder = final_path.split("/ids/")[1].replace(".csv","")
                 # ////////////////start ////////////////
                 ref = IDSLogDataProcessing()
 
@@ -135,9 +135,9 @@ class IDSLogView(APIView):
 
                 # create folder
                 import shutil
-                # daywisefolderName = filewiseFolder
+                daywisefolderName = filewiseFolder
 
-                daywisefolderName = ref.fileNameFormat("ids")
+                # daywisefolderName = ref.fileNameFormat("ids")
                 daywisefolderPath =  os.path.join(ids_predicted_base_path, daywisefolderName)
                 if os.path.exists(daywisefolderPath):
                     shutil.rmtree(daywisefolderPath)

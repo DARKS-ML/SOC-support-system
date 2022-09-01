@@ -1,3 +1,4 @@
+import email
 from django.contrib import auth
 
 from rest_framework import serializers
@@ -6,7 +7,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from .models import User
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(max_length=255,min_length=6,write_only=True)
+    password = serializers.CharField(max_length=255,min_length=8,write_only=True)
 
     class Meta:
         model = User
@@ -29,7 +30,12 @@ class LoginSerializer(serializers.ModelSerializer):
     tokens = serializers.SerializerMethodField()
 
     def get_tokens(self, obj):
-        user = User.objects.get()
+        ddd = str(obj)
+        dddd = ddd.split("<User: ")[1].split(">>")[0]
+        final_email = dddd.strip()
+        user = User.objects.get(email=final_email)
+       
+        print("email is ",dddd)
         return {
             'refresh': user.tokens()['refresh'],
             'access': user.tokens()['access']
