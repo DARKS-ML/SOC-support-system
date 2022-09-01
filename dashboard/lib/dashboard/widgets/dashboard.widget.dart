@@ -250,4 +250,20 @@ class GlobalWidget {
       ),
     );
   }
+
+  static displaySnackbar(
+      {required BuildContext context, String msg = 'Failed to load data'}) {
+    final snackBar = SnackBar(
+      content: Text(
+        msg,
+        textAlign: TextAlign.center,
+      ),
+      backgroundColor: (Colors.red),
+      behavior: SnackBarBehavior.floating,
+      width: 300,
+    );
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }

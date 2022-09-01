@@ -148,11 +148,15 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
   Future<String> loadDataFromFile({required String filename}) async {
-    String path = filename;
-    File f = File(path);
-    final input = await f.readAsString();
+    try {
+      String path = filename;
+      File f = File(path);
+      final input = await f.readAsString();
 
-    return input;
+      return input;
+    } catch (e) {
+      rethrow;
+    }
   }
 
 //ddos

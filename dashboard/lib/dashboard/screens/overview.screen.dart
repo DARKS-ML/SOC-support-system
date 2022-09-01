@@ -46,27 +46,32 @@ class _OverViewScreenState extends State<OverViewScreen> {
         width: size.width,
         height: double.infinity,
         child: FutureBuilder(
-            future: loadDataFromFile(filePath: ""),
+            future: loadDataFromFile(context: context, filePath: ""),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                final snapshotData = snapshot.data;
+                try {
+                  final snapshotData = snapshot.data;
 
-                final jsonSample = "$snapshotData";
-                var json = jsonDecode(jsonSample);
-                final totalDataLength = json.length;
-                int page1Data = totalDataLength > 20 ? 20 : json.length;
+                  final jsonSample = "$snapshotData";
+                  var json = jsonDecode(jsonSample);
+                  final totalDataLength = json.length;
+                  int page1Data = totalDataLength > 20 ? 20 : json.length;
 
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.all(16.0),
-                  child: JsonTable(
-                    json,
-                    showColumnToggle: true,
-                    allowRowHighlight: true,
-                    rowHighlightColor: Colors.yellow[500]!.withOpacity(0.7),
-                    paginationRowCount: page1Data,
-                    onRowSelect: (index, map) {},
-                  ),
-                );
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.all(16.0),
+                    child: JsonTable(
+                      json,
+                      showColumnToggle: true,
+                      allowRowHighlight: true,
+                      rowHighlightColor: Colors.yellow[500]!.withOpacity(0.7),
+                      paginationRowCount: page1Data,
+                      onRowSelect: (index, map) {},
+                    ),
+                  );
+                } catch (e) {
+                  return GlobalWidget.displayDialogWithLoadingIndicator(
+                      isCenter: true);
+                }
               } else {
                 return GlobalWidget.displayDialogWithLoadingIndicator(
                     isCenter: true);
@@ -77,12 +82,17 @@ class _OverViewScreenState extends State<OverViewScreen> {
   }
 }
 
-loadDataFromFile({required String filePath}) async {
-  String path =
-      "Predicted Results/Notification/notif_2022_08_31/auth_2022_08_31.json";
-  // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
-  File f = File(path);
-  final input = await f.readAsString();
+loadDataFromFile(
+    {required BuildContext context, required String filePath}) async {
+  try {
+    String path =
+        "Predicted Results/Notification/notif_2022_08_31/auth_2022_08_31.json";
+    // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
+    File f = File(path);
+    final input = await f.readAsString();
 
-  return input;
+    return input;
+  } catch (e) {
+    GlobalWidget.displaySnackbar(context: context);
+  }
 }

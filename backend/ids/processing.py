@@ -14,6 +14,7 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.linear_model import LogisticRegression
 from rest_framework.response import Response
 from rest_framework import status
+import xgboost as xgb
 
 import  pickle
 
