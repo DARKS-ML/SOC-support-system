@@ -1,16 +1,21 @@
 class WebAttackSqlInjectionModel {
   String? initWinBytesBackward;
   String? destinationPort;
-  String? flowBytesS;
-  String? fwdPacketLengthStd;
-  String? flowDuration;
   String? bwdPacketLengthStd;
-  String? initWinBytesForward;
-  String? fwdPacketLengthMax;
   String? avgFwdSegmentSize;
+  String? flowBytesS;
+  String? initWinBytesForward;
   String? bwdIATMin;
-  String? webAttackSqlInjection;
-  String? webAttackSqlInjectionProb;
+  String? flowIATMean;
+  String? bwdPacketsS;
+  String? flowPacketsS;
+  String? webAttackSqlInjectionLogic;
+  String? webAttackSqlInjectionProbLogic;
+  String? webAttackSqlInjectionNn;
+  String? webAttackSqlInjectionProbNn;
+  String? webAttackSqlInjectionSgd;
+  String? webAttackSqlInjectionXgb;
+  double? webAttackSqlInjectionProbXgb;
   String? sourceIP;
   String? destinationIP;
   String? protocol;
@@ -19,16 +24,21 @@ class WebAttackSqlInjectionModel {
   WebAttackSqlInjectionModel(
       {this.initWinBytesBackward,
       this.destinationPort,
-      this.flowBytesS,
-      this.fwdPacketLengthStd,
-      this.flowDuration,
       this.bwdPacketLengthStd,
-      this.initWinBytesForward,
-      this.fwdPacketLengthMax,
       this.avgFwdSegmentSize,
+      this.flowBytesS,
+      this.initWinBytesForward,
       this.bwdIATMin,
-      this.webAttackSqlInjection,
-      this.webAttackSqlInjectionProb,
+      this.flowIATMean,
+      this.bwdPacketsS,
+      this.flowPacketsS,
+      this.webAttackSqlInjectionLogic,
+      this.webAttackSqlInjectionProbLogic,
+      this.webAttackSqlInjectionNn,
+      this.webAttackSqlInjectionProbNn,
+      this.webAttackSqlInjectionSgd,
+      this.webAttackSqlInjectionXgb,
+      this.webAttackSqlInjectionProbXgb,
       this.sourceIP,
       this.destinationIP,
       this.protocol,
@@ -37,16 +47,22 @@ class WebAttackSqlInjectionModel {
   WebAttackSqlInjectionModel.fromJson(Map<String, dynamic> json) {
     initWinBytesBackward = json[' Init_Win_bytes_backward'];
     destinationPort = json[' Destination Port'];
-    flowBytesS = json['Flow Bytes/s'];
-    fwdPacketLengthStd = json[' Fwd Packet Length Std'];
-    flowDuration = json[' Flow Duration'];
     bwdPacketLengthStd = json[' Bwd Packet Length Std'];
-    initWinBytesForward = json['Init_Win_bytes_forward'];
-    fwdPacketLengthMax = json[' Fwd Packet Length Max'];
     avgFwdSegmentSize = json[' Avg Fwd Segment Size'];
+    flowBytesS = json['Flow Bytes/s'];
+    initWinBytesForward = json['Init_Win_bytes_forward'];
     bwdIATMin = json[' Bwd IAT Min'];
-    webAttackSqlInjection = json['Web_Attack_Sql_Injection'];
-    webAttackSqlInjectionProb = json['Web_Attack_Sql_Injection_prob'];
+    flowIATMean = json[' Flow IAT Mean'];
+    bwdPacketsS = json[' Bwd Packets/s'];
+    flowPacketsS = json[' Flow Packets/s'];
+    webAttackSqlInjectionLogic = json['Web_Attack_Sql_Injection_logic'];
+    webAttackSqlInjectionProbLogic =
+        json['Web_Attack_Sql_Injection_prob_logic'];
+    webAttackSqlInjectionNn = json['Web_Attack_Sql_Injection_nn'];
+    webAttackSqlInjectionProbNn = json['Web_Attack_Sql_Injection_prob_nn'];
+    webAttackSqlInjectionSgd = json['Web_Attack_Sql_Injection_sgd'];
+    webAttackSqlInjectionXgb = json['Web_Attack_Sql_Injection_xgb'];
+    webAttackSqlInjectionProbXgb = double.parse(json['Web_Attack_Sql_Injection_prob_xgb']);
     sourceIP = json['Source IP'];
     destinationIP = json['Destination IP'];
     protocol = json['Protocol'];
@@ -57,16 +73,22 @@ class WebAttackSqlInjectionModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data[' Init_Win_bytes_backward'] = initWinBytesBackward;
     data[' Destination Port'] = destinationPort;
-    data['Flow Bytes/s'] = flowBytesS;
-    data[' Fwd Packet Length Std'] = fwdPacketLengthStd;
-    data[' Flow Duration'] = flowDuration;
     data[' Bwd Packet Length Std'] = bwdPacketLengthStd;
-    data['Init_Win_bytes_forward'] = initWinBytesForward;
-    data[' Fwd Packet Length Max'] = fwdPacketLengthMax;
     data[' Avg Fwd Segment Size'] = avgFwdSegmentSize;
+    data['Flow Bytes/s'] = flowBytesS;
+    data['Init_Win_bytes_forward'] = initWinBytesForward;
     data[' Bwd IAT Min'] = bwdIATMin;
-    data['Web_Attack_Sql_Injection'] = webAttackSqlInjection;
-    data['Web_Attack_Sql_Injection_prob'] = webAttackSqlInjectionProb;
+    data[' Flow IAT Mean'] = flowIATMean;
+    data[' Bwd Packets/s'] = bwdPacketsS;
+    data[' Flow Packets/s'] = flowPacketsS;
+    data['Web_Attack_Sql_Injection_logic'] = webAttackSqlInjectionLogic;
+    data['Web_Attack_Sql_Injection_prob_logic'] =
+        webAttackSqlInjectionProbLogic;
+    data['Web_Attack_Sql_Injection_nn'] = webAttackSqlInjectionNn;
+    data['Web_Attack_Sql_Injection_prob_nn'] = webAttackSqlInjectionProbNn;
+    data['Web_Attack_Sql_Injection_sgd'] = webAttackSqlInjectionSgd;
+    data['Web_Attack_Sql_Injection_xgb'] = webAttackSqlInjectionXgb;
+    data['Web_Attack_Sql_Injection_prob_xgb'] = webAttackSqlInjectionProbXgb;
     data['Source IP'] = sourceIP;
     data['Destination IP'] = destinationIP;
     data['Protocol'] = protocol;

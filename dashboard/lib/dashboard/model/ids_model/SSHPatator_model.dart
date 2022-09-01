@@ -2,15 +2,20 @@ class SSHPatatorModel {
   String? destinationPort;
   String? initWinBytesBackward;
   String? flowBytesS;
-  String? bwdHeaderLength;
   String? totalBackwardPackets;
+  String? bwdHeaderLength;
+  String? subflowBwdPackets;
+  String? packetLengthMean;
+  String? actDataPktFwd;
   String? initWinBytesForward;
   String? fwdHeaderLength;
-  String? maxPacketLength;
-  String? bwdPacketsS;
-  String? averagePacketSize;
-  String? sSHPatator;
-  String? sSHPatatorProb;
+  String? sSHPatatorLogic;
+  String? sSHPatatorProbLogic;
+  String? sSHPatatorNn;
+  String? sSHPatatorProbNn;
+  String? sSHPatatorSgd;
+  String? sSHPatatorXgb;
+  double? sSHPatatorProbXgb;
   String? sourceIP;
   String? destinationIP;
   String? protocol;
@@ -20,15 +25,20 @@ class SSHPatatorModel {
       {this.destinationPort,
       this.initWinBytesBackward,
       this.flowBytesS,
-      this.bwdHeaderLength,
       this.totalBackwardPackets,
+      this.bwdHeaderLength,
+      this.subflowBwdPackets,
+      this.packetLengthMean,
+      this.actDataPktFwd,
       this.initWinBytesForward,
       this.fwdHeaderLength,
-      this.maxPacketLength,
-      this.bwdPacketsS,
-      this.averagePacketSize,
-      this.sSHPatator,
-      this.sSHPatatorProb,
+      this.sSHPatatorLogic,
+      this.sSHPatatorProbLogic,
+      this.sSHPatatorNn,
+      this.sSHPatatorProbNn,
+      this.sSHPatatorSgd,
+      this.sSHPatatorXgb,
+      this.sSHPatatorProbXgb,
       this.sourceIP,
       this.destinationIP,
       this.protocol,
@@ -38,15 +48,20 @@ class SSHPatatorModel {
     destinationPort = json[' Destination Port'];
     initWinBytesBackward = json[' Init_Win_bytes_backward'];
     flowBytesS = json['Flow Bytes/s'];
-    bwdHeaderLength = json[' Bwd Header Length'];
     totalBackwardPackets = json[' Total Backward Packets'];
+    bwdHeaderLength = json[' Bwd Header Length'];
+    subflowBwdPackets = json[' Subflow Bwd Packets'];
+    packetLengthMean = json[' Packet Length Mean'];
+    actDataPktFwd = json[' act_data_pkt_fwd'];
     initWinBytesForward = json['Init_Win_bytes_forward'];
     fwdHeaderLength = json[' Fwd Header Length'];
-    maxPacketLength = json[' Max Packet Length'];
-    bwdPacketsS = json[' Bwd Packets/s'];
-    averagePacketSize = json[' Average Packet Size'];
-    sSHPatator = json['SSHPatator'];
-    sSHPatatorProb = json['SSHPatator_prob'];
+    sSHPatatorLogic = json['SSHPatator_logic'];
+    sSHPatatorProbLogic = json['SSHPatator_prob_logic'];
+    sSHPatatorNn = json['SSHPatator_nn'];
+    sSHPatatorProbNn = json['SSHPatator_prob_nn'];
+    sSHPatatorSgd = json['SSHPatator_sgd'];
+    sSHPatatorXgb = json['SSHPatator_xgb'];
+    sSHPatatorProbXgb = double.parse(json['SSHPatator_prob_xgb']);
     sourceIP = json['Source IP'];
     destinationIP = json['Destination IP'];
     protocol = json['Protocol'];
@@ -58,15 +73,20 @@ class SSHPatatorModel {
     data[' Destination Port'] = destinationPort;
     data[' Init_Win_bytes_backward'] = initWinBytesBackward;
     data['Flow Bytes/s'] = flowBytesS;
-    data[' Bwd Header Length'] = bwdHeaderLength;
     data[' Total Backward Packets'] = totalBackwardPackets;
+    data[' Bwd Header Length'] = bwdHeaderLength;
+    data[' Subflow Bwd Packets'] = subflowBwdPackets;
+    data[' Packet Length Mean'] = packetLengthMean;
+    data[' act_data_pkt_fwd'] = actDataPktFwd;
     data['Init_Win_bytes_forward'] = initWinBytesForward;
     data[' Fwd Header Length'] = fwdHeaderLength;
-    data[' Max Packet Length'] = maxPacketLength;
-    data[' Bwd Packets/s'] = bwdPacketsS;
-    data[' Average Packet Size'] = averagePacketSize;
-    data['SSHPatator'] = sSHPatator;
-    data['SSHPatator_prob'] = sSHPatatorProb;
+    data['SSHPatator_logic'] = sSHPatatorLogic;
+    data['SSHPatator_prob_logic'] = sSHPatatorProbLogic;
+    data['SSHPatator_nn'] = sSHPatatorNn;
+    data['SSHPatator_prob_nn'] = sSHPatatorProbNn;
+    data['SSHPatator_sgd'] = sSHPatatorSgd;
+    data['SSHPatator_xgb'] = sSHPatatorXgb;
+    data['SSHPatator_prob_xgb'] = sSHPatatorProbXgb;
     data['Source IP'] = sourceIP;
     data['Destination IP'] = destinationIP;
     data['Protocol'] = protocol;

@@ -1,52 +1,67 @@
 class DoSSlowhttptestModel {
-  String? flowIATMean;
   String? flowPacketsS;
-  String? flowIATMax;
-  String? fwdIATStd;
-  String? fwdIATMax;
   String? fwdIATMean;
-  String? activeMax;
-  String? fwdPacketsS;
+  String? flowIATMax;
+  String? flowIATMean;
   String? flowIATStd;
+  String? fwdIATStd;
+  String? fwdPacketsS;
+  String? fwdIATMax;
   String? idleMax;
-  String? doSSlowhttptest;
-  String? doSSlowhttptestProb;
+  String? flowDuration;
+  String? doSSlowhttptestLogic;
+  String? doSSlowhttptestProbLogic;
+  String? doSSlowhttptestNn;
+  String? doSSlowhttptestProbNn;
+  String? doSSlowhttptestSgd;
+  String? doSSlowhttptestXgb;
+  double? doSSlowhttptestProbXgb;
   String? sourceIP;
   String? destinationIP;
   String? protocol;
   String? timestamp;
 
   DoSSlowhttptestModel(
-      {this.flowIATMean,
-      this.flowPacketsS,
-      this.flowIATMax,
-      this.fwdIATStd,
-      this.fwdIATMax,
+      {this.flowPacketsS,
       this.fwdIATMean,
-      this.activeMax,
-      this.fwdPacketsS,
+      this.flowIATMax,
+      this.flowIATMean,
       this.flowIATStd,
+      this.fwdIATStd,
+      this.fwdPacketsS,
+      this.fwdIATMax,
       this.idleMax,
-      this.doSSlowhttptest,
-      this.doSSlowhttptestProb,
+      this.flowDuration,
+      this.doSSlowhttptestLogic,
+      this.doSSlowhttptestProbLogic,
+      this.doSSlowhttptestNn,
+      this.doSSlowhttptestProbNn,
+      this.doSSlowhttptestSgd,
+      this.doSSlowhttptestXgb,
+      this.doSSlowhttptestProbXgb,
       this.sourceIP,
       this.destinationIP,
       this.protocol,
       this.timestamp});
 
   DoSSlowhttptestModel.fromJson(Map<String, dynamic> json) {
-    flowIATMean = json[' Flow IAT Mean'];
     flowPacketsS = json[' Flow Packets/s'];
-    flowIATMax = json[' Flow IAT Max'];
-    fwdIATStd = json[' Fwd IAT Std'];
-    fwdIATMax = json[' Fwd IAT Max'];
     fwdIATMean = json[' Fwd IAT Mean'];
-    activeMax = json[' Active Max'];
-    fwdPacketsS = json['Fwd Packets/s'];
+    flowIATMax = json[' Flow IAT Max'];
+    flowIATMean = json[' Flow IAT Mean'];
     flowIATStd = json[' Flow IAT Std'];
+    fwdIATStd = json[' Fwd IAT Std'];
+    fwdPacketsS = json['Fwd Packets/s'];
+    fwdIATMax = json[' Fwd IAT Max'];
     idleMax = json[' Idle Max'];
-    doSSlowhttptest = json['DoS_Slowhttptest'];
-    doSSlowhttptestProb = json['DoS_Slowhttptest_prob'];
+    flowDuration = json[' Flow Duration'];
+    doSSlowhttptestLogic = json['DoS_Slowhttptest_logic'];
+    doSSlowhttptestProbLogic = json['DoS_Slowhttptest_prob_logic'];
+    doSSlowhttptestNn = json['DoS_Slowhttptest_nn'];
+    doSSlowhttptestProbNn = json['DoS_Slowhttptest_prob_nn'];
+    doSSlowhttptestSgd = json['DoS_Slowhttptest_sgd'];
+    doSSlowhttptestXgb = json['DoS_Slowhttptest_xgb'];
+    doSSlowhttptestProbXgb = double.parse(json['DoS_Slowhttptest_prob_xgb']);
     sourceIP = json['Source IP'];
     destinationIP = json['Destination IP'];
     protocol = json['Protocol'];
@@ -55,18 +70,23 @@ class DoSSlowhttptestModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data[' Flow IAT Mean'] = flowIATMean;
     data[' Flow Packets/s'] = flowPacketsS;
-    data[' Flow IAT Max'] = flowIATMax;
-    data[' Fwd IAT Std'] = fwdIATStd;
-    data[' Fwd IAT Max'] = fwdIATMax;
     data[' Fwd IAT Mean'] = fwdIATMean;
-    data[' Active Max'] = activeMax;
-    data['Fwd Packets/s'] = fwdPacketsS;
+    data[' Flow IAT Max'] = flowIATMax;
+    data[' Flow IAT Mean'] = flowIATMean;
     data[' Flow IAT Std'] = flowIATStd;
+    data[' Fwd IAT Std'] = fwdIATStd;
+    data['Fwd Packets/s'] = fwdPacketsS;
+    data[' Fwd IAT Max'] = fwdIATMax;
     data[' Idle Max'] = idleMax;
-    data['DoS_Slowhttptest'] = doSSlowhttptest;
-    data['DoS_Slowhttptest_prob'] = doSSlowhttptestProb;
+    data[' Flow Duration'] = flowDuration;
+    data['DoS_Slowhttptest_logic'] = doSSlowhttptestLogic;
+    data['DoS_Slowhttptest_prob_logic'] = doSSlowhttptestProbLogic;
+    data['DoS_Slowhttptest_nn'] = doSSlowhttptestNn;
+    data['DoS_Slowhttptest_prob_nn'] = doSSlowhttptestProbNn;
+    data['DoS_Slowhttptest_sgd'] = doSSlowhttptestSgd;
+    data['DoS_Slowhttptest_xgb'] = doSSlowhttptestXgb;
+    data['DoS_Slowhttptest_prob_xgb'] = doSSlowhttptestProbXgb;
     data['Source IP'] = sourceIP;
     data['Destination IP'] = destinationIP;
     data['Protocol'] = protocol;

@@ -1,52 +1,67 @@
 class DDoSBenignModel {
-  String? bwdPacketLengthMean;
   String? packetLengthVariance;
-  String? packetLengthStd;
+  String? bwdPacketLengthMean;
   String? bwdPacketLengthStd;
+  String? fwdPacketLengthMax;
+  String? packetLengthStd;
   String? avgBwdSegmentSize;
-  String? actDataPktFwd;
-  String? subflowFwdPackets;
-  String? fwdIATStd;
   String? averagePacketSize;
-  String? fwdPacketLengthMean;
-  String? dfDDoSBenign;
-  String? dfDDoSBenignProb;
+  String? actDataPktFwd;
+  String? packetLengthMean;
+  String? fwdIATStd;
+  String? dfDDoSBenignLogic;
+  String? dfDDoSBenignProbLogic;
+  String? dfDDoSBenignNn;
+  String? dfDDoSBenignProbNn;
+  String? dfDDoSBenignSgd;
+  String? dfDDoSBenignXgb;
+  double? dfDDoSBenignProbXgb;
   String? sourceIP;
   String? destinationIP;
   String? protocol;
   String? timestamp;
 
   DDoSBenignModel(
-      {this.bwdPacketLengthMean,
-      this.packetLengthVariance,
-      this.packetLengthStd,
+      {this.packetLengthVariance,
+      this.bwdPacketLengthMean,
       this.bwdPacketLengthStd,
+      this.fwdPacketLengthMax,
+      this.packetLengthStd,
       this.avgBwdSegmentSize,
-      this.actDataPktFwd,
-      this.subflowFwdPackets,
-      this.fwdIATStd,
       this.averagePacketSize,
-      this.fwdPacketLengthMean,
-      this.dfDDoSBenign,
-      this.dfDDoSBenignProb,
+      this.actDataPktFwd,
+      this.packetLengthMean,
+      this.fwdIATStd,
+      this.dfDDoSBenignLogic,
+      this.dfDDoSBenignProbLogic,
+      this.dfDDoSBenignNn,
+      this.dfDDoSBenignProbNn,
+      this.dfDDoSBenignSgd,
+      this.dfDDoSBenignXgb,
+      this.dfDDoSBenignProbXgb,
       this.sourceIP,
       this.destinationIP,
       this.protocol,
       this.timestamp});
 
   DDoSBenignModel.fromJson(Map<String, dynamic> json) {
-    bwdPacketLengthMean = json[' Bwd Packet Length Mean'];
     packetLengthVariance = json[' Packet Length Variance'];
-    packetLengthStd = json[' Packet Length Std'];
+    bwdPacketLengthMean = json[' Bwd Packet Length Mean'];
     bwdPacketLengthStd = json[' Bwd Packet Length Std'];
+    fwdPacketLengthMax = json[' Fwd Packet Length Max'];
+    packetLengthStd = json[' Packet Length Std'];
     avgBwdSegmentSize = json[' Avg Bwd Segment Size'];
-    actDataPktFwd = json[' act_data_pkt_fwd'];
-    subflowFwdPackets = json['Subflow Fwd Packets'];
-    fwdIATStd = json[' Fwd IAT Std'];
     averagePacketSize = json[' Average Packet Size'];
-    fwdPacketLengthMean = json[' Fwd Packet Length Mean'];
-    dfDDoSBenign = json['df_DDoS_benign'];
-    dfDDoSBenignProb = json['df_DDoS_benign_prob'];
+    actDataPktFwd = json[' act_data_pkt_fwd'];
+    packetLengthMean = json[' Packet Length Mean'];
+    fwdIATStd = json[' Fwd IAT Std'];
+    dfDDoSBenignLogic = json['df_DDoS_benign_logic'];
+    dfDDoSBenignProbLogic = json['df_DDoS_benign_prob_logic'];
+    dfDDoSBenignNn = json['df_DDoS_benign_nn'];
+    dfDDoSBenignProbNn = json['df_DDoS_benign_prob_nn'];
+    dfDDoSBenignSgd = json['df_DDoS_benign_sgd'];
+    dfDDoSBenignXgb = json['df_DDoS_benign_xgb'];
+    dfDDoSBenignProbXgb = double.parse(json['df_DDoS_benign_prob_xgb']);
     sourceIP = json['Source IP'];
     destinationIP = json['Destination IP'];
     protocol = json['Protocol'];
@@ -55,18 +70,23 @@ class DDoSBenignModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data[' Bwd Packet Length Mean'] = bwdPacketLengthMean;
     data[' Packet Length Variance'] = packetLengthVariance;
-    data[' Packet Length Std'] = packetLengthStd;
+    data[' Bwd Packet Length Mean'] = bwdPacketLengthMean;
     data[' Bwd Packet Length Std'] = bwdPacketLengthStd;
+    data[' Fwd Packet Length Max'] = fwdPacketLengthMax;
+    data[' Packet Length Std'] = packetLengthStd;
     data[' Avg Bwd Segment Size'] = avgBwdSegmentSize;
-    data[' act_data_pkt_fwd'] = actDataPktFwd;
-    data['Subflow Fwd Packets'] = subflowFwdPackets;
-    data[' Fwd IAT Std'] = fwdIATStd;
     data[' Average Packet Size'] = averagePacketSize;
-    data[' Fwd Packet Length Mean'] = fwdPacketLengthMean;
-    data['df_DDoS_benign'] = dfDDoSBenign;
-    data['df_DDoS_benign_prob'] = dfDDoSBenignProb;
+    data[' act_data_pkt_fwd'] = actDataPktFwd;
+    data[' Packet Length Mean'] = packetLengthMean;
+    data[' Fwd IAT Std'] = fwdIATStd;
+    data['df_DDoS_benign_logic'] = dfDDoSBenignLogic;
+    data['df_DDoS_benign_prob_logic'] = dfDDoSBenignProbLogic;
+    data['df_DDoS_benign_nn'] = dfDDoSBenignNn;
+    data['df_DDoS_benign_prob_nn'] = dfDDoSBenignProbNn;
+    data['df_DDoS_benign_sgd'] = dfDDoSBenignSgd;
+    data['df_DDoS_benign_xgb'] = dfDDoSBenignXgb;
+    data['df_DDoS_benign_prob_xgb'] = dfDDoSBenignProbXgb;
     data['Source IP'] = sourceIP;
     data['Destination IP'] = destinationIP;
     data['Protocol'] = protocol;

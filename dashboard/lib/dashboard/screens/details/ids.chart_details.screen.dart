@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dashboard/dashboard/model/ids_model/FTPPatator_model.dart';
@@ -13,7 +12,6 @@ import 'package:dashboard/dashboard/model/ids_model/SSHPatator_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/Web_Attack_Sql_Injection_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/Web_Attack_XSS_benign_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/df_DDoS_benign_model.dart';
-import 'package:dashboard/dashboard/model/ids_model/df_Web_Attack_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/dos_GoldenEye_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/dos_Hulk_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/dos_SlowHttp_model.dart';
@@ -68,8 +66,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   List<IDSBotModel> liveBot = [];
   List<DDoSBenignModel> ddosData = [];
   List<DDoSBenignModel> liveDdosData = [];
-  List<WebAttackModel> webAttackData = [];
-  List<WebAttackModel> livewebAttackData = [];
+
   List<DoSGoldenEyeModel> dosGoldenData = [];
   List<DoSGoldenEyeModel> livedosGoldenData = [];
   List<DoSHulkModel> dosHulkData = [];
@@ -101,7 +98,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
     if (isPlay) {
       liveBot = chartData.sublist(data + 40, (data + 40) + 40);
       liveDdosData = ddosData.sublist(data + 40, (data + 40) + 40);
-      livewebAttackData = webAttackData.sublist(data + 40, (data + 40) + 40);
       livedosGoldenData = dosGoldenData.sublist(data + 40, (data + 40) + 40);
       livedosHulkData = dosHulkData.sublist(data + 40, (data + 40) + 40);
       liveslowHttpData = slowHttpData.sublist(data + 40, (data + 40) + 40);
@@ -629,7 +625,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         dataSource: liveBot,
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (IDSBotModel bot, _) => bot.timestamp,
-        yValueMapper: (IDSBotModel bot, _) => bot.bot == "Bot" ? 1 : -1,
+        yValueMapper: (IDSBotModel bot, _) => bot.botProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -649,8 +645,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         dataSource: liveDdosData,
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (DDoSBenignModel bot, _) => bot.timestamp,
-        yValueMapper: (DDoSBenignModel bot, _) =>
-            bot.dfDDoSBenign == "DDoS" ? 1 : -1,
+        yValueMapper: (DDoSBenignModel bot, _) => bot.dfDDoSBenignProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -691,8 +686,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         dataSource: livedosGoldenData,
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (DoSGoldenEyeModel bot, _) => bot.timestamp,
-        yValueMapper: (DoSGoldenEyeModel bot, _) =>
-            bot.doSGoldenEye == "BENIGN" ? -1 : 1,
+        yValueMapper: (DoSGoldenEyeModel bot, _) => bot.doSGoldenEyeProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -712,7 +706,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         dataSource: livedosHulkData,
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (DoSHulkModel bot, _) => bot.timestamp,
-        yValueMapper: (DoSHulkModel bot, _) => bot.doSHulk == "BENIGN" ? -1 : 1,
+        yValueMapper: (DoSHulkModel bot, _) => bot.doSHulkProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -733,7 +727,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (DoSSlowhttptestModel bot, _) => bot.timestamp,
         yValueMapper: (DoSSlowhttptestModel bot, _) =>
-            bot.doSSlowhttptest == "BENIGN" ? -1 : 1,
+            bot.doSSlowhttptestProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -753,8 +747,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         dataSource: liveftpPatatorData,
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (FTPPatatorModel bot, _) => bot.timestamp,
-        yValueMapper: (FTPPatatorModel bot, _) =>
-            bot.fTPPatator == "BENIGN" ? -1 : 1,
+        yValueMapper: (FTPPatatorModel bot, _) => bot.fTPPatatorProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -774,8 +767,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         dataSource: liveheartbleedData,
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (HeartbleedModel bot, _) => bot.timestamp,
-        yValueMapper: (HeartbleedModel bot, _) =>
-            bot.heartbleed == "BENIGN" ? -1 : 1,
+        yValueMapper: (HeartbleedModel bot, _) => bot.heartbleedProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -795,8 +787,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         dataSource: liveinfiltrationData,
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (InfiltrationModel bot, _) => bot.timestamp,
-        yValueMapper: (InfiltrationModel bot, _) =>
-            bot.infiltration == "BENIGN" ? -1 : 1,
+        yValueMapper: (InfiltrationModel bot, _) => bot.infiltrationProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -816,8 +807,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         dataSource: liveportScanData,
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (PortScanModel bot, _) => bot.timestamp,
-        yValueMapper: (PortScanModel bot, _) =>
-            bot.portScan == "BENIGN" ? -1 : 1,
+        yValueMapper: (PortScanModel bot, _) => bot.portScanProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -837,8 +827,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         dataSource: livesshPatator,
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (SSHPatatorModel bot, _) => bot.timestamp,
-        yValueMapper: (SSHPatatorModel bot, _) =>
-            bot.sSHPatator == "BENIGN" ? -1 : 1,
+        yValueMapper: (SSHPatatorModel bot, _) => bot.sSHPatatorProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -859,7 +848,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (WebAttackBruteForceModel bot, _) => bot.timestamp,
         yValueMapper: (WebAttackBruteForceModel bot, _) =>
-            bot.webAttackBruteForce == "BENIGN" ? -1 : 1,
+            bot.webAttackBruteForceProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -880,7 +869,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (WebAttackSqlInjectionModel bot, _) => bot.timestamp,
         yValueMapper: (WebAttackSqlInjectionModel bot, _) =>
-            bot.webAttackSqlInjection == "BENIGN" ? -1 : 1,
+            bot.webAttackSqlInjectionProbXgb,
         // animationDuration: 0,
       )
     ];
@@ -901,7 +890,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
         color: const Color.fromRGBO(192, 108, 132, 1),
         xValueMapper: (WebAttackXSSbenignModel bot, _) => bot.timestamp,
         yValueMapper: (WebAttackXSSbenignModel bot, _) =>
-            bot.webAttackXSSBenign == "BENIGN" ? -1 : 1,
+            bot.webAttackXSSBenignProbXgb,
         // animationDuration: 0,
       )
     ];

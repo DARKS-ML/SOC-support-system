@@ -1,52 +1,67 @@
 class DoSHulkModel {
+  String? packetLengthStd;
+  String? bwdPacketLengthStd;
+  String? bwdPacketLengthMean;
+  String? avgBwdSegmentSize;
+  String? averagePacketSize;
   String? packetLengthMean;
   String? maxPacketLength;
-  String? averagePacketSize;
-  String? packetLengthStd;
-  String? packetLengthVariance;
-  String? avgBwdSegmentSize;
-  String? totalLengthOfBwdPackets;
-  String? bwdPacketLengthStd;
+  String? bwdPacketLengthMax;
   String? destinationPort;
-  String? idleMax;
-  String? doSHulk;
-  String? doSHulkProb;
+  String? packetLengthVariance;
+  String? doSHulkLogic;
+  String? doSHulkProbLogic;
+  String? doSHulkNn;
+  String? doSHulkProbNn;
+  String? doSHulkSgd;
+  String? doSHulkXgb;
+  double? doSHulkProbXgb;
   String? sourceIP;
   String? destinationIP;
   String? protocol;
   String? timestamp;
 
   DoSHulkModel(
-      {this.packetLengthMean,
-      this.maxPacketLength,
-      this.averagePacketSize,
-      this.packetLengthStd,
-      this.packetLengthVariance,
-      this.avgBwdSegmentSize,
-      this.totalLengthOfBwdPackets,
+      {this.packetLengthStd,
       this.bwdPacketLengthStd,
+      this.bwdPacketLengthMean,
+      this.avgBwdSegmentSize,
+      this.averagePacketSize,
+      this.packetLengthMean,
+      this.maxPacketLength,
+      this.bwdPacketLengthMax,
       this.destinationPort,
-      this.idleMax,
-      this.doSHulk,
-      this.doSHulkProb,
+      this.packetLengthVariance,
+      this.doSHulkLogic,
+      this.doSHulkProbLogic,
+      this.doSHulkNn,
+      this.doSHulkProbNn,
+      this.doSHulkSgd,
+      this.doSHulkXgb,
+      this.doSHulkProbXgb,
       this.sourceIP,
       this.destinationIP,
       this.protocol,
       this.timestamp});
 
   DoSHulkModel.fromJson(Map<String, dynamic> json) {
+    packetLengthStd = json[' Packet Length Std'];
+    bwdPacketLengthStd = json[' Bwd Packet Length Std'];
+    bwdPacketLengthMean = json[' Bwd Packet Length Mean'];
+    avgBwdSegmentSize = json[' Avg Bwd Segment Size'];
+    averagePacketSize = json[' Average Packet Size'];
     packetLengthMean = json[' Packet Length Mean'];
     maxPacketLength = json[' Max Packet Length'];
-    averagePacketSize = json[' Average Packet Size'];
-    packetLengthStd = json[' Packet Length Std'];
-    packetLengthVariance = json[' Packet Length Variance'];
-    avgBwdSegmentSize = json[' Avg Bwd Segment Size'];
-    totalLengthOfBwdPackets = json[' Total Length of Bwd Packets'];
-    bwdPacketLengthStd = json[' Bwd Packet Length Std'];
+    bwdPacketLengthMax = json['Bwd Packet Length Max'];
     destinationPort = json[' Destination Port'];
-    idleMax = json[' Idle Max'];
-    doSHulk = json['DoS_Hulk'];
-    doSHulkProb = json['DoS_Hulk_prob'];
+    packetLengthVariance = json[' Packet Length Variance'];
+    doSHulkLogic = json['DoS_Hulk_logic'];
+    doSHulkProbLogic = json['DoS_Hulk_prob_logic'];
+    doSHulkNn = json['DoS_Hulk_nn'];
+    doSHulkProbNn = json['DoS_Hulk_prob_nn'];
+    doSHulkSgd = json['DoS_Hulk_sgd'];
+    doSHulkXgb = json['DoS_Hulk_xgb'];
+    doSHulkProbXgb = double.parse(json['DoS_Hulk_prob_xgb']);
     sourceIP = json['Source IP'];
     destinationIP = json['Destination IP'];
     protocol = json['Protocol'];
@@ -55,18 +70,23 @@ class DoSHulkModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data[' Packet Length Std'] = packetLengthStd;
+    data[' Bwd Packet Length Std'] = bwdPacketLengthStd;
+    data[' Bwd Packet Length Mean'] = bwdPacketLengthMean;
+    data[' Avg Bwd Segment Size'] = avgBwdSegmentSize;
+    data[' Average Packet Size'] = averagePacketSize;
     data[' Packet Length Mean'] = packetLengthMean;
     data[' Max Packet Length'] = maxPacketLength;
-    data[' Average Packet Size'] = averagePacketSize;
-    data[' Packet Length Std'] = packetLengthStd;
-    data[' Packet Length Variance'] = packetLengthVariance;
-    data[' Avg Bwd Segment Size'] = avgBwdSegmentSize;
-    data[' Total Length of Bwd Packets'] = totalLengthOfBwdPackets;
-    data[' Bwd Packet Length Std'] = bwdPacketLengthStd;
+    data['Bwd Packet Length Max'] = bwdPacketLengthMax;
     data[' Destination Port'] = destinationPort;
-    data[' Idle Max'] = idleMax;
-    data['DoS_Hulk'] = doSHulk;
-    data['DoS_Hulk_prob'] = doSHulkProb;
+    data[' Packet Length Variance'] = packetLengthVariance;
+    data['DoS_Hulk_logic'] = doSHulkLogic;
+    data['DoS_Hulk_prob_logic'] = doSHulkProbLogic;
+    data['DoS_Hulk_nn'] = doSHulkNn;
+    data['DoS_Hulk_prob_nn'] = doSHulkProbNn;
+    data['DoS_Hulk_sgd'] = doSHulkSgd;
+    data['DoS_Hulk_xgb'] = doSHulkXgb;
+    data['DoS_Hulk_prob_xgb'] = doSHulkProbXgb;
     data['Source IP'] = sourceIP;
     data['Destination IP'] = destinationIP;
     data['Protocol'] = protocol;

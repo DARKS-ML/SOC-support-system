@@ -1,52 +1,67 @@
 class WebAttackXSSbenignModel {
-  String? fwdIATMin;
-  String? fwdPacketLengthMean;
-  String? flowBytesS;
+  String? initWinBytesBackward;
   String? maxPacketLength;
+  String? fwdIATMin;
   String? totalLengthOfFwdPackets;
-  String? fwdIATStd;
-  String? averagePacketSize;
-  String? avgFwdSegmentSize;
   String? flowIATMean;
-  String? flowPacketsS;
-  String? webAttackXSSBenign;
-  String? webAttackXSSBenignProb;
+  String? packetLengthMean;
+  String? fwdHeaderLength1;
+  String? fwdHeaderLength;
+  String? subflowFwdBytes;
+  String? flowIATStd;
+  String? webAttackXSSBenignLogic;
+  String? webAttackXSSBenignProbLogic;
+  String? webAttackXSSBenignNn;
+  String? webAttackXSSBenignProbNn;
+  String? webAttackXSSBenignSgd;
+  String? webAttackXSSBenignXgb;
+  double? webAttackXSSBenignProbXgb;
   String? sourceIP;
   String? destinationIP;
   String? protocol;
   String? timestamp;
 
   WebAttackXSSbenignModel(
-      {this.fwdIATMin,
-      this.fwdPacketLengthMean,
-      this.flowBytesS,
+      {this.initWinBytesBackward,
       this.maxPacketLength,
+      this.fwdIATMin,
       this.totalLengthOfFwdPackets,
-      this.fwdIATStd,
-      this.averagePacketSize,
-      this.avgFwdSegmentSize,
       this.flowIATMean,
-      this.flowPacketsS,
-      this.webAttackXSSBenign,
-      this.webAttackXSSBenignProb,
+      this.packetLengthMean,
+      this.fwdHeaderLength1,
+      this.fwdHeaderLength,
+      this.subflowFwdBytes,
+      this.flowIATStd,
+      this.webAttackXSSBenignLogic,
+      this.webAttackXSSBenignProbLogic,
+      this.webAttackXSSBenignNn,
+      this.webAttackXSSBenignProbNn,
+      this.webAttackXSSBenignSgd,
+      this.webAttackXSSBenignXgb,
+      this.webAttackXSSBenignProbXgb,
       this.sourceIP,
       this.destinationIP,
       this.protocol,
       this.timestamp});
 
   WebAttackXSSbenignModel.fromJson(Map<String, dynamic> json) {
-    fwdIATMin = json[' Fwd IAT Min'];
-    fwdPacketLengthMean = json[' Fwd Packet Length Mean'];
-    flowBytesS = json['Flow Bytes/s'];
+    initWinBytesBackward = json[' Init_Win_bytes_backward'];
     maxPacketLength = json[' Max Packet Length'];
+    fwdIATMin = json[' Fwd IAT Min'];
     totalLengthOfFwdPackets = json['Total Length of Fwd Packets'];
-    fwdIATStd = json[' Fwd IAT Std'];
-    averagePacketSize = json[' Average Packet Size'];
-    avgFwdSegmentSize = json[' Avg Fwd Segment Size'];
     flowIATMean = json[' Flow IAT Mean'];
-    flowPacketsS = json[' Flow Packets/s'];
-    webAttackXSSBenign = json['Web_Attack_XSS_benign'];
-    webAttackXSSBenignProb = json['Web_Attack_XSS_benign_prob'];
+    packetLengthMean = json[' Packet Length Mean'];
+    fwdHeaderLength1 = json[' Fwd Header Length.1'];
+    fwdHeaderLength = json[' Fwd Header Length'];
+    subflowFwdBytes = json[' Subflow Fwd Bytes'];
+    flowIATStd = json[' Flow IAT Std'];
+    webAttackXSSBenignLogic = json['Web_Attack_XSS_benign_logic'];
+    webAttackXSSBenignProbLogic = json['Web_Attack_XSS_benign_prob_logic'];
+    webAttackXSSBenignNn = json['Web_Attack_XSS_benign_nn'];
+    webAttackXSSBenignProbNn = json['Web_Attack_XSS_benign_prob_nn'];
+    webAttackXSSBenignSgd = json['Web_Attack_XSS_benign_sgd'];
+    webAttackXSSBenignXgb = json['Web_Attack_XSS_benign_xgb'];
+    webAttackXSSBenignProbXgb = double.parse(json['Web_Attack_XSS_benign_prob_xgb']);
     sourceIP = json['Source IP'];
     destinationIP = json['Destination IP'];
     protocol = json['Protocol'];
@@ -55,18 +70,23 @@ class WebAttackXSSbenignModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data[' Fwd IAT Min'] = fwdIATMin;
-    data[' Fwd Packet Length Mean'] = fwdPacketLengthMean;
-    data['Flow Bytes/s'] = flowBytesS;
+    data[' Init_Win_bytes_backward'] = initWinBytesBackward;
     data[' Max Packet Length'] = maxPacketLength;
+    data[' Fwd IAT Min'] = fwdIATMin;
     data['Total Length of Fwd Packets'] = totalLengthOfFwdPackets;
-    data[' Fwd IAT Std'] = fwdIATStd;
-    data[' Average Packet Size'] = averagePacketSize;
-    data[' Avg Fwd Segment Size'] = avgFwdSegmentSize;
     data[' Flow IAT Mean'] = flowIATMean;
-    data[' Flow Packets/s'] = flowPacketsS;
-    data['Web_Attack_XSS_benign'] = webAttackXSSBenign;
-    data['Web_Attack_XSS_benign_prob'] = webAttackXSSBenignProb;
+    data[' Packet Length Mean'] = packetLengthMean;
+    data[' Fwd Header Length.1'] = fwdHeaderLength1;
+    data[' Fwd Header Length'] = fwdHeaderLength;
+    data[' Subflow Fwd Bytes'] = subflowFwdBytes;
+    data[' Flow IAT Std'] = flowIATStd;
+    data['Web_Attack_XSS_benign_logic'] = webAttackXSSBenignLogic;
+    data['Web_Attack_XSS_benign_prob_logic'] = webAttackXSSBenignProbLogic;
+    data['Web_Attack_XSS_benign_nn'] = webAttackXSSBenignNn;
+    data['Web_Attack_XSS_benign_prob_nn'] = webAttackXSSBenignProbNn;
+    data['Web_Attack_XSS_benign_sgd'] = webAttackXSSBenignSgd;
+    data['Web_Attack_XSS_benign_xgb'] = webAttackXSSBenignXgb;
+    data['Web_Attack_XSS_benign_prob_xgb'] = webAttackXSSBenignProbXgb;
     data['Source IP'] = sourceIP;
     data['Destination IP'] = destinationIP;
     data['Protocol'] = protocol;
