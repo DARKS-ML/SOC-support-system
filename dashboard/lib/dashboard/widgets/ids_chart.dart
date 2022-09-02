@@ -43,7 +43,7 @@ IDSChart(
                   plotAreaBorderWidth: 0,
                   primaryXAxis: CategoryAxis(
                       title: AxisTitle(
-                          text: "Timestamp",
+                          text: "index",
                           textStyle:
                               const TextStyle(fontWeight: FontWeight.bold)),
                       labelRotation: 20,
@@ -57,8 +57,8 @@ IDSChart(
                       plotBands: <PlotBand>[
                         PlotBand(
                             isVisible: true,
-                            start: 0.02,
-                            end: 0.02,
+                            start: 0.7,
+                            end: 0.7,
                             borderWidth: 2,
                             color: Colors.black),
                       ],

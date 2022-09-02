@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-import '../../authentication/services/auth.service.dart';
 import '../screens/notification.screen.dart';
 import '../services/global.service.dart';
 
@@ -50,7 +50,15 @@ class GlobalWidget {
         CircleAvatar(
           backgroundColor: Colors.black,
           child: IconButton(
-            onPressed: () {
+            onPressed: () async {
+              String path =
+                  "Predicted Results/ids_notf_2022_09_02_group_by.json";
+              File f = File(path);
+              final input = await f.readAsString();
+              final groupbySource = json.decode(input);
+              final dd = groupbySource["source_ip"];
+              print(dd);
+
               // scaffoldKey.currentState!.openEndDrawer();
             },
             icon: const Icon(
@@ -273,7 +281,7 @@ class GlobalWidget {
                               padding: const EdgeInsets.only(left: 8.0),
                               child: notificationList[i]
                                       .toString()
-                                      .split("$notificationKeyName/")[1]
+                                      .split("$notificationKeyName/")[0]
                                       .endsWith(".json")
                                   ? ListTile(
                                       onTap: () {
@@ -288,7 +296,7 @@ class GlobalWidget {
                                         );
                                       },
                                       title: Text(
-                                        "${notificationList[i].toString().split("$notificationKeyName/")[1].split(".")[0].split("_")[1].toUpperCase()} log Anomaly",
+                                        "${notificationList[i].toString().split("$notificationKeyName/")[0].split(".")[0].split("_")[1].toUpperCase()} log Anomaly",
                                         style: const TextStyle(
                                           color: Colors.red,
                                         ),
