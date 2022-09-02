@@ -21,12 +21,12 @@ class DashboardScreenList {
     ),
     SideBarItem(
       text: "Previous Predict",
-      icon: FontAwesomeIcons.diagramPredecessor,
+      icon: FontAwesomeIcons.listCheck,
       tooltipText: "Previous Result Page",
     ),
     SideBarItem(
-      text: "Overview",
-      icon: FontAwesomeIcons.filterCircleDollar,
+      text: "Notification",
+      icon: FontAwesomeIcons.bell,
       tooltipText: "Auth Anomoly CSV",
     ),
     SideBarItem(

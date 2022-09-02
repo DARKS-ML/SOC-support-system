@@ -221,7 +221,7 @@ class GlobalWidget {
                               padding: const EdgeInsets.only(left: 8.0),
                               child: notificationList[i]
                                       .toString()
-                                      .split("$notificationKeyName/")[0]
+                                      .split("$notificationKeyName/")[1]
                                       .endsWith(".json")
                                   ? ListTile(
                                       onTap: () {
@@ -236,7 +236,7 @@ class GlobalWidget {
                                         );
                                       },
                                       title: Text(
-                                        "${notificationList[i].toString().split("$notificationKeyName/")[0].split(".")[0].split("_")[1].toUpperCase()} log Anomaly",
+                                        "${notificationList[i].toString().split("$notificationKeyName/")[1].split(".")[0].split("_")[1].toUpperCase()} log Anomaly",
                                         style: const TextStyle(
                                           color: Colors.red,
                                         ),
@@ -271,14 +271,17 @@ class GlobalWidget {
     );
   }
 
-  static displaySnackbar(
-      {required BuildContext context, String msg = 'Failed to load data'}) {
+  static displaySnackbar({
+    required BuildContext context,
+    String msg = 'Failed to load data',
+    Color color = Colors.red,
+  }) {
     final snackBar = SnackBar(
       content: Text(
         msg,
         textAlign: TextAlign.center,
       ),
-      backgroundColor: (Colors.red),
+      backgroundColor: color,
       behavior: SnackBarBehavior.floating,
       width: 300,
     );

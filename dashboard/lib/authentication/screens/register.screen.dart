@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -243,19 +245,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         email: emailController.text,
                         password: passwordController.text,
                       ).then((value) async {
-                        if (value[0] == 200) {
-                          AuthService.loginService(context: context);
+                        if (value[0] == 201) {
+                          GlobalWidget.displaySnackbar(
+                            context: context,
+                            msg: "User Sucessfuly created",
+                            color: Colors.green,
+                          );
+                          AuthService.loginPage(context: context);
                         } else {
                           final Size size = MediaQuery.of(context).size;
+                          final errorResponse = value[1];
+                          print(value);
+                          final decodedMsg = json.decode(errorResponse);
+                          final keysStringList = decodedMsg.keys
+                              .toString()
+                              .replaceAll("(", "")
+                              .replaceAll(")", "");
+                          final keysList = keysStringList.split(",");
+
+                          // log(keysList[0].toString());
+                          final fieldError = decodedMsg[keysList[0]].toString();
+
+                          // print(fieldError.contains("not be blank.]"));
+                          final errorMessage =
+                              fieldError.contains("field may not be blank.") ||
+                                      fieldError.contains("field is required")
+                                  ? "${keysList[0]} field may not be blank."
+                                  : fieldError
+                                      .replaceAll("[", "")
+                                      .replaceAll("]", "");
+
                           final snackBar = SnackBar(
                             // width: size.width / 2.5,
                             content: Text(
-                              '${value[1]}',
+                              '${errorMessage.substring(0, 1).toUpperCase()}${errorMessage.substring(1, errorMessage.length)}',
                               textAlign: TextAlign.center,
                               style: const TextStyle(fontSize: 25),
                             ),
                             behavior: SnackBarBehavior.floating,
                             backgroundColor: Colors.red,
+                            duration: const Duration(milliseconds: 500),
                             margin: EdgeInsets.fromLTRB(
                               size.width - size.width / 2.4,
                               0,
@@ -336,14 +365,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: {
           "firstname": firstname,
           "lastname": lastname,
-          "phoneNo": phone,
+          "phone": phone,
           "email": email,
           "password": password
         },
       );
 
       final responseBody = [response.statusCode, response.body];
-      log(responseBody.toString());
+      // log(responseBody.toString());
       return responseBody;
     } catch (e) {
       rethrow;
