@@ -326,7 +326,8 @@ class MultiClassPrediction(APIView):
 
 
                 return Response({
-                    "path":notif_json_file_path
+                    "csv_path":notif_csv_file_path,
+                    "json_path":notif_json_file_path
                 })
 
         except Exception as e: 
@@ -343,8 +344,13 @@ class GroupBy(APIView):
             if csv_path.endswith('.csv'):
                 df = pd.read_csv(csv_path)
                 sourceIp = df.groupby([' Source IP','type']).count()
+                sourceIp.reset_index(inplace=True)
+
                 destIp = df.groupby([' Destination IP','type']).count()
+                destIp.reset_index(inplace=True)
+
                 sourcePort = df.groupby([' Source Port','type']).count()
+                sourcePort.reset_index(inplace=True)
 
                 ref = AuthLogDataProcessing()
                 import json
