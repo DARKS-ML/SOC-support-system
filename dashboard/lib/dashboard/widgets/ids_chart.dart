@@ -43,7 +43,7 @@ IDSChart(
                   plotAreaBorderWidth: 0,
                   primaryXAxis: CategoryAxis(
                       title: AxisTitle(
-                          text: "Timestamp",
+                          text: "index",
                           textStyle:
                               const TextStyle(fontWeight: FontWeight.bold)),
                       labelRotation: 20,

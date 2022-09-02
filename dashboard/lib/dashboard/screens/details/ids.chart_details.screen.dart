@@ -63,6 +63,19 @@ class IDSChartDetailsScreen extends StatefulWidget {
 }
 
 class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
+  int botIndex = 0;
+  int ddosIndex = 0;
+  int goldenIndex = 0;
+  int hulkIndex = 0;
+  int slowhttpIndex = 0;
+  int ftpIndex = 0;
+  int heartIndex = 0;
+  int infiltrationIndex = 0;
+  int portScanIndex = 0;
+  int sshIndex = 0;
+  int webforceIndex = 0;
+  int sqlIndex = 0;
+  int webXssIndex = 0;
   List<IDSBotModel> chartData = [];
   List<IDSBotModel> liveBot = [];
   List<DDoSBenignModel> ddosData = [];
@@ -404,9 +417,13 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
     loadIDSBruteForceLog();
     loadIDSSqlInjectionLog();
     loadIDSWebXssLog();
-    timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
       _updateDataSource(timer);
-      isPlay ? setState(() {}) : null;
+      isPlay
+          ? setState(() {
+              // plotIndex++;
+            })
+          : null;
     });
     _tooltipBehavior1 = hoverBot();
     _tooltipBehavior2 = hoverDdos();
@@ -607,19 +624,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
   //bot
-  List<LineSeries<IDSBotModel, String>> getBotChart() {
-    return <LineSeries<IDSBotModel, String>>[
-      LineSeries<IDSBotModel, String>(
+  List<LineSeries<IDSBotModel, int>> getBotChart() {
+    return <LineSeries<IDSBotModel, int>>[
+      LineSeries<IDSBotModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: liveBot,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (IDSBotModel bot, _) => bot.timestamp,
+        xValueMapper: (IDSBotModel bot, _) => botIndex++,
         yValueMapper: (IDSBotModel bot, _) => bot.botProbXgb,
         // animationDuration: 0,
       )
@@ -627,60 +641,33 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
 //ddos
-  List<LineSeries<DDoSBenignModel, String>> getDDosChart() {
-    return <LineSeries<DDoSBenignModel, String>>[
-      LineSeries<DDoSBenignModel, String>(
+  List<LineSeries<DDoSBenignModel, int>> getDDosChart() {
+    return <LineSeries<DDoSBenignModel, int>>[
+      LineSeries<DDoSBenignModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: liveDdosData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (DDoSBenignModel bot, _) => bot.timestamp,
+        xValueMapper: (DDoSBenignModel bot, _) => ddosIndex++,
         yValueMapper: (DDoSBenignModel bot, _) => bot.dfDDoSBenignProbXgb,
         // animationDuration: 0,
       )
     ];
   }
 
-//web attack
-  // List<LineSeries<WebAttackModel, String>> getWebAttackChart() {
-  //   return <LineSeries<WebAttackModel, String>>[
-  //     LineSeries<WebAttackModel, String>(
-  //       markerSettings: const MarkerSettings(
-  //         isVisible: true,
-  //       ),
-
-  //       // onRendererCreated: (ChartSeriesController controller) {
-  //       //   _chartSeriesController = controller;
-  //       // },
-  //       dataSource: livewebAttackData,
-  //       color: const Color.fromRGBO(192, 108, 132, 1),
-  //       xValueMapper: (WebAttackModel bot, _) => bot.timestamp,
-  //       yValueMapper: (WebAttackModel bot, _) =>
-  //           bot.dfWebAttack == "BENIGN" ? -1 : 1,
-  //       // animationDuration: 0,
-  //     )
-  //   ];
-  // }
-
   //Gloden EYE
-  List<LineSeries<DoSGoldenEyeModel, String>> getGoldenEyeChart() {
-    return <LineSeries<DoSGoldenEyeModel, String>>[
-      LineSeries<DoSGoldenEyeModel, String>(
+  List<LineSeries<DoSGoldenEyeModel, int>> getGoldenEyeChart() {
+    return <LineSeries<DoSGoldenEyeModel, int>>[
+      LineSeries<DoSGoldenEyeModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: livedosGoldenData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (DoSGoldenEyeModel bot, _) => bot.timestamp,
+        xValueMapper: (DoSGoldenEyeModel bot, _) => goldenIndex++,
         yValueMapper: (DoSGoldenEyeModel bot, _) => bot.doSGoldenEyeProbXgb,
         // animationDuration: 0,
       )
@@ -688,19 +675,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
   //DOS HUlk
-  List<LineSeries<DoSHulkModel, String>> getHulkChart() {
-    return <LineSeries<DoSHulkModel, String>>[
-      LineSeries<DoSHulkModel, String>(
+  List<LineSeries<DoSHulkModel, int>> getHulkChart() {
+    return <LineSeries<DoSHulkModel, int>>[
+      LineSeries<DoSHulkModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: livedosHulkData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (DoSHulkModel bot, _) => bot.timestamp,
+        xValueMapper: (DoSHulkModel bot, _) => hulkIndex++,
         yValueMapper: (DoSHulkModel bot, _) => bot.doSHulkProbXgb,
         // animationDuration: 0,
       )
@@ -708,19 +692,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
   //Slow Http
-  List<LineSeries<DoSSlowhttptestModel, String>> getSlowHttpChart() {
-    return <LineSeries<DoSSlowhttptestModel, String>>[
-      LineSeries<DoSSlowhttptestModel, String>(
+  List<LineSeries<DoSSlowhttptestModel, int>> getSlowHttpChart() {
+    return <LineSeries<DoSSlowhttptestModel, int>>[
+      LineSeries<DoSSlowhttptestModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: liveslowHttpData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (DoSSlowhttptestModel bot, _) => bot.timestamp,
+        xValueMapper: (DoSSlowhttptestModel bot, _) => slowhttpIndex++,
         yValueMapper: (DoSSlowhttptestModel bot, _) =>
             bot.doSSlowhttptestProbXgb,
         // animationDuration: 0,
@@ -729,19 +710,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
   //FTP PATATOR
-  List<LineSeries<FTPPatatorModel, String>> getFtpPatatorChart() {
-    return <LineSeries<FTPPatatorModel, String>>[
-      LineSeries<FTPPatatorModel, String>(
+  List<LineSeries<FTPPatatorModel, int>> getFtpPatatorChart() {
+    return <LineSeries<FTPPatatorModel, int>>[
+      LineSeries<FTPPatatorModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: liveftpPatatorData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (FTPPatatorModel bot, _) => bot.timestamp,
+        xValueMapper: (FTPPatatorModel bot, _) => ftpIndex++,
         yValueMapper: (FTPPatatorModel bot, _) => bot.fTPPatatorProbXgb,
         // animationDuration: 0,
       )
@@ -749,19 +727,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
   //Heartbleed
-  List<LineSeries<HeartbleedModel, String>> getHeartbleedChart() {
-    return <LineSeries<HeartbleedModel, String>>[
-      LineSeries<HeartbleedModel, String>(
+  List<LineSeries<HeartbleedModel, int>> getHeartbleedChart() {
+    return <LineSeries<HeartbleedModel, int>>[
+      LineSeries<HeartbleedModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: liveheartbleedData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (HeartbleedModel bot, _) => bot.timestamp,
+        xValueMapper: (HeartbleedModel bot, _) => heartIndex++,
         yValueMapper: (HeartbleedModel bot, _) => bot.heartbleedProbXgb,
         // animationDuration: 0,
       )
@@ -769,19 +744,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
   //Infiltration
-  List<LineSeries<InfiltrationModel, String>> getInfiltrationChart() {
-    return <LineSeries<InfiltrationModel, String>>[
-      LineSeries<InfiltrationModel, String>(
+  List<LineSeries<InfiltrationModel, int>> getInfiltrationChart() {
+    return <LineSeries<InfiltrationModel, int>>[
+      LineSeries<InfiltrationModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: liveinfiltrationData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (InfiltrationModel bot, _) => bot.timestamp,
+        xValueMapper: (InfiltrationModel bot, _) => infiltrationIndex++,
         yValueMapper: (InfiltrationModel bot, _) => bot.infiltrationProbXgb,
         // animationDuration: 0,
       )
@@ -789,19 +761,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
   //PortScan
-  List<LineSeries<PortScanModel, String>> getPortScanChart() {
-    return <LineSeries<PortScanModel, String>>[
-      LineSeries<PortScanModel, String>(
+  List<LineSeries<PortScanModel, int>> getPortScanChart() {
+    return <LineSeries<PortScanModel, int>>[
+      LineSeries<PortScanModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: liveportScanData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (PortScanModel bot, _) => bot.timestamp,
+        xValueMapper: (PortScanModel bot, _) => portScanIndex++,
         yValueMapper: (PortScanModel bot, _) => bot.portScanProbXgb,
         // animationDuration: 0,
       )
@@ -809,19 +778,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
 //SSH Patator
-  List<LineSeries<SSHPatatorModel, String>> getsshPatatorChart() {
-    return <LineSeries<SSHPatatorModel, String>>[
-      LineSeries<SSHPatatorModel, String>(
+  List<LineSeries<SSHPatatorModel, int>> getsshPatatorChart() {
+    return <LineSeries<SSHPatatorModel, int>>[
+      LineSeries<SSHPatatorModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: livesshPatator,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (SSHPatatorModel bot, _) => bot.timestamp,
+        xValueMapper: (SSHPatatorModel bot, _) => sshIndex++,
         yValueMapper: (SSHPatatorModel bot, _) => bot.sSHPatatorProbXgb,
         // animationDuration: 0,
       )
@@ -829,19 +795,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
 //Web Brute Force
-  List<LineSeries<WebAttackBruteForceModel, String>> getwebBruteForceChart() {
-    return <LineSeries<WebAttackBruteForceModel, String>>[
-      LineSeries<WebAttackBruteForceModel, String>(
+  List<LineSeries<WebAttackBruteForceModel, int>> getwebBruteForceChart() {
+    return <LineSeries<WebAttackBruteForceModel, int>>[
+      LineSeries<WebAttackBruteForceModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: livewebBruteForceData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (WebAttackBruteForceModel bot, _) => bot.timestamp,
+        xValueMapper: (WebAttackBruteForceModel bot, _) => webforceIndex++,
         yValueMapper: (WebAttackBruteForceModel bot, _) =>
             bot.webAttackBruteForceProbXgb,
         // animationDuration: 0,
@@ -850,19 +813,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
 //Sql Injection
-  List<LineSeries<WebAttackSqlInjectionModel, String>> getsqlInjectionChart() {
-    return <LineSeries<WebAttackSqlInjectionModel, String>>[
-      LineSeries<WebAttackSqlInjectionModel, String>(
+  List<LineSeries<WebAttackSqlInjectionModel, int>> getsqlInjectionChart() {
+    return <LineSeries<WebAttackSqlInjectionModel, int>>[
+      LineSeries<WebAttackSqlInjectionModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: livesqlInjectionData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (WebAttackSqlInjectionModel bot, _) => bot.timestamp,
+        xValueMapper: (WebAttackSqlInjectionModel bot, _) => sqlIndex++,
         yValueMapper: (WebAttackSqlInjectionModel bot, _) =>
             bot.webAttackSqlInjectionProbXgb,
         // animationDuration: 0,
@@ -871,19 +831,16 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   }
 
 //Web Xss
-  List<LineSeries<WebAttackXSSbenignModel, String>> getwebXssChart() {
-    return <LineSeries<WebAttackXSSbenignModel, String>>[
-      LineSeries<WebAttackXSSbenignModel, String>(
+  List<LineSeries<WebAttackXSSbenignModel, int>> getwebXssChart() {
+    return <LineSeries<WebAttackXSSbenignModel, int>>[
+      LineSeries<WebAttackXSSbenignModel, int>(
         markerSettings: const MarkerSettings(
           isVisible: true,
         ),
 
-        // onRendererCreated: (ChartSeriesController controller) {
-        //   _chartSeriesController = controller;
-        // },
         dataSource: livewebXssData,
         color: const Color.fromRGBO(192, 108, 132, 1),
-        xValueMapper: (WebAttackXSSbenignModel bot, _) => bot.timestamp,
+        xValueMapper: (WebAttackXSSbenignModel bot, _) => webXssIndex++,
         yValueMapper: (WebAttackXSSbenignModel bot, _) =>
             bot.webAttackXSSBenignProbXgb,
         // animationDuration: 0,
@@ -919,6 +876,11 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
+                        "TimeStamp:${data.timestamp.toString()}",
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
                         "Source IP:${data.sourceIP.toString()}",
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
@@ -930,11 +892,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                       ),
                       Text(
                         "Probability:${data.botProbXgb.toString()}",
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Destination Port:${data.destinationPort.toString()}",
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -1004,6 +961,11 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
@@ -1015,11 +977,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                     ),
                     Text(
                       "Probability:${data.doSGoldenEyeProbXgb.toString()}",
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Destination Port:${data.destinationPort.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
@@ -1046,6 +1003,11 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
@@ -1057,11 +1019,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                     ),
                     Text(
                       "Probability:${data.doSHulkProbXgb.toString()}",
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Destination Port:${data.destinationPort.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
@@ -1080,13 +1037,18 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
           int seriesIndex) {
         return Expanded(
           child: SizedBox(
-            height: 100,
+            height: 110,
             width: 270,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
                     Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
@@ -1102,11 +1064,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    // Text(
-                    //   "Destination Port:${data.destinationPort.toString()}",
-                    //   style: const TextStyle(
-                    //       color: Colors.white, fontWeight: FontWeight.bold),
-                    // ),
                   ]),
             ),
           ),
@@ -1130,6 +1087,11 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
@@ -1141,11 +1103,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                     ),
                     Text(
                       "Probability:${data.fTPPatatorProbXgb.toString()}",
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Destination Port:${data.destinationPort.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
@@ -1172,6 +1129,11 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
@@ -1186,11 +1148,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    // Text(
-                    //   "Destination Port:${data.destinationPort.toString()}",
-                    //   style: const TextStyle(
-                    //       color: Colors.white, fontWeight: FontWeight.bold),
-                    // ),
                   ]),
             ),
           ),
@@ -1214,6 +1171,11 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
@@ -1228,11 +1190,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    // Text(
-                    //   "Destination Port:${data.destinationPort.toString()}",
-                    //   style: const TextStyle(
-                    //       color: Colors.white, fontWeight: FontWeight.bold),
-                    // ),
                   ]),
             ),
           ),
@@ -1248,13 +1205,18 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
           int seriesIndex) {
         return Expanded(
           child: SizedBox(
-            height: 100,
+            height: 110,
             width: 270,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
                     Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
@@ -1270,11 +1232,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    // Text(
-                    //   "Destination Port:${data.destinationPort.toString()}",
-                    //   style: const TextStyle(
-                    //       color: Colors.white, fontWeight: FontWeight.bold),
-                    // ),
                   ]),
             ),
           ),
@@ -1298,6 +1255,11 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
@@ -1309,11 +1271,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                     ),
                     Text(
                       "Probability:${data.sSHPatatorProbXgb.toString()}",
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Destination Port:${data.destinationPort.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
@@ -1340,6 +1297,11 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
@@ -1351,11 +1313,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                     ),
                     Text(
                       "Probability:${data.webAttackBruteForceProbXgb.toString()}",
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Destination Port:${data.destinationPort.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
@@ -1382,6 +1339,11 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
@@ -1393,11 +1355,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                     ),
                     Text(
                       "Probability:${data.webAttackSqlInjectionProbXgb.toString()}",
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Destination Port:${data.destinationPort.toString()}",
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
@@ -1416,13 +1373,18 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
           int seriesIndex) {
         return Expanded(
           child: SizedBox(
-            height: 100,
+            height: 110,
             width: 270,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
                     Text(
                       "Source IP:${data.sourceIP.toString()}",
                       style: const TextStyle(
@@ -1438,11 +1400,6 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    // Text(
-                    //   "Destination Port:${data.destinationPort.toString()}",
-                    //   style: const TextStyle(
-                    //       color: Colors.white, fontWeight: FontWeight.bold),
-                    // ),
                   ]),
             ),
           ),

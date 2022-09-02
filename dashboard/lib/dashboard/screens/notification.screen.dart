@@ -76,7 +76,6 @@ class NotificationScreen extends StatelessWidget {
 
 loadDataFromFile({required String filePath}) async {
   String path = filePath;
-  // "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/ids_2022_08_27/Bot/json/Bot_2022_08_27.json";
   File f = File(path);
   final input = await f.readAsString();
 

@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-import '../../authentication/services/auth.service.dart';
 import '../screens/notification.screen.dart';
 import '../services/global.service.dart';
 
