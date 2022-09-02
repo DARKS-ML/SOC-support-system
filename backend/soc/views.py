@@ -179,7 +179,7 @@ class MultiLineAuthLogView(APIView):
                 if not os.path.exists(notification_date_path):             
                     os.makedirs(notification_date_path)
                 
-                notification_name = ref.fileNameFormat("notf_auth")
+                notification_name = ref.fileNameFormat("auth_notf")
                 notif_csv_file_path = f'{notification_date_path}/{notification_name}.csv'
                 notif.to_csv(notif_csv_file_path,index=False,header=True)
 
@@ -219,8 +219,11 @@ class NotificationResult(APIView):
     def get(self,request):
 
         dir_name = notification_path+"Notification/"
+        dir_name_groupby = notification_path+"Groupby/"
         
         path = dir_name
+        groupby_path = dir_name_groupby
+
         def tree_path_json(path):
             dir_structure = {}
             base_name = os.path.basename(os.path.realpath(path))
@@ -231,8 +234,10 @@ class NotificationResult(APIView):
                 return os.path.abspath(path)
             return dir_structure
         data = tree_path_json(path)
+        groupby = tree_path_json(groupby_path)
         return Response({
-            "data":data
+            "data":data,
+            "groupby":groupby,
         })
         
 

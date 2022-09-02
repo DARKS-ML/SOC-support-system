@@ -3,6 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status,viewsets
 
+from soc.processing import AuthLogDataProcessing
+
 from .processing import IDSLogDataProcessing
 import pandas as pd
 import numpy as np
@@ -309,7 +311,7 @@ class MultiClassPrediction(APIView):
                 if not os.path.exists(notification_date_path):             
                     os.makedirs(notification_date_path)
                 
-                notification_name = ref.fileNameFormat("notf_ids")
+                notification_name = ref.fileNameFormat("ids_notf")
                 notif_csv_file_path = f'{notification_date_path}/{notification_name}.csv'
                 df.to_csv(notif_csv_file_path,index=False,header=True)
 
@@ -336,5 +338,117 @@ class MultiClassPrediction(APIView):
         
         
         
-        
-        
+class GroupBy(APIView):
+    def get(self,request):
+        try:
+            csv_path = request.GET.get("csv_path")
+            if csv_path.endswith('.csv'):
+                df = pd.read_csv(csv_path)
+                sourceIp = df.groupby([' Source IP','type']).count()
+                destIp = df.groupby([' Destination IP','type']).count()
+                sourcePort = df.groupby([' Source Port','type']).count()
+
+                # creating groupby folder
+                # group_by_path_name = csv_path.split(".csv")[0]
+                # groupby_path = os.path.join(group_by_path_name,"groupby")
+                # if not os.path.exists(groupby_path):             
+                #     os.makedirs(groupby_path)
+                # group_by_path = groupby_path+"_group_by_"
+                # cretae base Notification folder ->done
+                ref = AuthLogDataProcessing()
+                import json
+
+                groupby_base_path = os.path.join(notification_path,"Groupby")
+                if not os.path.exists(groupby_base_path):             
+                    os.makedirs(groupby_base_path)
+                
+                groupby_name = "group_by_"
+
+                # source ip json
+                groupby_sourceip_csv_file_path = f'{groupby_base_path}/{groupby_name}source_ip.csv'
+                sourceIp.to_csv(groupby_sourceip_csv_file_path,index=False,header=True)
+
+                groupby_sourceip_json_data = ref.convertCsvToJson(groupby_sourceip_csv_file_path)
+                groupby_sourceip_json_object = json.dumps(groupby_sourceip_json_data, indent = 4)
+
+                groupby_sourceip_json_file_path = f'{groupby_base_path}/{groupby_name}source_ip.json'
+                with open(groupby_sourceip_json_file_path, "w") as outfile:
+                    outfile.write(groupby_sourceip_json_object)
+
+                # dest ip
+                # source ip json
+                groupby_descip_csv_file_path = f'{groupby_base_path}/{groupby_name}desc_ip.csv'
+                destIp.to_csv(groupby_descip_csv_file_path,index=False,header=True)
+
+                groupby_descip_json_data = ref.convertCsvToJson(groupby_descip_csv_file_path)
+                groupby_descip_json_object = json.dumps(groupby_descip_json_data, indent = 4)
+
+                groupby_descip_json_file_path = f'{groupby_base_path}/{groupby_name}desc_ip.json'
+                with open(groupby_descip_json_file_path, "w") as outfile:
+                    outfile.write(groupby_descip_json_object)
+
+
+                 # source port ip
+                # source ip json
+                groupby_sourceport_csv_file_path = f'{groupby_base_path}/{groupby_name}source_port.csv'
+                sourcePort.to_csv(groupby_sourceport_csv_file_path,index=False,header=True)
+
+                groupby_sourceport_json_data = ref.convertCsvToJson(groupby_sourceport_csv_file_path)
+                groupby_sourceport_json_object = json.dumps(groupby_sourceport_json_data, indent = 4)
+
+                groupby_sourceport_json_file_path = f'{groupby_base_path}/{groupby_name}source_port.json'
+                with open(groupby_sourceport_json_file_path, "w") as outfile:
+                    outfile.write(groupby_sourceport_json_object)
+                # group_by_path = csv_path.split(".csv")[0]+"_group_by_"
+
+                # group by source ip    
+                # notif_sourceip_file_path = f'{group_by_path}source_ip.csv'    
+                # sourceIp.to_csv(notif_sourceip_file_path,index=False,header=True)
+
+                # 
+                # notif_sourceip_data = ref.convertCsvToJson(notif_sourceip_file_path)
+                # notf_sourceip_json_object = json.dumps(notif_sourceip_data, indent = 4)
+
+                # notif_json_file_path = f'{group_by_path}source_ip.json'
+                # with open(notif_json_file_path, "w") as outfile:
+                #     outfile.write(notf_sourceip_json_object)
+
+                # /group by destIp
+                # notif_destip_file_path = f'{group_by_path}dest_ip.csv'    
+                # destIp.to_csv(notif_destip_file_path,index=False,header=True)
+
+                # notif_destip_data = ref.convertCsvToJson(notif_destip_file_path)
+                # notf_destip_object = json.dumps(notif_destip_data, indent = 4)
+
+                # notif_destip_file_path = f'{group_by_path}dest_ip.json'
+                # with open(notif_destip_file_path, "w") as outfile:
+                #     outfile.write(notf_destip_object)
+                
+                # # /group by port
+                # notif_sourceport_file_path = f'{group_by_path}port.csv'    
+                # sourcePort.to_csv(notif_sourceport_file_path,index=False,header=True)
+
+                # notif_sourceport_data = ref.convertCsvToJson(notif_sourceport_file_path)
+                # notf_sourceport_object = json.dumps(notif_sourceport_data, indent = 4)
+
+                # notif_sourceport_file_path = f'{group_by_path}port.json'
+                # with open(notif_sourceport_file_path, "w") as outfile:
+                #     outfile.write(notf_sourceport_object)
+
+
+                # helllooooo
+               
+                return Response({
+                    "source_ip":sourceIp.to_json(),
+                    "destination_ip":destIp.to_json(),
+                    "soure_port":sourcePort.to_json()
+                    })
+            return Response({
+                    "error":"failed to load data",
+                    },
+                    status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({
+            "error":e
+            },
+            status=status.HTTP_400_BAD_REQUEST)  
