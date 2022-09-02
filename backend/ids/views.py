@@ -349,12 +349,12 @@ class GroupBy(APIView):
 
                 destIp = df.groupby([' Destination IP','type']).count()
                 destIp.reset_index(inplace=True)
-                sourceIp.sort_values(by=['max'], ascending=False)
+                destIp.sort_values(by=['max'], ascending=False)
 
 
                 sourcePort = df.groupby([' Source Port','type']).count()
                 sourcePort.reset_index(inplace=True)
-                sourceIp.sort_values(by=['max'], ascending=False)
+                sourcePort.sort_values(by=['max'], ascending=False)
 
 
                 ref = AuthLogDataProcessing()

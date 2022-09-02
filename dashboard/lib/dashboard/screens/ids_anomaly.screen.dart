@@ -18,7 +18,7 @@ class _IDSAnomalySCreenState extends State<IDSAnomalySCreen> {
   bool isDescIp = false;
   bool isSourcePort = false;
   String defaultAnomalyJson =
-      "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/Notification/notif_2022_09_02/ids_multiclass_notf_2022_09_02.json";
+      "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/Notification/notif_2022_09_03/ids_multiclass_notf_2022_09_03.json";
   String sourceIpJson =
       "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/Groupby/group_by_source_ip.json";
   String descIpJson =
