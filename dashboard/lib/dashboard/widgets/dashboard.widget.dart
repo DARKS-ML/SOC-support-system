@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:dashboard/dashboard/screens/ids_anomaly.screen.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -51,6 +52,12 @@ class GlobalWidget {
           backgroundColor: Colors.black,
           child: IconButton(
             onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => IDSAnomalySCreen(),
+                ),
+              );
               // String path =
               //     "Predicted Results/ids_notf_2022_09_02_group_by.json";
               // File f = File(path);
