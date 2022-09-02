@@ -81,7 +81,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
   void initState() {
     log("File name${widget.fileName}");
     loadAuthLog();
-    timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _updateDataSource(timer);
       isPlay ? setState(() {}) : null;
     });
