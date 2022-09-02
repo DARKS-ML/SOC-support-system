@@ -97,6 +97,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                     ),
                   );
                   final data = decodeData[index];
+                  log("message$data");
                   await predictData(
                     dataTosend: data,
                     socType: socType,

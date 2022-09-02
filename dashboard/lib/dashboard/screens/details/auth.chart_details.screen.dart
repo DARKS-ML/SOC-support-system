@@ -278,6 +278,22 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                           return SfCartesianChart(
                             title: ChartTitle(text: "Histogram Chart"),
                             legend: Legend(isVisible: true),
+                            primaryXAxis: CategoryAxis(
+                              title: AxisTitle(
+                                text: "Count",
+                                textStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              isVisible: true,
+                            ),
+                            primaryYAxis: NumericAxis(
+                              title: AxisTitle(
+                                text: "Label",
+                                textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                             series: <ChartSeries>[
                               HistogramSeries<AuthLogModel, num>(
                                   dataLabelSettings: const DataLabelSettings(

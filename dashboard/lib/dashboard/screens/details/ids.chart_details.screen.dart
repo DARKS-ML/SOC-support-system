@@ -417,7 +417,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
     loadIDSBruteForceLog();
     loadIDSSqlInjectionLog();
     loadIDSWebXssLog();
-    timer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _updateDataSource(timer);
       isPlay
           ? setState(() {
@@ -475,7 +475,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   getLineChartSeries: getDDosChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
-                  title: 'DDOs Benign',
+                  title: 'Ddos Benign',
                 ),
                 const SizedBox(
                   height: 10,
@@ -511,7 +511,7 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
                   getLineChartSeries: getSlowHttpChart(),
                   isPlay: isPlay,
                   buttonFunction: PausePlayButton,
-                  title: 'Slow HT',
+                  title: 'Slowhttp',
                 ),
                 const SizedBox(
                   height: 10,
