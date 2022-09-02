@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
+import '../../authentication/services/auth.service.dart';
 import '../screens/notification.screen.dart';
 import '../services/global.service.dart';
 
@@ -59,8 +60,59 @@ class GlobalWidget {
           ),
         ),
         const SizedBox(width: 20),
-        const CircleAvatar(
-          backgroundColor: Colors.black,
+        GestureDetector(
+          onTap: () {
+            Widget _buildPopupDialog(BuildContext context) {
+              return AlertDialog(
+                title: const Text(
+                  "Are You Sure ?",
+                  textAlign: TextAlign.center,
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Center(
+                      child: MaterialButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            "/login",
+                          );
+                        },
+                        child: const Text(
+                          "Log Out",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ],
+              );
+            }
+
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => _buildPopupDialog(context),
+            );
+          },
+          child: const CircleAvatar(
+            backgroundColor: Colors.black,
+            child: Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
+          ),
         ),
         const SizedBox(width: 30)
       ],
