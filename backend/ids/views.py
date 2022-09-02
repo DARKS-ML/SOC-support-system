@@ -23,6 +23,7 @@ ids_predicted_json_path = base_path+'/dashboard/Predicted Results/ids/'
 notification_path = base_path+'/dashboard/Predicted Results/'
 dataset_collection = base_path+'/Dataset/ids/'
 
+
 # @desc -> get list of files from specific log containg directory  
 class IDSLogFileDetailsView(APIView):
     def get(self,request):
@@ -259,85 +260,81 @@ class IDSLogView(APIView):
             },
             status=status.HTTP_406_NOT_ACCEPTABLE)
 
-    # def post(self,request):
-    #     requested_data = request.data
-      
 
-    #     ref = IDSLogDataProcessing()
+class MultiClassPrediction(APIView):
+    def post(self,request):
+        try:
+            request_data = request.data
+            final_path = request_data["path"]
+            if final_path.endswith('.csv'):
+                ref = IDSLogDataProcessing()
 
-    #     data =ref.dfAppendClean(requested_data)
+                multiclass_model_load =  pickle.load(open(ids_model_path+'IDS_multiclass.sav','rb'))
+                data_to_predict = pd.read_csv(final_path)
 
-    #     data = data.drop(' Label',axis=1)
+                column_to_remove = ['Flow ID',' Source IP',' Source Port',' Destination IP',' Protocol',' Timestamp']
+                data = data_to_predict.drop(column_to_remove , axis=1)
+                data = data.fillna(0)
+                # data[' Label'] = data[' Label'].str.replace(r'[^\w\s]+', '')
+                data = data.replace([np.inf, -np.inf], 0)
+                if ' Label' in data.columns:
+                    data = data.drop(' Label',axis=1)  
 
-    #     p_df = data.copy()
+                if 'Label' in data.columns:
+                    data = data.drop(' Label',axis=1) 
+                
+                model_out = multiclass_model_load.predict(data)
+                model_probab = multiclass_model_load.predict_proba(data)
+                # multiclass_model_load.classes_
+                model_probab_df = pd.DataFrame(model_probab)
+                attack_column_name = ['BENIGN', 'Bot', 'DDoS', 'DoS GoldenEye', 'DoS Hulk','DoS Slowhttptest', 'DoS slowloris', 'FTPPatator', 'Heartbleed','Infiltration', 'PortScan', 'SSHPatator','Web Attack  Brute Force', 'Web Attack  Sql Injection','Web Attack  XSS']
+                model_probab_df.columns = attack_column_name
 
-    #     df_FTPPatator_benign = ref.load_feature_importance(data, ids_model_path+"df_FTPPatator_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_FTPPatator_benign_logic_model.sav", df_FTPPatator_benign,"FTPPatator",p_df)
+                model_probab_df["max"] = model_probab_df.max(axis=1)
+                model_probab_df["type"] = model_probab_df.idxmax(axis=1)
+                new = data_to_predict[[' Source IP',' Source Port',' Destination IP',' Timestamp']].join(model_probab_df)
+               
+                df = new[new["type"].str.contains("BENIGN") == False]
+                column_to_remove_from_df = attack_column_name
+
+                df = df.drop(column_to_remove_from_df,axis=1)
+                # convert to csv
+                # cretae base Notification folder ->done
+                notf_base_path = os.path.join(notification_path,"Notification")
+                if not os.path.exists(notf_base_path):             
+                    os.makedirs(notf_base_path)
+
+                notification_date = ref.fileNameFormat("notif")
+                notification_date_path = os.path.join(notf_base_path,notification_date)
+                if not os.path.exists(notification_date_path):             
+                    os.makedirs(notification_date_path)
+                
+                notification_name = ref.fileNameFormat("notf_ids")
+                notif_csv_file_path = f'{notification_date_path}/{notification_name}.csv'
+                df.to_csv(notif_csv_file_path,index=False,header=True)
+
+                notif_json_data = ref.convertCsvToJson(notif_csv_file_path)
+                import json
+                notf_json_object = json.dumps(notif_json_data, indent = 4)
+
+                notif_json_file_path = f'{notification_date_path}/{notification_name}.json'
+                with open(notif_json_file_path, "w") as outfile:
+                    outfile.write(notf_json_object)
+
+
+                return Response({
+                    "path":notif_json_file_path
+                })
+
+        except Exception as e: 
+            return Response({
+                "error":e
+            },
+            status=status.HTTP_400_BAD_REQUEST)
+
         
-       
-    #     df_SSHPatator_benign = ref.load_feature_importance(data, ids_model_path+"df_SSHPatator_benign.sav")
-    #     p_df =  ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_SSHPatator_benign_logic_model.sav", df_SSHPatator_benign,"SSHPatator",p_df)
-     
-    #     df_DoS_Slowhttptest_benign = ref.load_feature_importance(data, ids_model_path+"df_DoS_Slowhttptest_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_Slowhttptest_benign_logic_model.sav", df_DoS_Slowhttptest_benign,"DoS_Slowhttptest",p_df)
         
-    #     df_DoS_Hulk_benign = ref.load_feature_importance(data, ids_model_path+"df_DoS_Hulk_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_Hulk_benign_logic_model.sav", df_DoS_Hulk_benign,"DoS_Hulk",p_df)
-          
-    #     df_DoS_GoldenEye_benign= ref.load_feature_importance(data, ids_model_path+"df_DoS_GoldenEye_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DoS_GoldenEye_benign_logic_model.sav", df_DoS_GoldenEye_benign,"DoS_GoldenEye",p_df)
         
-    #     df_Heartbleed_benign = ref.load_feature_importance(data, ids_model_path+"df_Heartbleed_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Heartbleed_benign_logic_model.sav", df_Heartbleed_benign,"Heartbleed",p_df)
         
-    #     df_Web_Attack_Brute_Force_benign = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_Brute_Force_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_Brute_Force_benign_logic_model.sav", df_Web_Attack_Brute_Force_benign,"Web_Attack_Brute_Force",p_df)
         
-    #     df_Web_Attack_XSS = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_XSS_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_XSS_benign_logic_model.sav", df_Web_Attack_XSS,"Web_Attack_XSS_benign",p_df)
         
-    #     df_Web_Attack_Sql_Injection_benign = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_Sql_Injection_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_Sql_Injection_benign_logic_model.sav", df_Web_Attack_Sql_Injection_benign,"Web_Attack_Sql_Injection",p_df)
-        
-    #     # df_Infiltration_benign = pickle.load(open(ids_model_path+"IDS"+".sav", 'rb'))
-    #     df_Infiltration_benign = ref.load_feature_importance(data, ids_model_path+"df_Infiltration_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Infiltration_benign_logic_model.sav", df_Infiltration_benign,"Infiltration",p_df)
-        
-    #     df_Bot_benign = ref.load_feature_importance(data, ids_model_path+"df_Bot_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Bot_benign_logic_model.sav", df_Bot_benign,"Bot",p_df)
-        
-    #     df_PortScan_benign = ref.load_feature_importance(data, ids_model_path+"df_PortScan_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_PortScan_benign_logic_model.sav", df_PortScan_benign,"PortScan",p_df)
-        
-    #     df_DDoS_benign = ref.load_feature_importance(data, ids_model_path+"df_DDoS_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_DDoS_benign_logic_model.sav", df_DDoS_benign,"df_DDoS_benign",p_df)
-        
-    #     df_Web_Attack_benign = ref.load_feature_importance(data, ids_model_path+"df_Web_Attack_benign.sav")
-    #     p_df = ref.predict_ids_attack(data, ids_model_path+"IDS"+"df_Web_Attack_benign_logic_model.sav", df_Web_Attack_benign,"df_Web_Attack",p_df)
-       
-       
-    #     # p_df.to_csv(ids_predicted_csv_path+"sample.csv")
-    #     file_name =ref.fileNameFormat("ids")
-    #     csv_file_path = f'{ids_predicted_csv_path}/{file_name}.csv'
-    #     p_df.to_csv(csv_file_path,index=False,header=True)
-
-    #     import json
-    #     json_data = ref.convertCsvToJson(csv_file_path)
-
-
-    #     json_object = json.dumps(json_data, indent = 4)
-    #     file_name =ref.fileNameFormat("ids")
-    #     json_file_path = f'{ids_predicted_json_path}/{file_name}.json'
-    #     with open( json_file_path, "w") as outfile:
-    #         outfile.write(json_object)
-
-    #     print(data)
-    #     print(p_df)
-
-    #     return Response ({
-    #                 "csv_path":csv_file_path,
-    #                 "json_path":json_file_path
-    #             })
-
-
-
