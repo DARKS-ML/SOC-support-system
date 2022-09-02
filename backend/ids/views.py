@@ -254,7 +254,8 @@ class IDSLogView(APIView):
 
         except Exception as e:
             return Response({
-             "error":  e
+            "error":f"{type(e).__name__} was raised: {e}",
+
             },status=status.HTTP_406_NOT_ACCEPTABLE)
 
         return Response({
@@ -311,7 +312,7 @@ class MultiClassPrediction(APIView):
                 if not os.path.exists(notification_date_path):             
                     os.makedirs(notification_date_path)
                 
-                notification_name = ref.fileNameFormat("ids_notf")
+                notification_name = ref.fileNameFormat("ids_multiclass_notf")
                 notif_csv_file_path = f'{notification_date_path}/{notification_name}.csv'
                 df.to_csv(notif_csv_file_path,index=False,header=True)
 
@@ -330,14 +331,11 @@ class MultiClassPrediction(APIView):
 
         except Exception as e: 
             return Response({
-                "error":e
+                "error":f"{type(e).__name__} was raised: {e}",
             },
             status=status.HTTP_400_BAD_REQUEST)
 
-        
-        
-        
-        
+               
 class GroupBy(APIView):
     def get(self,request):
         try:
@@ -348,13 +346,6 @@ class GroupBy(APIView):
                 destIp = df.groupby([' Destination IP','type']).count()
                 sourcePort = df.groupby([' Source Port','type']).count()
 
-                # creating groupby folder
-                # group_by_path_name = csv_path.split(".csv")[0]
-                # groupby_path = os.path.join(group_by_path_name,"groupby")
-                # if not os.path.exists(groupby_path):             
-                #     os.makedirs(groupby_path)
-                # group_by_path = groupby_path+"_group_by_"
-                # cretae base Notification folder ->done
                 ref = AuthLogDataProcessing()
                 import json
 
@@ -401,42 +392,6 @@ class GroupBy(APIView):
                     outfile.write(groupby_sourceport_json_object)
                 # group_by_path = csv_path.split(".csv")[0]+"_group_by_"
 
-                # group by source ip    
-                # notif_sourceip_file_path = f'{group_by_path}source_ip.csv'    
-                # sourceIp.to_csv(notif_sourceip_file_path,index=False,header=True)
-
-                # 
-                # notif_sourceip_data = ref.convertCsvToJson(notif_sourceip_file_path)
-                # notf_sourceip_json_object = json.dumps(notif_sourceip_data, indent = 4)
-
-                # notif_json_file_path = f'{group_by_path}source_ip.json'
-                # with open(notif_json_file_path, "w") as outfile:
-                #     outfile.write(notf_sourceip_json_object)
-
-                # /group by destIp
-                # notif_destip_file_path = f'{group_by_path}dest_ip.csv'    
-                # destIp.to_csv(notif_destip_file_path,index=False,header=True)
-
-                # notif_destip_data = ref.convertCsvToJson(notif_destip_file_path)
-                # notf_destip_object = json.dumps(notif_destip_data, indent = 4)
-
-                # notif_destip_file_path = f'{group_by_path}dest_ip.json'
-                # with open(notif_destip_file_path, "w") as outfile:
-                #     outfile.write(notf_destip_object)
-                
-                # # /group by port
-                # notif_sourceport_file_path = f'{group_by_path}port.csv'    
-                # sourcePort.to_csv(notif_sourceport_file_path,index=False,header=True)
-
-                # notif_sourceport_data = ref.convertCsvToJson(notif_sourceport_file_path)
-                # notf_sourceport_object = json.dumps(notif_sourceport_data, indent = 4)
-
-                # notif_sourceport_file_path = f'{group_by_path}port.json'
-                # with open(notif_sourceport_file_path, "w") as outfile:
-                #     outfile.write(notf_sourceport_object)
-
-
-                # helllooooo
                
                 return Response({
                     "source_ip":sourceIp.to_json(),
@@ -449,6 +404,7 @@ class GroupBy(APIView):
                     status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({
-            "error":e
+            "error":f"{type(e).__name__} was raised: {e}",
+            "hint":"localhost/?csv_path=multiclass_output_csv_file_path.csv"
             },
             status=status.HTTP_400_BAD_REQUEST)  
