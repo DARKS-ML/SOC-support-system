@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
@@ -51,13 +51,13 @@ class GlobalWidget {
           backgroundColor: Colors.black,
           child: IconButton(
             onPressed: () async {
-              String path =
-                  "Predicted Results/ids_notf_2022_09_02_group_by.json";
-              File f = File(path);
-              final input = await f.readAsString();
-              final groupbySource = json.decode(input);
-              final dd = groupbySource["source_ip"];
-              print(dd);
+              // String path =
+              //     "Predicted Results/ids_notf_2022_09_02_group_by.json";
+              // File f = File(path);
+              // final input = await f.readAsString();
+              // final groupbySource = json.decode(input);
+              // final dd = groupbySource["source_ip"];
+              // print(dd);
 
               // scaffoldKey.currentState!.openEndDrawer();
             },
@@ -162,9 +162,10 @@ class GlobalWidget {
     }
   }
 
-  static displayBackButton({required BuildContext context}) {
+  static displayBackButton(
+      {required BuildContext context, double padding = 10}) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: EdgeInsets.all(padding),
       child: FloatingActionButton(
         onPressed: () => Navigator.pushReplacementNamed(
           context,
@@ -331,11 +332,10 @@ class GlobalWidget {
     );
   }
 
-  static displaySnackbar({
-    required BuildContext context,
-    String msg = 'Failed to load data',
-    Color color = Colors.red,
-  }) {
+  static displaySnackbar(
+      {required BuildContext context,
+      String msg = 'Failed to load data',
+      Color color = Colors.red}) {
     final snackBar = SnackBar(
       content: Text(
         msg,
@@ -348,5 +348,90 @@ class GlobalWidget {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+// details page appbar
+  static displayDetailsPageAppBar({
+    required BuildContext context,
+    required GlobalKey<ScaffoldState> scaffoldKey,
+  }) {
+    return AppBar(
+      elevation: 1,
+      leading: GlobalWidget.displayBackButton(context: context),
+      backgroundColor: Colors.white,
+      title: Text(
+        "${"intrusion detection system".toUpperCase()} ",
+        style: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      actions: [
+        CircleAvatar(
+          backgroundColor: Colors.black,
+          child: IconButton(
+            onPressed: () {
+              scaffoldKey.currentState!.openEndDrawer();
+            },
+            icon: const Icon(
+              Icons.notification_add,
+              color: Colors.red,
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 30,
+        ),
+      ],
+    );
+  }
+
+  // ids details page notification lists
+  static displayIdsDetailsPageDrawer() {
+    return Drawer(
+      child: SingleChildScrollView(
+        // controller: controller,
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                "Notification",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+            FutureBuilder(
+              builder: (context, snapshot) {
+                try {
+                  return Text("data");
+                } catch (e) {
+                  return GlobalWidget.loadingWidget(context: context);
+                }
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+loadIDSMultiClassModelAndPredict({
+  required String jsonFilePath,
+}) async {
+  try {
+    final response = await http.post(
+      Uri.parse(
+        "http://localhost:8000/api/v1/ids/multiclass/",
+      ),
+      body: jsonFilePath,
+    );
+  } catch (e) {
+    rethrow;
   }
 }
