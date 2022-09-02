@@ -442,15 +442,24 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
     super.initState();
   }
 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-        floatingActionButton: GlobalWidget.displayBackButton(context: context),
+        key: scaffoldKey,
+        appBar: GlobalWidget.displayDetailsPageAppBar(
+          context: context,
+          scaffoldKey: scaffoldKey,
+        ),
+        endDrawer: GlobalWidget.displayIdsDetailsPageDrawer(),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
+        // floatingActionButton: ,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
