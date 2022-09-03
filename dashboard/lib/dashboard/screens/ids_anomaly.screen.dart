@@ -7,7 +7,8 @@ import 'package:json_table/json_table.dart';
 import '../widgets/dashboard.widget.dart';
 
 class IDSAnomalySCreen extends StatefulWidget {
-  const IDSAnomalySCreen({Key? key}) : super(key: key);
+  String fileName;
+  IDSAnomalySCreen({Key? key, required this.fileName}) : super(key: key);
 
   @override
   State<IDSAnomalySCreen> createState() => _IDSAnomalySCreenState();
@@ -74,7 +75,7 @@ class _IDSAnomalySCreenState extends State<IDSAnomalySCreen> {
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(color: Colors.black),
                     ),
-                    child: Text("Group By Destination Ip"),
+                    child: const Text("Group By Destination Ip"),
                   ),
                 ),
                 GestureDetector(
@@ -94,14 +95,14 @@ class _IDSAnomalySCreenState extends State<IDSAnomalySCreen> {
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(color: Colors.black),
                     ),
-                    child: Text("Group By Source Port"),
+                    child: const Text("Group By Source Port"),
                   ),
                 ),
               ],
             ),
             FutureBuilder(
                 future: loadDataFromFile(
-                  filePath: providePath,
+                  filePath: widget.fileName,
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {

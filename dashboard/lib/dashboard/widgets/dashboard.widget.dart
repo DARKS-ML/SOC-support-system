@@ -4,7 +4,6 @@ import 'package:dashboard/dashboard/screens/ids_anomaly.screen.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:json_table/json_table.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 import '../screens/notification.screen.dart';
@@ -49,33 +48,6 @@ class GlobalWidget {
         ],
       ),
       actions: [
-        CircleAvatar(
-          backgroundColor: Colors.black,
-          child: IconButton(
-            onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const IDSAnomalySCreen(),
-                ),
-              );
-              // String path =
-              //     "Predicted Results/ids_notf_2022_09_02_group_by.json";
-              // File f = File(path);
-              // final input = await f.readAsString();
-              // final groupbySource = json.decode(input);
-              // final dd = groupbySource["source_ip"];
-              // print(dd);
-
-              // scaffoldKey.currentState!.openEndDrawer();
-            },
-            icon: const Icon(
-              Icons.notification_add,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        const SizedBox(width: 20),
         GestureDetector(
           onTap: () {
             Widget _buildPopupDialog(BuildContext context) {
@@ -360,7 +332,7 @@ class GlobalWidget {
 
 // details page appbar
   static displayDetailsPageAppBar(
-      {required BuildContext context, required Future future}) {
+      {required BuildContext context, required String file}) {
     bool isSourceIp = false;
     bool isDescIp = false;
     bool isSourcePort = false;
@@ -379,122 +351,131 @@ class GlobalWidget {
         CircleAvatar(
           backgroundColor: Colors.black,
           child: IconButton(
-            onPressed: () => showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                title: Row(
-                  children: [
-                    const Text("Anamoly List"),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.clear))
-                  ],
-                ),
-                content: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              // setState(() {
-                              isSourceIp = !isSourceIp;
-                              isDescIp = false;
-                              isSourcePort = false;
-                              // providePath = isSourceIp
-                              //     ? sourceIpJson
-                              //     : defaultAnomalyJson;
-                              // });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: isSourceIp ? Colors.green : Colors.white,
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: const Text("Group By Source Ip"),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              // setState(() {
-                              isSourceIp = false;
-                              isDescIp = !isDescIp;
-                              isSourcePort = false;
-                              // providePath =
-                              //     isDescIp ? descIpJson : defaultAnomalyJson;
-                              // });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: isDescIp ? Colors.green : Colors.white,
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: const Text("Group By Destination Ip"),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              // setState(() {
-                              isSourceIp = false;
-                              isDescIp = false;
-                              isSourcePort = !isSourcePort;
-                              // providePath = isSourcePort
-                              //     ? sourcePortIpJson
-                              //     : defaultAnomalyJson;
-                              // });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color:
-                                    isSourcePort ? Colors.green : Colors.white,
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: const Text("Group By Source Port"),
-                            ),
-                          ),
-                        ],
-                      ),
-                      FutureBuilder(
-                          future: future,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              final snapshotData = snapshot.data;
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => IDSAnomalySCreen(
+                            fileName: file,
+                          ))));
+            },
+            // showDialog<String>(
+            //   context: context,
+            //   builder: (BuildContext context) => AlertDialog(
+            //     title: Row(
+            //       children: [
+            //         const Text("Anamoly List"),
+            //         IconButton(onPressed: () {}, icon: const Icon(Icons.clear))
+            //       ],
+            //     ),
+            //     content: SingleChildScrollView(
+            //       child: Column(
+            //         children: [
+            //           const SizedBox(height: 20),
+            //           Row(
+            //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //             children: [
+            //               GestureDetector(
+            //                 onTap: () {
+            //                   // setState(() {
+            //                   isSourceIp = !isSourceIp;
+            //                   isDescIp = false;
+            //                   isSourcePort = false;
+            //                   // providePath = isSourceIp
+            //                   //     ? sourceIpJson
+            //                   //     : defaultAnomalyJson;
+            //                   // });
+            //                 },
+            //                 child: Container(
+            //                   padding: const EdgeInsets.all(10),
+            //                   decoration: BoxDecoration(
+            //                     color: isSourceIp ? Colors.green : Colors.white,
+            //                     borderRadius: BorderRadius.circular(4),
+            //                     border: Border.all(color: Colors.black),
+            //                   ),
+            //                   child: const Text("Group By Source Ip"),
+            //                 ),
+            //               ),
+            //               GestureDetector(
+            //                 onTap: () {
+            //                   // setState(() {
+            //                   isSourceIp = false;
+            //                   isDescIp = !isDescIp;
+            //                   isSourcePort = false;
+            //                   // providePath =
+            //                   //     isDescIp ? descIpJson : defaultAnomalyJson;
+            //                   // });
+            //                 },
+            //                 child: Container(
+            //                   padding: const EdgeInsets.all(10),
+            //                   decoration: BoxDecoration(
+            //                     color: isDescIp ? Colors.green : Colors.white,
+            //                     borderRadius: BorderRadius.circular(4),
+            //                     border: Border.all(color: Colors.black),
+            //                   ),
+            //                   child: const Text("Group By Destination Ip"),
+            //                 ),
+            //               ),
+            //               GestureDetector(
+            //                 onTap: () {
+            //                   // setState(() {
+            //                   isSourceIp = false;
+            //                   isDescIp = false;
+            //                   isSourcePort = !isSourcePort;
+            //                   // providePath = isSourcePort
+            //                   //     ? sourcePortIpJson
+            //                   //     : defaultAnomalyJson;
+            //                   // });
+            //                 },
+            //                 child: Container(
+            //                   padding: const EdgeInsets.all(10),
+            //                   decoration: BoxDecoration(
+            //                     color:
+            //                         isSourcePort ? Colors.green : Colors.white,
+            //                     borderRadius: BorderRadius.circular(4),
+            //                     border: Border.all(color: Colors.black),
+            //                   ),
+            //                   child: const Text("Group By Source Port"),
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //           FutureBuilder(
+            //               future: future,
+            //               builder: (context, snapshot) {
+            //                 if (snapshot.hasData) {
+            //                   final snapshotData = snapshot.data;
 
-                              final jsonSample = "$snapshotData";
-                              var json = jsonDecode(jsonSample);
-                              final totalDataLength = json.length;
-                              int page1Data =
-                                  totalDataLength > 20 ? 20 : json.length;
+            //                   final jsonSample = "$snapshotData";
+            //                   var json = jsonDecode(jsonSample);
+            //                   final totalDataLength = json.length;
+            //                   int page1Data =
+            //                       totalDataLength > 20 ? 20 : json.length;
 
-                              return SingleChildScrollView(
-                                padding: const EdgeInsets.all(16.0),
-                                child: JsonTable(
-                                  json,
-                                  showColumnToggle: true,
-                                  allowRowHighlight: true,
-                                  rowHighlightColor:
-                                      Colors.yellow[500]!.withOpacity(0.7),
-                                  paginationRowCount: page1Data,
-                                  onRowSelect: (index, map) {},
-                                ),
-                              );
-                            } else {
-                              return GlobalWidget
-                                  .displayDialogWithLoadingIndicator(
-                                      isCenter: true);
-                            }
-                          }),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            //                   return SingleChildScrollView(
+            //                     padding: const EdgeInsets.all(16.0),
+            //                     child: JsonTable(
+            //                       json,
+            //                       showColumnToggle: true,
+            //                       allowRowHighlight: true,
+            //                       rowHighlightColor:
+            //                           Colors.yellow[500]!.withOpacity(0.7),
+            //                       paginationRowCount: page1Data,
+            //                       onRowSelect: (index, map) {},
+            //                     ),
+            //                   );
+            //                 } else {
+            //                   return GlobalWidget
+            //                       .displayDialogWithLoadingIndicator(
+            //                           isCenter: true);
+            //                 }
+            //               }),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
             icon: const Icon(
               Icons.notification_add,
               color: Colors.red,
