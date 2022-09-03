@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:json_table/json_table.dart';
+import 'package:http/http.dart' as http;
 
 import '../widgets/dashboard.widget.dart';
 
@@ -18,20 +20,33 @@ class _IDSAnomalySCreenState extends State<IDSAnomalySCreen> {
   bool isSourceIp = false;
   bool isDescIp = false;
   bool isSourcePort = false;
-  String defaultAnomalyJson =
-      "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/Notification/notif_2022_09_03/ids_multiclass_notf_2022_09_03.json";
+  String defaultAnomalyJson = "";
+  // "C:/Users/HIMAL PAUDEL/Documents/Project III/SOC-support-system/dashboard/Predicted Results/ids/test_all/GropBy/json/GropBy_test_all.json";
   String sourceIpJson =
-      "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/Groupby/group_by_source_ip.json";
+      "C:/Users/HIMAL PAUDEL/Documents/Project III/SOC-support-system/dashboard/Predicted Results/Groupby/group_by_source_ip.json";
   String descIpJson =
-      "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/Groupby/group_by_desc_ip.json";
+      "C:/Users/HIMAL PAUDEL/Documents/Project III/SOC-support-system/dashboard/Predicted Results/Groupby/group_by_desc_ip.json";
   String sourcePortIpJson =
-      "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/Groupby/group_by_source_port.json";
-  String providePath =
-      "/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/Notification/notif_2022_09_02/ids_multiclass_notf_2022_09_02.json";
+      "C:/Users/HIMAL PAUDEL/Documents/Project III/SOC-support-system/dashboard/Predicted Results/Groupby/group_by_source_port.json";
+  String providePath = '';
+  // "C:/Users/HIMAL PAUDEL/Documents/Project III/SOC-support-system/dashboard/Predicted Results/ids/test_all/GropBy/json/GropBy_test_all.json";
+
+  @override
+  void initState() {
+    defaultAnomalyJson =
+        "C:/Users/HIMAL PAUDEL/Documents/Project III/SOC-support-system/dashboard/${widget.fileName}";
+    providePath =
+        "C:/Users/HIMAL PAUDEL/Documents/Project III/SOC-support-system/dashboard/${widget.fileName}";
+    groupByService(filePath: widget.fileName);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -102,7 +117,7 @@ class _IDSAnomalySCreenState extends State<IDSAnomalySCreen> {
             ),
             FutureBuilder(
                 future: loadDataFromFile(
-                  filePath: widget.fileName,
+                  filePath: providePath,
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -136,10 +151,26 @@ class _IDSAnomalySCreenState extends State<IDSAnomalySCreen> {
   }
 }
 
+groupByService({required String filePath}) async {
+  try {
+    final path = filePath.replaceAll("json", "csv");
+    final response = await http.get(Uri.parse(
+        "http://localhost:8000/api/v1/ids/groupby/?csv_path=C:/Users/HIMAL PAUDEL/Documents/Project III/SOC-support-system/dashboard/$path"));
+    if (response.statusCode == 200) {
+      // log(response.body);
+      return response.body;
+    }
+    log(path);
+  } catch (e) {
+    rethrow;
+  }
+}
+
 // load multi class predicted data
 loadDataFromFile({required String filePath}) async {
   String path = filePath;
   File f = File(path);
+  // log("Message aayo$path");
   final input = await f.readAsString();
 
   return input;
