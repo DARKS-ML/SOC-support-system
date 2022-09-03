@@ -83,7 +83,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Processing...."),
+                        const Text("Processing....\n"),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacementNamed(
