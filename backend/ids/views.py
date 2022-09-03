@@ -235,7 +235,40 @@ class IDSLogView(APIView):
                 # # ref.createDirectoryAndFileAsPerModelName(ids_predicted_base_path,model_name,p_df)
             
                 # p_df.to_csv(ids_predicted_csv_path+"sample.csv")
+
+
+                # multi class model prediction
+                multiclass_model_load =  pickle.load(open(ids_model_path+'IDS_multiclass.sav','rb'))
+                data_to_predict = pd.read_csv(final_path)
+
+                column_to_remove = ['Flow ID',' Source IP',' Source Port',' Destination IP',' Protocol',' Timestamp']
+                data = data_to_predict.drop(column_to_remove , axis=1)
+                data = data.fillna(0)
+                # data[' Label'] = data[' Label'].str.replace(r'[^\w\s]+', '')
+                data = data.replace([np.inf, -np.inf], 0)
+                if ' Label' in data.columns:
+                    data = data.drop(' Label',axis=1)  
+
+                if 'Label' in data.columns:
+                    data = data.drop(' Label',axis=1) 
                 
+                model_out = multiclass_model_load.predict(data)
+                model_probab = multiclass_model_load.predict_proba(data)
+                # multiclass_model_load.classes_
+                model_probab_df = pd.DataFrame(model_probab)
+                attack_column_name = ['BENIGN', 'Bot', 'DDoS', 'DoS GoldenEye', 'DoS Hulk','DoS Slowhttptest', 'DoS slowloris', 'FTPPatator', 'Heartbleed','Infiltration', 'PortScan', 'SSHPatator','Web Attack  Brute Force', 'Web Attack  Sql Injection','Web Attack  XSS']
+                model_probab_df.columns = attack_column_name
+
+                model_probab_df["max"] = model_probab_df.max(axis=1)
+                model_probab_df["type"] = model_probab_df.idxmax(axis=1)
+                new = data_to_predict[[' Source IP',' Source Port',' Destination IP',' Timestamp']].join(model_probab_df)
+               
+                df = new[new["type"].str.contains("BENIGN") == False]
+                column_to_remove_from_df = attack_column_name
+
+                df = df.drop(column_to_remove_from_df,axis=1)
+                ref.createModelCsvJsonFolder(daywisefolderPath,"GropBy",df,daywisefolderName)
+                # multiclass_model_load.classes_ 
 
               
                 
