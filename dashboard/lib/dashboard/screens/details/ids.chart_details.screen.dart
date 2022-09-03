@@ -467,8 +467,8 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: GlobalWidget.displayDetailsPageAppBar(
-          context: context,
-          future: loadNotification(filename:widget.groupdfileName)
+          context: context, file: widget.groupdfileName,
+          
 
         ),
         // endDrawer: GlobalWidget.displayIdsDetailsPageDrawer(context:  context),
