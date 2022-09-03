@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../services/auth_log_services.dart';
+import '../widgets/authlog.predicted.widget.dart';
+import '../widgets/idslog.predicted.widget.dart';
 import 'details/ids.chart_details.screen.dart';
 
 class ListDataSetScreen extends StatelessWidget {
@@ -22,12 +24,39 @@ class ListDataSetScreen extends StatelessWidget {
       backgroundColor: Colors.white,
 
       body: SingleChildScrollView(
-        child: Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Flexible(
-                child: buildDataSetContainer(size: size, datasetName: "auth")),
-            Flexible(
-                child: buildDataSetContainer(size: size, datasetName: "ids")),
+            Row(
+              children: [
+                Flexible(
+                    child:
+                        buildDataSetContainer(size: size, datasetName: "auth")),
+                Flexible(
+                    child:
+                        buildDataSetContainer(size: size, datasetName: "ids")),
+              ],
+            ),
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.only(left: 14),
+              child: Text(
+                "Recently Predicted Results",
+                style: TextStyle(
+                  color: Color(0xff16213E),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            Divider(),
+            Row(
+              children: [
+                displayAuthLogPredictedResultWidget(context: context),
+                displayIdsLogPredictedResultWidget(context: context),
+              ],
+            ),
           ],
         ),
       ),
