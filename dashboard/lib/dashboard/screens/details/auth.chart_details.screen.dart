@@ -280,15 +280,15 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                             legend: Legend(isVisible: true),
                             primaryXAxis: CategoryAxis(
                               title: AxisTitle(
-                                text: "Count",
+                                text: "Label",
                                 textStyle: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
                               isVisible: true,
                             ),
-                            primaryYAxis: NumericAxis(
+                            primaryYAxis: CategoryAxis(
                               title: AxisTitle(
-                                text: "Label",
+                                text: "Count",
                                 textStyle: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/details/ids.chart_details.screen.dart';
@@ -148,7 +149,12 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
                   );
                 }
               } catch (e) {
-                rethrow;
+                return const Center(
+                  child: Text(
+                    "No Previous Prediction\n yet!",
+                    textAlign: TextAlign.center,
+                  ),
+                );
               }
             },
           ),

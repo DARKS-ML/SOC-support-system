@@ -48,7 +48,7 @@ class GlobalWidget {
         ],
       ),
       actions: [
-        GestureDetector(
+        InkWell(
           onTap: () {
             Widget _buildPopupDialog(BuildContext context) {
               return AlertDialog(
@@ -61,7 +61,7 @@ class GlobalWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Center(
-                      child: MaterialButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           Navigator.pushReplacementNamed(
                             context,
@@ -303,7 +303,13 @@ class GlobalWidget {
                   );
                 }
               } catch (e) {
-                return loadingIndicator;
+                return Container(
+                  margin: const EdgeInsets.only(top: 100),
+                  alignment: Alignment.center,
+                  child: const Center(
+                    child: Text("No Notification yet!"),
+                  ),
+                );
               }
             },
           ),
