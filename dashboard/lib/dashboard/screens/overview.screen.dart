@@ -30,7 +30,7 @@ class _OverViewScreenState extends State<OverViewScreen> {
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              "Notifications",
+              "Auth Anomaly Details",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.red,

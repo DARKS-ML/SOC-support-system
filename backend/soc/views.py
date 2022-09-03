@@ -178,7 +178,15 @@ class MultiLineAuthLogView(APIView):
                 # =======================================#
 
                 df_nf = pd.read_csv(csv_file_path)
-                notif = df_nf.loc[df_nf['mod_zscore'] <= 3]
+                df_nf = df_nf.drop(["date","time","distance","mod_zscore"],axis=1)
+                # notif = df_nf.loc[df_nf['distance'] > 0.6]
+                # notif['event'] = notif['event'].str.replace("\n","")
+                notif = df_nf.loc[df_nf['label'] > 3]
+                notif = notif.groupby(['ip','event','label']).count()
+                notif.reset_index(inplace=True)
+                notif = notif.sort_values(by=['process'], ascending=False)
+                # notif['count'] = notif(["process"])
+                notif.rename(columns = {'process':'count'}, inplace = True)
                 notif['event'] = notif['event'].str.replace("\n","")
                 
                 # cretae base Notification folder ->done
