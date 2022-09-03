@@ -1,0 +1,6 @@
+resources/
+Dataset/
+Predicted Results/
+backend/backend/settings.py
+backend/.requirements.txt.swp
+backend/requirements.txt

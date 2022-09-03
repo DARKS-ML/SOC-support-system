@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta name="Author" content="Made by 'tree'">
+ <meta name="GENERATOR" content="$Version: $ tree v1.8.0 (c) 1996 - 2018 by Steve Baker, Thomas Moore, Francesc Rocher, Florian Sesser, Kyosuke Tokoro $">
+ <title>Directory Tree</title>
+ <style type="text/css">
+  <!-- 
+  BODY { font-family : ariel, monospace, sans-serif; }
+  P { font-weight: normal; font-family : ariel, monospace, sans-serif; color: black; background-color: transparent;}
+  B { font-weight: normal; color: black; background-color: transparent;}
+  A:visited { font-weight : normal; text-decoration : none; background-color : transparent; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  A:link    { font-weight : normal; text-decoration : none; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  A:hover   { color : #000000; font-weight : normal; text-decoration : underline; background-color : yellow; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  A:active  { color : #000000; font-weight: normal; background-color : transparent; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  .VERSION { font-size: small; font-family : arial, sans-serif; }
+  .NORM  { color: black;  background-color: transparent;}
+  .FIFO  { color: purple; background-color: transparent;}
+  .CHAR  { color: yellow; background-color: transparent;}
+  .DIR   { color: blue;   background-color: transparent;}
+  .BLOCK { color: yellow; background-color: transparent;}
+  .LINK  { color: aqua;   background-color: transparent;}
+  .SOCK  { color: fuchsia;background-color: transparent;}
+  .EXEC  { color: green;  background-color: transparent;}
+  -->
+ </style>
+</head>
+<body>
+	<h1>Directory Tree</h1><p>
+	<a href="./">./</a><br>
+	├── <a href=".//backend/">backend</a><br>
+	│   ├── <a href=".//backend/auth/">auth</a><br>
+	│   │   ├── <a href=".//backend/auth/migrations/">migrations</a><br>
+	│   │   └── <a href=".//backend/auth/mlmodels/">mlmodels</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; └── <a href=".//backend/auth/mlmodels/auth_system/">auth_system</a><br>
+	│   ├── <a href=".//backend/authentication/">authentication</a><br>
+	│   │   ├── <a href=".//backend/authentication/admin.py">admin.py</a><br>
+	│   │   ├── <a href=".//backend/authentication/apps.py">apps.py</a><br>
+	│   │   ├── <a href=".//backend/authentication/__init__.py">__init__.py</a><br>
+	│   │   ├── <a href=".//backend/authentication/migrations/">migrations</a><br>
+	│   │   │   ├── <a href=".//backend/authentication/migrations/0001_initial.py">0001_initial.py</a><br>
+	│   │   │   └── <a href=".//backend/authentication/migrations/__init__.py">__init__.py</a><br>
+	│   │   ├── <a href=".//backend/authentication/models.py">models.py</a><br>
+	│   │   ├── <a href=".//backend/authentication/serializers.py">serializers.py</a><br>
+	│   │   ├── <a href=".//backend/authentication/tests.py">tests.py</a><br>
+	│   │   ├── <a href=".//backend/authentication/urls.py">urls.py</a><br>
+	│   │   └── <a href=".//backend/authentication/views.py">views.py</a><br>
+	│   ├── <a href=".//backend/authlog/">authlog</a><br>
+	│   │   ├── <a href=".//backend/authlog/migrations/">migrations</a><br>
+	│   │   └── <a href=".//backend/authlog/mlmodels/">mlmodels</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; └── <a href=".//backend/authlog/mlmodels/auth_system/">auth_system</a><br>
+	│   ├── <a href=".//backend/backend/">backend</a><br>
+	│   │   ├── <a href=".//backend/backend/asgi.py">asgi.py</a><br>
+	│   │   ├── <a href=".//backend/backend/__init__.py">__init__.py</a><br>
+	│   │   ├── <a href=".//backend/backend/settings.py">settings.py</a><br>
+	│   │   ├── <a href=".//backend/backend/urls.py">urls.py</a><br>
+	│   │   └── <a href=".//backend/backend/wsgi.py">wsgi.py</a><br>
+	│   ├── <a href=".//backend/firewall/">firewall</a><br>
+	│   │   ├── <a href=".//backend/firewall/admin.py">admin.py</a><br>
+	│   │   ├── <a href=".//backend/firewall/apps.py">apps.py</a><br>
+	│   │   ├── <a href=".//backend/firewall/__init__.py">__init__.py</a><br>
+	│   │   ├── <a href=".//backend/firewall/migrations/">migrations</a><br>
+	│   │   │   └── <a href=".//backend/firewall/migrations/__init__.py">__init__.py</a><br>
+	│   │   ├── <a href=".//backend/firewall/models.py">models.py</a><br>
+	│   │   ├── <a href=".//backend/firewall/tests.py">tests.py</a><br>
+	│   │   └── <a href=".//backend/firewall/views.py">views.py</a><br>
+	│   ├── <a href=".//backend/ids/">ids</a><br>
+	│   │   ├── <a href=".//backend/ids/admin.py">admin.py</a><br>
+	│   │   ├── <a href=".//backend/ids/apps.py">apps.py</a><br>
+	│   │   ├── <a href=".//backend/ids/__init__.py">__init__.py</a><br>
+	│   │   ├── <a href=".//backend/ids/migrations/">migrations</a><br>
+	│   │   │   └── <a href=".//backend/ids/migrations/__init__.py">__init__.py</a><br>
+	│   │   ├── <a href=".//backend/ids/models.py">models.py</a><br>
+	│   │   ├── <a href=".//backend/ids/processing.py">processing.py</a><br>
+	│   │   ├── <a href=".//backend/ids/tests.py">tests.py</a><br>
+	│   │   ├── <a href=".//backend/ids/urls.py">urls.py</a><br>
+	│   │   └── <a href=".//backend/ids/views.py">views.py</a><br>
+	│   ├── <a href=".//backend/manage.py">manage.py</a><br>
+	│   ├── <a href=".//backend/Pipfile">Pipfile</a><br>
+	│   ├── <a href=".//backend/Pipfile.lock">Pipfile.lock</a><br>
+	│   └── <a href=".//backend/soc/">soc</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/admin.py">admin.py</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/apps.py">apps.py</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/__init__.py">__init__.py</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/migrations/">migrations</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   └── <a href=".//backend/soc/migrations/__init__.py">__init__.py</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/mlmodels/">mlmodels</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   └── <a href=".//backend/soc/mlmodels/auth_system/">auth_system</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/mlmodels/auth_system/auth_kmeans_model.joblib">auth_kmeans_model.joblib</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/mlmodels/auth_system/auth_kmeans_model.sav">auth_kmeans_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/mlmodels/auth_system/auth_pca_model.joblib">auth_pca_model.joblib</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/mlmodels/auth_system/auth_pca_model.sav">auth_pca_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/mlmodels/auth_system/auth_sgd_model.joblib">auth_sgd_model.joblib</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/mlmodels/auth_system/auth_sgd_model.sav">auth_sgd_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/mlmodels/auth_system/auth_vectorizer_model.joblib">auth_vectorizer_model.joblib</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/mlmodels/auth_system/auth_vectorizer_model.sav">auth_vectorizer_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/mlmodels/auth_system/export_dataframe.csv">export_dataframe.csv</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; └── <a href=".//backend/soc/mlmodels/auth_system/__init__.py">__init__.py</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/models.py">models.py</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/processing.py">processing.py</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/serializers.py">serializers.py</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/tests.py">tests.py</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//backend/soc/urls.py">urls.py</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href=".//backend/soc/views.py">views.py</a><br>
+	├── <a href=".//dashboard/">dashboard</a><br>
+	│   ├── <a href=".//dashboard/analysis_options.yaml">analysis_options.yaml</a><br>
+	│   ├── <a href=".//dashboard/android/">android</a><br>
+	│   │   ├── <a href=".//dashboard/android/app/">app</a><br>
+	│   │   │   ├── <a href=".//dashboard/android/app/build.gradle">build.gradle</a><br>
+	│   │   │   └── <a href=".//dashboard/android/app/src/">src</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/app/src/debug/">debug</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/android/app/src/debug/AndroidManifest.xml">AndroidManifest.xml</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/app/src/main/">main</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   ├── <a href=".//dashboard/android/app/src/main/AndroidManifest.xml">AndroidManifest.xml</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   ├── <a href=".//dashboard/android/app/src/main/java/">java</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   │   └── <a href=".//dashboard/android/app/src/main/java/io/">io</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/app/src/main/java/io/flutter/">flutter</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/app/src/main/java/io/flutter/plugins/">plugins</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java">GeneratedPluginRegistrant.java</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   ├── <a href=".//dashboard/android/app/src/main/kotlin/">kotlin</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   │   └── <a href=".//dashboard/android/app/src/main/kotlin/com/">com</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/app/src/main/kotlin/com/darks/">darks</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/app/src/main/kotlin/com/darks/dashboard/">dashboard</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/app/src/main/kotlin/com/darks/dashboard/MainActivity.kt">MainActivity.kt</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/android/app/src/main/res/">res</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/app/src/main/res/drawable/">drawable</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/android/app/src/main/res/drawable/launch_background.xml">launch_background.xml</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/app/src/main/res/drawable-v21/">drawable-v21</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/android/app/src/main/res/drawable-v21/launch_background.xml">launch_background.xml</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/app/src/main/res/mipmap-hdpi/">mipmap-hdpi</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/android/app/src/main/res/mipmap-hdpi/ic_launcher.png">ic_launcher.png</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/app/src/main/res/mipmap-mdpi/">mipmap-mdpi</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/android/app/src/main/res/mipmap-mdpi/ic_launcher.png">ic_launcher.png</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/app/src/main/res/mipmap-xhdpi/">mipmap-xhdpi</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png">ic_launcher.png</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/app/src/main/res/mipmap-xxhdpi/">mipmap-xxhdpi</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png">ic_launcher.png</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/app/src/main/res/mipmap-xxxhdpi/">mipmap-xxxhdpi</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png">ic_launcher.png</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/app/src/main/res/values/">values</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/android/app/src/main/res/values/styles.xml">styles.xml</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/app/src/main/res/values-night/">values-night</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/app/src/main/res/values-night/styles.xml">styles.xml</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/app/src/profile/">profile</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/app/src/profile/AndroidManifest.xml">AndroidManifest.xml</a><br>
+	│   │   ├── <a href=".//dashboard/android/build.gradle">build.gradle</a><br>
+	│   │   ├── <a href=".//dashboard/android/dashboard_android.iml">dashboard_android.iml</a><br>
+	│   │   ├── <a href=".//dashboard/android/gradle/">gradle</a><br>
+	│   │   │   └── <a href=".//dashboard/android/gradle/wrapper/">wrapper</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/android/gradle/wrapper/gradle-wrapper.jar">gradle-wrapper.jar</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/android/gradle/wrapper/gradle-wrapper.properties">gradle-wrapper.properties</a><br>
+	│   │   ├── <a href=".//dashboard/android/gradle.properties">gradle.properties</a><br>
+	│   │   ├── <a href=".//dashboard/android/gradlew">gradlew</a><br>
+	│   │   ├── <a href=".//dashboard/android/gradlew.bat">gradlew.bat</a><br>
+	│   │   ├── <a href=".//dashboard/android/local.properties">local.properties</a><br>
+	│   │   └── <a href=".//dashboard/android/settings.gradle">settings.gradle</a><br>
+	│   ├── <a href=".//dashboard/dashboard.iml">dashboard.iml</a><br>
+	│   ├── <a href=".//dashboard/ios/">ios</a><br>
+	│   │   ├── <a href=".//dashboard/ios/Flutter/">Flutter</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Flutter/AppFrameworkInfo.plist">AppFrameworkInfo.plist</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Flutter/Debug.xcconfig">Debug.xcconfig</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Flutter/flutter_export_environment.sh">flutter_export_environment.sh</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Flutter/Generated.xcconfig">Generated.xcconfig</a><br>
+	│   │   │   └── <a href=".//dashboard/ios/Flutter/Release.xcconfig">Release.xcconfig</a><br>
+	│   │   ├── <a href=".//dashboard/ios/Runner/">Runner</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Runner/AppDelegate.swift">AppDelegate.swift</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/">Assets.xcassets</a><br>
+	│   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/">AppIcon.appiconset</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json">Contents.json</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png">Icon-App-1024x1024@1x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png">Icon-App-20x20@1x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png">Icon-App-20x20@2x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png">Icon-App-20x20@3x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png">Icon-App-29x29@1x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png">Icon-App-29x29@2x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png">Icon-App-29x29@3x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png">Icon-App-40x40@1x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png">Icon-App-40x40@2x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png">Icon-App-40x40@3x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png">Icon-App-60x60@2x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png">Icon-App-60x60@3x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png">Icon-App-76x76@1x.png</a><br>
+	│   │   │   │   │   ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png">Icon-App-76x76@2x.png</a><br>
+	│   │   │   │   │   └── <a href=".//dashboard/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png">Icon-App-83.5x83.5@2x.png</a><br>
+	│   │   │   │   └── <a href=".//dashboard/ios/Runner/Assets.xcassets/LaunchImage.imageset/">LaunchImage.imageset</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json">Contents.json</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png">LaunchImage@2x.png</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png">LaunchImage@3x.png</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png">LaunchImage.png</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md">README.md</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Runner/Base.lproj/">Base.lproj</a><br>
+	│   │   │   │   ├── <a href=".//dashboard/ios/Runner/Base.lproj/LaunchScreen.storyboard">LaunchScreen.storyboard</a><br>
+	│   │   │   │   └── <a href=".//dashboard/ios/Runner/Base.lproj/Main.storyboard">Main.storyboard</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Runner/GeneratedPluginRegistrant.h">GeneratedPluginRegistrant.h</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Runner/GeneratedPluginRegistrant.m">GeneratedPluginRegistrant.m</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Runner/Info.plist">Info.plist</a><br>
+	│   │   │   └── <a href=".//dashboard/ios/Runner/Runner-Bridging-Header.h">Runner-Bridging-Header.h</a><br>
+	│   │   ├── <a href=".//dashboard/ios/Runner.xcodeproj/">Runner.xcodeproj</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Runner.xcodeproj/project.pbxproj">project.pbxproj</a><br>
+	│   │   │   ├── <a href=".//dashboard/ios/Runner.xcodeproj/project.xcworkspace/">project.xcworkspace</a><br>
+	│   │   │   │   ├── <a href=".//dashboard/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata">contents.xcworkspacedata</a><br>
+	│   │   │   │   └── <a href=".//dashboard/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/">xcshareddata</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist">IDEWorkspaceChecks.plist</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings">WorkspaceSettings.xcsettings</a><br>
+	│   │   │   └── <a href=".//dashboard/ios/Runner.xcodeproj/xcshareddata/">xcshareddata</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/ios/Runner.xcodeproj/xcshareddata/xcschemes/">xcschemes</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme">Runner.xcscheme</a><br>
+	│   │   └── <a href=".//dashboard/ios/Runner.xcworkspace/">Runner.xcworkspace</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/ios/Runner.xcworkspace/contents.xcworkspacedata">contents.xcworkspacedata</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/ios/Runner.xcworkspace/xcshareddata/">xcshareddata</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist">IDEWorkspaceChecks.plist</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings">WorkspaceSettings.xcsettings</a><br>
+	│   ├── <a href=".//dashboard/lib/">lib</a><br>
+	│   │   └── <a href=".//dashboard/lib/main.dart">main.dart</a><br>
+	│   ├── <a href=".//dashboard/linux/">linux</a><br>
+	│   │   ├── <a href=".//dashboard/linux/CMakeLists.txt">CMakeLists.txt</a><br>
+	│   │   ├── <a href=".//dashboard/linux/flutter/">flutter</a><br>
+	│   │   │   ├── <a href=".//dashboard/linux/flutter/CMakeLists.txt">CMakeLists.txt</a><br>
+	│   │   │   ├── <a href=".//dashboard/linux/flutter/generated_plugin_registrant.cc">generated_plugin_registrant.cc</a><br>
+	│   │   │   ├── <a href=".//dashboard/linux/flutter/generated_plugin_registrant.h">generated_plugin_registrant.h</a><br>
+	│   │   │   └── <a href=".//dashboard/linux/flutter/generated_plugins.cmake">generated_plugins.cmake</a><br>
+	│   │   ├── <a href=".//dashboard/linux/main.cc">main.cc</a><br>
+	│   │   ├── <a href=".//dashboard/linux/my_application.cc">my_application.cc</a><br>
+	│   │   └── <a href=".//dashboard/linux/my_application.h">my_application.h</a><br>
+	│   ├── <a href=".//dashboard/macos/">macos</a><br>
+	│   │   ├── <a href=".//dashboard/macos/Flutter/">Flutter</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Flutter/ephemeral/">ephemeral</a><br>
+	│   │   │   │   ├── <a href=".//dashboard/macos/Flutter/ephemeral/flutter_export_environment.sh">flutter_export_environment.sh</a><br>
+	│   │   │   │   └── <a href=".//dashboard/macos/Flutter/ephemeral/Flutter-Generated.xcconfig">Flutter-Generated.xcconfig</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Flutter/Flutter-Debug.xcconfig">Flutter-Debug.xcconfig</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Flutter/Flutter-Release.xcconfig">Flutter-Release.xcconfig</a><br>
+	│   │   │   └── <a href=".//dashboard/macos/Flutter/GeneratedPluginRegistrant.swift">GeneratedPluginRegistrant.swift</a><br>
+	│   │   ├── <a href=".//dashboard/macos/Runner/">Runner</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Runner/AppDelegate.swift">AppDelegate.swift</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Runner/Assets.xcassets/">Assets.xcassets</a><br>
+	│   │   │   │   └── <a href=".//dashboard/macos/Runner/Assets.xcassets/AppIcon.appiconset/">AppIcon.appiconset</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png">app_icon_1024.png</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_128.png">app_icon_128.png</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_16.png">app_icon_16.png</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_256.png">app_icon_256.png</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_32.png">app_icon_32.png</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_512.png">app_icon_512.png</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_64.png">app_icon_64.png</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/macos/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json">Contents.json</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Runner/Base.lproj/">Base.lproj</a><br>
+	│   │   │   │   └── <a href=".//dashboard/macos/Runner/Base.lproj/MainMenu.xib">MainMenu.xib</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Runner/Configs/">Configs</a><br>
+	│   │   │   │   ├── <a href=".//dashboard/macos/Runner/Configs/AppInfo.xcconfig">AppInfo.xcconfig</a><br>
+	│   │   │   │   ├── <a href=".//dashboard/macos/Runner/Configs/Debug.xcconfig">Debug.xcconfig</a><br>
+	│   │   │   │   ├── <a href=".//dashboard/macos/Runner/Configs/Release.xcconfig">Release.xcconfig</a><br>
+	│   │   │   │   └── <a href=".//dashboard/macos/Runner/Configs/Warnings.xcconfig">Warnings.xcconfig</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Runner/DebugProfile.entitlements">DebugProfile.entitlements</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Runner/Info.plist">Info.plist</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Runner/MainFlutterWindow.swift">MainFlutterWindow.swift</a><br>
+	│   │   │   └── <a href=".//dashboard/macos/Runner/Release.entitlements">Release.entitlements</a><br>
+	│   │   ├── <a href=".//dashboard/macos/Runner.xcodeproj/">Runner.xcodeproj</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Runner.xcodeproj/project.pbxproj">project.pbxproj</a><br>
+	│   │   │   ├── <a href=".//dashboard/macos/Runner.xcodeproj/project.xcworkspace/">project.xcworkspace</a><br>
+	│   │   │   │   └── <a href=".//dashboard/macos/Runner.xcodeproj/project.xcworkspace/xcshareddata/">xcshareddata</a><br>
+	│   │   │   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/macos/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist">IDEWorkspaceChecks.plist</a><br>
+	│   │   │   └── <a href=".//dashboard/macos/Runner.xcodeproj/xcshareddata/">xcshareddata</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/macos/Runner.xcodeproj/xcshareddata/xcschemes/">xcschemes</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/macos/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme">Runner.xcscheme</a><br>
+	│   │   └── <a href=".//dashboard/macos/Runner.xcworkspace/">Runner.xcworkspace</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/macos/Runner.xcworkspace/contents.xcworkspacedata">contents.xcworkspacedata</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/macos/Runner.xcworkspace/xcshareddata/">xcshareddata</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/macos/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist">IDEWorkspaceChecks.plist</a><br>
+	│   ├── <a href=".//dashboard/pubspec.lock">pubspec.lock</a><br>
+	│   ├── <a href=".//dashboard/pubspec.yaml">pubspec.yaml</a><br>
+	│   ├── <a href=".//dashboard/README.md">README.md</a><br>
+	│   ├── <a href=".//dashboard/test/">test</a><br>
+	│   │   └── <a href=".//dashboard/test/widget_test.dart">widget_test.dart</a><br>
+	│   ├── <a href=".//dashboard/web/">web</a><br>
+	│   │   ├── <a href=".//dashboard/web/favicon.png">favicon.png</a><br>
+	│   │   ├── <a href=".//dashboard/web/icons/">icons</a><br>
+	│   │   │   ├── <a href=".//dashboard/web/icons/Icon-192.png">Icon-192.png</a><br>
+	│   │   │   ├── <a href=".//dashboard/web/icons/Icon-512.png">Icon-512.png</a><br>
+	│   │   │   ├── <a href=".//dashboard/web/icons/Icon-maskable-192.png">Icon-maskable-192.png</a><br>
+	│   │   │   └── <a href=".//dashboard/web/icons/Icon-maskable-512.png">Icon-maskable-512.png</a><br>
+	│   │   ├── <a href=".//dashboard/web/index.html">index.html</a><br>
+	│   │   └── <a href=".//dashboard/web/manifest.json">manifest.json</a><br>
+	│   └── <a href=".//dashboard/windows/">windows</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/CMakeLists.txt">CMakeLists.txt</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/flutter/">flutter</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   ├── <a href=".//dashboard/windows/flutter/CMakeLists.txt">CMakeLists.txt</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   ├── <a href=".//dashboard/windows/flutter/generated_plugin_registrant.cc">generated_plugin_registrant.cc</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   ├── <a href=".//dashboard/windows/flutter/generated_plugin_registrant.h">generated_plugin_registrant.h</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/windows/flutter/generated_plugins.cmake">generated_plugins.cmake</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/windows/runner/">runner</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/CMakeLists.txt">CMakeLists.txt</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/flutter_window.cpp">flutter_window.cpp</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/flutter_window.h">flutter_window.h</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/main.cpp">main.cpp</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/resource.h">resource.h</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/resources/">resources</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href=".//dashboard/windows/runner/resources/app_icon.ico">app_icon.ico</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/runner.exe.manifest">runner.exe.manifest</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/Runner.rc">Runner.rc</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/utils.cpp">utils.cpp</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/utils.h">utils.h</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//dashboard/windows/runner/win32_window.cpp">win32_window.cpp</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//dashboard/windows/runner/win32_window.h">win32_window.h</a><br>
+	├── <a href=".//Dataset/">Dataset</a><br>
+	│   ├── <a href=".//Dataset/auth/">auth</a><br>
+	│   │   ├── <a href=".//Dataset/auth/auth.csv">auth.csv</a><br>
+	│   │   ├── <a href=".//Dataset/auth/auth.log">auth.log</a><br>
+	│   │   └── <a href=".//Dataset/auth/newfile.txt">newfile.txt</a><br>
+	│   └── <a href=".//Dataset/ids/">ids</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Dataset/ids/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv">Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Dataset/ids/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv">Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Dataset/ids/Friday-WorkingHours-Morning.pcap_ISCX.csv">Friday-WorkingHours-Morning.pcap_ISCX.csv</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Dataset/ids/Monday-WorkingHours.pcap_ISCX.csv">Monday-WorkingHours.pcap_ISCX.csv</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Dataset/ids/Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv">Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Dataset/ids/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv">Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Dataset/ids/Tuesday-WorkingHours.pcap_ISCX.csv">Tuesday-WorkingHours.pcap_ISCX.csv</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href=".//Dataset/ids/Wednesday-workingHours.pcap_ISCX.csv">Wednesday-workingHours.pcap_ISCX.csv</a><br>
+	├── <a href=".//Models%20Collection/">Models Collection</a><br>
+	│   ├── <a href=".//Models%20Collection/auth/">auth</a><br>
+	│   │   ├── <a href=".//Models%20Collection/auth/auth_kmeans_model.joblib">auth_kmeans_model.joblib</a><br>
+	│   │   ├── <a href=".//Models%20Collection/auth/auth_pca_model.joblib">auth_pca_model.joblib</a><br>
+	│   │   ├── <a href=".//Models%20Collection/auth/auth_sgd_model.joblib">auth_sgd_model.joblib</a><br>
+	│   │   └── <a href=".//Models%20Collection/auth/auth_vectorizer_model.joblib">auth_vectorizer_model.joblib</a><br>
+	│   └── <a href=".//Models%20Collection/ids/">ids</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_Bot_benign.sav">df_Bot_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_DDoS_benign.sav">df_DDoS_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_DoS_GoldenEye_benign.sav">df_DoS_GoldenEye_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_DoS_Hulk_benign.sav">df_DoS_Hulk_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_DoS_Slowhttptest_benign.sav">df_DoS_Slowhttptest_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_FTPPatator_benign.sav">df_FTPPatator_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_Heartbleed_benign.sav">df_Heartbleed_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_Infiltration_benign.sav">df_Infiltration_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_PortScan_benign.sav">df_PortScan_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_SSHPatator_benign.sav">df_SSHPatator_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_Web_Attack_benign.sav">df_Web_Attack_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_Web_Attack_Brute_Force_benign.sav">df_Web_Attack_Brute_Force_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_Web_Attack_Sql_Injection_benign.sav">df_Web_Attack_Sql_Injection_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/df_Web_Attack_XSS_benign.sav">df_Web_Attack_XSS_benign.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_Bot_benign_logic_model.sav">IDSdf_Bot_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_DDoS_benign_logic_model.sav">IDSdf_DDoS_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_DoS_GoldenEye_benign_logic_model.sav">IDSdf_DoS_GoldenEye_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_DoS_Hulk_benign_logic_model.sav">IDSdf_DoS_Hulk_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_DoS_Slowhttptest_benign_logic_model.sav">IDSdf_DoS_Slowhttptest_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_FTPPatator_benign_logic_model.sav">IDSdf_FTPPatator_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_Heartbleed_benign_logic_model.sav">IDSdf_Heartbleed_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_Infiltration_benign_logic_model.sav">IDSdf_Infiltration_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_PortScan_benign_logic_model.sav">IDSdf_PortScan_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_SSHPatator_benign_logic_model.sav">IDSdf_SSHPatator_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_Web_Attack_benign_logic_model.sav">IDSdf_Web_Attack_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_Web_Attack_Brute_Force_benign_logic_model.sav">IDSdf_Web_Attack_Brute_Force_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_Web_Attack_Sql_Injection_benign_logic_model.sav">IDSdf_Web_Attack_Sql_Injection_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Models%20Collection/ids/IDSdf_Web_Attack_XSS_benign_logic_model.sav">IDSdf_Web_Attack_XSS_benign_logic_model.sav</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href=".//Models%20Collection/ids/IDS_sgd_model.sav">IDS_sgd_model.sav</a><br>
+	├── <a href=".//Predicted%20Results/">Predicted Results</a><br>
+	│   ├── <a href=".//Predicted%20Results/Auth%20Log/">Auth Log</a><br>
+	│   │   ├── <a href=".//Predicted%20Results/Auth%20Log/csv/">csv</a><br>
+	│   │   └── <a href=".//Predicted%20Results/Auth%20Log/json/">json</a><br>
+	│   └── <a href=".//Predicted%20Results/ids/">ids</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href=".//Predicted%20Results/ids/csv/">csv</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   └── <a href=".//Predicted%20Results/ids/csv/ids_2022_07_17.csv">ids_2022_07_17.csv</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href=".//Predicted%20Results/ids/json/">json</a><br>
+	├── <a href=".//project_structure.html">project_structure.html</a><br>
+	├── <a href=".//README.md">README.md</a><br>
+	└── <a href=".//resources/">resources</a><br>
+	&nbsp;&nbsp;&nbsp; └── <a href=".//resources/auth_system/">auth_system</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//resources/auth_system/auth_kmeans_model.joblib">auth_kmeans_model.joblib</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//resources/auth_system/auth_pca_model.joblib">auth_pca_model.joblib</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//resources/auth_system/auth_sgd_model.joblib">auth_sgd_model.joblib</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//resources/auth_system/auth_vectorizer_model.joblib">auth_vectorizer_model.joblib</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//resources/auth_system/new.json">new.json</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//resources/auth_system/newtesting.ipynb">newtesting.ipynb</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href=".//resources/auth_system/sample_csv.ipynb">sample_csv.ipynb</a><br>
+	&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href=".//resources/auth_system/whole%20log%20file.ipynb">whole log file.ipynb</a><br>
+	<br><br>
+	</p>
+	<p>
+
+101 directories, 241 files
+	<br><br>
+	</p>
+	<hr>
+	<p class="VERSION">
+		 tree v1.8.0 © 1996 - 2018 by Steve Baker and Thomas Moore <br>
+		 HTML output hacked and copyleft © 1998 by Francesc Rocher <br>
+		 JSON output hacked and copyleft © 2014 by Florian Sesser <br>
+		 Charsets / OS/2 support © 2001 by Kyosuke Tokoro
+	</p>
+</body>
+</html>
