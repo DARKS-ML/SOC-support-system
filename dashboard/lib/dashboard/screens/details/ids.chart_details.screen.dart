@@ -25,9 +25,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../model/ids_model/Web_Attack_Brute_Force_model.dart';
 
 class IDSChartDetailsScreen extends StatefulWidget {
+  final String groupdfileName;
   final String botfileName;
   final String ddosName;
-  // final String webAttackName;
   final String goldenEyeName;
   final String hulkName;
   final String slowHttpName;
@@ -42,6 +42,7 @@ class IDSChartDetailsScreen extends StatefulWidget {
 
   const IDSChartDetailsScreen(
       {Key? key,
+      required this.groupdfileName,
       required this.botfileName,
       required this.ddosName,
       // required this.webAttackName,
@@ -156,6 +157,19 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
       data++;
     } else {
       liveBot = liveBot;
+    }
+  }
+
+  //Notification
+  Future<String> loadNotification({required String filename}) async {
+    try {
+      String path = filename;
+      File f = File(path);
+      final input = await f.readAsString();
+
+      return input;
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -452,12 +466,12 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
 
     return SafeArea(
       child: Scaffold(
-        key: scaffoldKey,
         appBar: GlobalWidget.displayDetailsPageAppBar(
           context: context,
-          scaffoldKey: scaffoldKey,
+          future: loadNotification(filename:widget.groupdfileName)
+
         ),
-        endDrawer: GlobalWidget.displayIdsDetailsPageDrawer(),
+        // endDrawer: GlobalWidget.displayIdsDetailsPageDrawer(context:  context),
         // floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
         // floatingActionButton: ,
         body: SingleChildScrollView(

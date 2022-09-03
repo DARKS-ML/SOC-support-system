@@ -4,6 +4,7 @@ import 'package:dashboard/dashboard/screens/ids_anomaly.screen.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:json_table/json_table.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 import '../screens/notification.screen.dart';
@@ -55,7 +56,7 @@ class GlobalWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => IDSAnomalySCreen(),
+                  builder: (_) => const IDSAnomalySCreen(),
                 ),
               );
               // String path =
@@ -358,10 +359,11 @@ class GlobalWidget {
   }
 
 // details page appbar
-  static displayDetailsPageAppBar({
-    required BuildContext context,
-    required GlobalKey<ScaffoldState> scaffoldKey,
-  }) {
+  static displayDetailsPageAppBar(
+      {required BuildContext context, required Future future}) {
+    bool isSourceIp = false;
+    bool isDescIp = false;
+    bool isSourcePort = false;
     return AppBar(
       elevation: 1,
       leading: GlobalWidget.displayBackButton(context: context),
@@ -377,9 +379,122 @@ class GlobalWidget {
         CircleAvatar(
           backgroundColor: Colors.black,
           child: IconButton(
-            onPressed: () {
-              scaffoldKey.currentState!.openEndDrawer();
-            },
+            onPressed: () => showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: Row(
+                  children: [
+                    const Text("Anamoly List"),
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.clear))
+                  ],
+                ),
+                content: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // setState(() {
+                              isSourceIp = !isSourceIp;
+                              isDescIp = false;
+                              isSourcePort = false;
+                              // providePath = isSourceIp
+                              //     ? sourceIpJson
+                              //     : defaultAnomalyJson;
+                              // });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: isSourceIp ? Colors.green : Colors.white,
+                                borderRadius: BorderRadius.circular(4),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: const Text("Group By Source Ip"),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              // setState(() {
+                              isSourceIp = false;
+                              isDescIp = !isDescIp;
+                              isSourcePort = false;
+                              // providePath =
+                              //     isDescIp ? descIpJson : defaultAnomalyJson;
+                              // });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: isDescIp ? Colors.green : Colors.white,
+                                borderRadius: BorderRadius.circular(4),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: const Text("Group By Destination Ip"),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              // setState(() {
+                              isSourceIp = false;
+                              isDescIp = false;
+                              isSourcePort = !isSourcePort;
+                              // providePath = isSourcePort
+                              //     ? sourcePortIpJson
+                              //     : defaultAnomalyJson;
+                              // });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color:
+                                    isSourcePort ? Colors.green : Colors.white,
+                                borderRadius: BorderRadius.circular(4),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: const Text("Group By Source Port"),
+                            ),
+                          ),
+                        ],
+                      ),
+                      FutureBuilder(
+                          future: future,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              final snapshotData = snapshot.data;
+
+                              final jsonSample = "$snapshotData";
+                              var json = jsonDecode(jsonSample);
+                              final totalDataLength = json.length;
+                              int page1Data =
+                                  totalDataLength > 20 ? 20 : json.length;
+
+                              return SingleChildScrollView(
+                                padding: const EdgeInsets.all(16.0),
+                                child: JsonTable(
+                                  json,
+                                  showColumnToggle: true,
+                                  allowRowHighlight: true,
+                                  rowHighlightColor:
+                                      Colors.yellow[500]!.withOpacity(0.7),
+                                  paginationRowCount: page1Data,
+                                  onRowSelect: (index, map) {},
+                                ),
+                              );
+                            } else {
+                              return GlobalWidget
+                                  .displayDialogWithLoadingIndicator(
+                                      isCenter: true);
+                            }
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             icon: const Icon(
               Icons.notification_add,
               color: Colors.red,
@@ -394,38 +509,50 @@ class GlobalWidget {
   }
 
   // ids details page notification lists
-  static displayIdsDetailsPageDrawer() {
-    return Drawer(
-      child: SingleChildScrollView(
-        // controller: controller,
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                "Notification",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                ),
-              ),
-            ),
-            FutureBuilder(
-              builder: (context, snapshot) {
-                try {
-                  return Text("data");
-                } catch (e) {
-                  return GlobalWidget.loadingWidget(context: context);
-                }
-              },
-            )
-          ],
-        ),
-      ),
-    );
-  }
+//   static displayIdsDetailsPageDrawer({required BuildContext context}) {
+//     return Drawer(
+//       child: SingleChildScrollView(
+//         // controller: controller,
+//         child: Column(
+//           // mainAxisAlignment: MainAxisAlignment.start,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             const Padding(
+//               padding: EdgeInsets.all(8.0),
+//               child: Text(
+//                 "Notification",
+//                 style: TextStyle(
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.red,
+//                 ),
+//               ),
+//             ),
+//             ListTile(
+//               onTap: () => showDialog<String>(
+//                 context: context,
+//                 builder: (BuildContext context) => AlertDialog(
+
+//                   title: const Text('AlertDialog Title'),
+//                   content: const Text('AlertDialog description'),
+//                   actions:[
+//                     TextButton(
+//                       onPressed: () => Navigator.pop(context, 'Cancel'),
+//                       child: const Text('Cancel'),
+//                     ),
+//                     TextButton(
+//                       onPressed: () => Navigator.pop(context, 'OK'),
+//                       child: const Text('OK'),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//               title: const Text("View Anomaly"),
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
 }
 
 loadIDSMultiClassModelAndPredict({

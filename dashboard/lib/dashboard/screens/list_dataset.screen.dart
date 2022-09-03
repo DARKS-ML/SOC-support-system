@@ -146,7 +146,8 @@ fetchDataFromAPi({required Future future, required String socType}) {
                           //Predicted Results/ids/ids_2022_08_28/Web_Attack_Brute_Force/json/Web_Attack_Brute_Force_2022_08_28.json
                           //Predicted Results/ids/ids_2022_08_28/Web_Attack_Sql_Injection/json/Web_Attack_Sql_Injection_2022_08_28.json
                           // Predicted Results/ids/ids_2022_08_28/Web_Attack_XSS_benign/json/Web_Attack_XSS_benign_2022_08_28.json
-
+                          final groupByFile =
+                              "Predicted Results/ids/$folderName/GropBy/json/GropBy_$folderName.json";
                           final botFile =
                               "Predicted Results/ids/$folderName/Bot/json/Bot_$folderName.json";
                           final ddosBenignFile =
@@ -229,6 +230,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                                 webBruteForceName: bruteForceFile,
                                 webSqlInjectionName: sqlInjection,
                                 webXSSName: webXssfile,
+                                groupdfileName: groupByFile,
                               ),
                             ),
                           );

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
@@ -63,6 +62,9 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
                                 .toString();
                             bool isToday = todayDate == keysName;
 
+                            final groupByFile =
+                                "Predicted Results/ids/$keysName/GropBy/json/GropBy_$keysName.json";
+
                             final botFile =
                                 "Predicted Results/ids/$keysName/Bot/json/Bot_$keysName.json";
                             final ddosBenignFile =
@@ -120,6 +122,7 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
                                       webBruteForceName: bruteForceFile,
                                       webSqlInjectionName: sqlInjection,
                                       webXSSName: webXssfile,
+                                      groupdfileName: groupByFile,
                                     ),
                                   ),
                                 );
