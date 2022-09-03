@@ -389,16 +389,16 @@ class GroupBy(APIView):
                 df = pd.read_csv(csv_path)
                 sourceIp = df.groupby([' Source IP','type']).count()
                 sourceIp.reset_index(inplace=True)
-                sourceIp.sort_values(by=['max'], ascending=False)
+                sourceIp = sourceIp.sort_values(by=['max'], ascending=False)
 
                 destIp = df.groupby([' Destination IP','type']).count()
                 destIp.reset_index(inplace=True)
-                destIp.sort_values(by=['max'], ascending=False)
+                destIp = destIp.sort_values(by=['max'], ascending=False)
 
 
                 sourcePort = df.groupby([' Source Port','type']).count()
                 sourcePort.reset_index(inplace=True)
-                sourcePort.sort_values(by=['max'], ascending=False)
+                sourcePort = sourcePort.sort_values(by=['max'], ascending=False)
 
 
                 ref = AuthLogDataProcessing()
