@@ -449,9 +449,10 @@ class GroupBy(APIView):
 
                
                 return Response({
-                    "source_ip":sourceIp.to_json(),
-                    "destination_ip":destIp.to_json(),
-                    "soure_port":sourcePort.to_json()
+                    
+                    "source_ip":groupby_sourceip_json_file_path,
+                    "destination_ip":groupby_descip_json_file_path,
+                    "source_port":groupby_sourceport_json_file_path,
                     })
             return Response({
                     "error":"failed to load data",
