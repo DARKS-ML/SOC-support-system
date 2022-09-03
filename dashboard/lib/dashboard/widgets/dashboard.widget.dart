@@ -331,8 +331,11 @@ class GlobalWidget {
   }
 
 // details page appbar
-  static displayDetailsPageAppBar(
-      {required BuildContext context, required String file}) {
+  static displayDetailsPageAppBar({
+    required BuildContext context,
+    required String file,
+    required String predictionBasePath,
+  }) {
     bool isSourceIp = false;
     bool isDescIp = false;
     bool isSourcePort = false;
@@ -353,11 +356,14 @@ class GlobalWidget {
           child: IconButton(
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) => IDSAnomalySCreen(
-                            fileName: file,
-                          ))));
+                context,
+                MaterialPageRoute(
+                  builder: ((context) => IDSAnomalySCreen(
+                        predictionBasePath: predictionBasePath,
+                        fileName: file,
+                      )),
+                ),
+              );
             },
             // showDialog<String>(
             //   context: context,

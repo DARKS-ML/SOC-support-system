@@ -128,6 +128,11 @@ fetchDataFromAPi({required Future future, required String socType}) {
                           final folderName = finalDatasetName
                               .split("Dataset/ids/")[1]
                               .split(".csv")[0];
+                          final valueDecode = json.decode(value);
+                          // print("value is sss ${}");
+                          final predictionBasePath = valueDecode['files'][0]
+                              .toString()
+                              .split("Predicted Results")[0];
 
                           // DateTime now = DateTime.now();
                           // final todayDate =
@@ -216,6 +221,7 @@ fetchDataFromAPi({required Future future, required String socType}) {
                             context,
                             MaterialPageRoute(
                               builder: (_) => IDSChartDetailsScreen(
+                                predictionBasePath: predictionBasePath,
                                 botfileName: botFile,
                                 ddosName: ddosBenignFile,
                                 // webAttackName: webAttackFile,

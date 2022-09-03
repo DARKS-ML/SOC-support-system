@@ -39,6 +39,9 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
                   final decodeData = json.decode(snapshotData);
                   final idsData = decodeData["data"]["ids"];
                   final datasetLength = idsData.length;
+                  final predictionBasePath = decodeData['files'][0]
+                      .toString()
+                      .split("Predicted Results")[0];
                   DateTime now = DateTime.now();
                   final todayDate =
                       "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
@@ -108,6 +111,7 @@ displayIdsLogPredictedResultWidget({required BuildContext context}) {
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => IDSChartDetailsScreen(
+                                      predictionBasePath: predictionBasePath,
                                       botfileName: botFile,
                                       ddosName: ddosBenignFile,
                                       // webAttackName: webAttackFile,

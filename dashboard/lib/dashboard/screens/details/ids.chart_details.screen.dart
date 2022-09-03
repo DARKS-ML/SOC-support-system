@@ -25,6 +25,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../model/ids_model/Web_Attack_Brute_Force_model.dart';
 
 class IDSChartDetailsScreen extends StatefulWidget {
+  final String predictionBasePath;
   final String groupdfileName;
   final String botfileName;
   final String ddosName;
@@ -42,6 +43,7 @@ class IDSChartDetailsScreen extends StatefulWidget {
 
   const IDSChartDetailsScreen(
       {Key? key,
+      required this.predictionBasePath,
       required this.groupdfileName,
       required this.botfileName,
       required this.ddosName,
@@ -467,9 +469,9 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: GlobalWidget.displayDetailsPageAppBar(
-          context: context, file: widget.groupdfileName,
-          
-
+          context: context,
+          file: widget.groupdfileName,
+          predictionBasePath: widget.predictionBasePath,
         ),
         // endDrawer: GlobalWidget.displayIdsDetailsPageDrawer(context:  context),
         // floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,

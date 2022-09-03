@@ -11,7 +11,12 @@ import '../widgets/dashboard.widget.dart';
 
 class IDSAnomalySCreen extends StatefulWidget {
   final String fileName;
-  const IDSAnomalySCreen({Key? key, required this.fileName}) : super(key: key);
+  final String predictionBasePath;
+  const IDSAnomalySCreen({
+    Key? key,
+    required this.fileName,
+    required this.predictionBasePath,
+  }) : super(key: key);
 
   @override
   State<IDSAnomalySCreen> createState() => _IDSAnomalySCreenState();
@@ -36,10 +41,10 @@ class _IDSAnomalySCreenState extends State<IDSAnomalySCreen> {
   @override
   void initState() {
     defaultAnomalyJson =
-        "/home/iamdpk/Project Work/SOC-support-system/dashboard/${widget.fileName}";
+        widget.predictionBasePath.toString() + widget.fileName.toString();
 
     providePath =
-        "/home/iamdpk/Project Work/SOC-support-system/dashboard/${widget.fileName}";
+        widget.predictionBasePath.toString() + widget.fileName.toString();
     super.initState();
   }
 
@@ -47,11 +52,21 @@ class _IDSAnomalySCreenState extends State<IDSAnomalySCreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
-        title: Text(widget.fileName),
+        backgroundColor: Colors.white,
+        title: Text(
+          "IDS Anomaly List".toUpperCase(),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
       ),
       body: FutureBuilder(
-          future: groupByService(filePath: ""),
+          future: groupByService(
+              filePath: widget.predictionBasePath.toString() +
+                  widget.fileName.toString()),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final snapshotData = snapshot.data;
@@ -177,8 +192,8 @@ class _IDSAnomalySCreenState extends State<IDSAnomalySCreen> {
 groupByService({required String filePath}) async {
   try {
     final path = filePath.replaceAll("json", "csv");
-    final response = await http.get(Uri.parse(
-        "http://localhost:8000/api/v1/ids/groupby/?csv_path=/home/iamdpk/Project Work/SOC-support-system/dashboard/Predicted Results/ids/test_all/GropBy/csv/GropBy_test_all.csv"));
+    final response = await http.get(
+        Uri.parse("http://localhost:8000/api/v1/ids/groupby/?csv_path=$path"));
     if (response.statusCode == 200) {
       // log(response.body);
       return response.body;
