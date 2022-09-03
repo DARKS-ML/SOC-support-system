@@ -20,12 +20,12 @@ class DashBoardScreen extends StatelessWidget {
 }
 
 final config = SideBarConfig(
-  backgroundColor: Colors.white,
+  backgroundColor: const Color(0xff16213E),
   selectedBoxColor: Colors.white,
   selectedIconColor: Colors.black,
   dividerColor: Colors.black,
-  unselectedBoxColor: Colors.white,
-  unselectedIconColor: Colors.grey,
+  unselectedBoxColor: const Color(0xff16213E),
+  unselectedIconColor: Colors.white,
   bottomIconColor: Colors.black,
   iconSize: 20,
   selectedTextStyle: const TextStyle(color: Colors.black),
