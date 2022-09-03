@@ -182,7 +182,7 @@ class _IDSAnomalySCreenState extends State<IDSAnomalySCreen> {
                 ),
               );
             } else {
-              return Text(snapshot.data.toString());
+              return GlobalWidget.loadingWidget(context: context);
             }
           }),
     );
