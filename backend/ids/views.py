@@ -270,7 +270,15 @@ class MultiClassPrediction(APIView):
             request_data = request.data
             final_path = request_data["path"]
             if final_path.endswith('.csv'):
+                filewiseFolder = final_path.split("/ids/")[1].replace(".csv","")
                 ref = IDSLogDataProcessing()
+                daywisefolderName = filewiseFolder
+
+                import shutil
+                daywisefolderPath =  os.path.join(ids_predicted_base_path, daywisefolderName)
+                if os.path.exists(daywisefolderPath):
+                    shutil.rmtree(daywisefolderPath)
+                os.mkdir(daywisefolderPath)
 
                 multiclass_model_load =  pickle.load(open(ids_model_path+'IDS_multiclass.sav','rb'))
                 data_to_predict = pd.read_csv(final_path)
@@ -302,32 +310,35 @@ class MultiClassPrediction(APIView):
 
                 df = df.drop(column_to_remove_from_df,axis=1)
                 # convert to csv
-                # cretae base Notification folder ->done
-                notf_base_path = os.path.join(notification_path,"Notification")
-                if not os.path.exists(notf_base_path):             
-                    os.makedirs(notf_base_path)
-
-                notification_date = ref.fileNameFormat("notif")
-                notification_date_path = os.path.join(notf_base_path,notification_date)
-                if not os.path.exists(notification_date_path):             
-                    os.makedirs(notification_date_path)
                 
-                notification_name = ref.fileNameFormat("ids_multiclass_notf")
-                notif_csv_file_path = f'{notification_date_path}/{notification_name}.csv'
-                df.to_csv(notif_csv_file_path,index=False,header=True)
+                # cretae base Notification folder ->done
+                # notf_base_path = os.path.join(notification_path,"Notification")
+                # if not os.path.exists(notf_base_path):             
+                #     os.makedirs(notf_base_path)
 
-                notif_json_data = ref.convertCsvToJson(notif_csv_file_path)
-                import json
-                notf_json_object = json.dumps(notif_json_data, indent = 4)
+                # notification_date = ref.fileNameFormat("notif")
+                # notification_date_path = os.path.join(notf_base_path,notification_date)
+                # if not os.path.exists(notification_date_path):             
+                #     os.makedirs(notification_date_path)
+                
+                # notification_name = ref.fileNameFormat("ids_multiclass_notf")
+                # notif_csv_file_path = f'{notification_date_path}/{notification_name}.csv'
+                # df.to_csv(notif_csv_file_path,index=False,header=True)
 
-                notif_json_file_path = f'{notification_date_path}/{notification_name}.json'
-                with open(notif_json_file_path, "w") as outfile:
-                    outfile.write(notf_json_object)
+                # notif_json_data = ref.convertCsvToJson(notif_csv_file_path)
+                # import json
+                # notf_json_object = json.dumps(notif_json_data, indent = 4)
+
+                # notif_json_file_path = f'{notification_date_path}/{notification_name}.json'
+                # with open(notif_json_file_path, "w") as outfile:
+                #     outfile.write(notf_json_object)
+
+                ref.createModelCsvJsonFolder(daywisefolderPath,"GropBy",df,daywisefolderName)
 
 
                 return Response({
-                    "csv_path":notif_csv_file_path,
-                    "json_path":notif_json_file_path
+                    "csv_path":"notif_csv_file_path",
+                    "json_path":"notif_json_file_path"
                 })
 
         except Exception as e: 
