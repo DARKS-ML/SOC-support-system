@@ -1,7 +1,5 @@
 # SOC-support-system
 
-# SOC-support-system
-
 > install pipenv
 **GOTO base Project path ie, backend **
 ```shell
