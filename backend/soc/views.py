@@ -19,8 +19,8 @@ import os.path as path
 modulePath = os.path.dirname(__file__)
 base_path =  path.abspath(path.join(__file__ ,"../../.."))
 auth_model_path =base_path+'/Models Collection/auth/'
-auth_predicted_csv_path = base_path+'/dashboard/Predicted Results/Auth Log/csv/'
-auth_predicted_json_path = base_path+'/dashboard/Predicted Results/Auth Log/json/'
+auth_predicted_csv_path = base_path+'/dashboard/Predicted Results/Auth Log/'
+auth_predicted_json_path = base_path+'/dashboard/Predicted Results/Auth Log/'
 notification_path = base_path+'/dashboard/Predicted Results/'
 dataset_collection = base_path+'/Dataset/auth/'
 
@@ -90,7 +90,7 @@ class AuthLogFileDetailsView(APIView):
 
 class PredictedAuthFileDetailsView(APIView):
     def get(self,request):
-        dir_name = auth_predicted_json_path
+        dir_name = auth_predicted_json_path+"json/"
         my_dict = {}
         data = []
         # Get list of all files only in the given directory
@@ -113,11 +113,11 @@ class PredictedAuthFileDetailsView(APIView):
 # @desc -> get path of log file
 # http://127.0.0.1:8000/api/v1/csv/?path=%22Hello%22
 class MultiLineAuthLogView(APIView):
-    def get(self,request):
+    def get(self,request):      
         return Response({
             "msg":"enter your file path"
         },status=status.HTTP_404_NOT_FOUND)
-# here /home/iamdpk/Project Work/SOC-support-system/Dataset/auth.log
+    # here /home/iamdpk/Project Work/SOC-support-system/Dataset/auth.log
     def post(self,request):
         request_data =  request.data
         try:
@@ -147,8 +147,15 @@ class MultiLineAuthLogView(APIView):
                 mod_zscore, mad = ref.modified_zscore(df_copy1['distance'])
                 df_copy1['mod_zscore'] = mod_zscore.tolist()
 
+                import shutil
+                csv_f = "csv"
+                csv_path = os.path.join(auth_predicted_csv_path,csv_f)
+                if os.path.exists(csv_path):
+                        shutil.rmtree(csv_path)
+                os.mkdir(csv_path)
+
                 file_name =ref.fileNameFormat("auth")
-                csv_file_path = f'{auth_predicted_csv_path}{file_name}.csv'
+                csv_file_path = f'{csv_path}/{file_name}.csv'
                 df_copy1.to_csv(csv_file_path,index=False,header=True)
 
 
@@ -157,7 +164,12 @@ class MultiLineAuthLogView(APIView):
                 
                 json_object = json.dumps(json_data, indent = 4)
                 file_name =ref.fileNameFormat("auth")
-                json_file_path = f'{auth_predicted_json_path}{file_name}.json'
+                json_f = "json"
+                json_path = os.path.join(auth_predicted_json_path,json_f)
+                if os.path.exists(json_path):
+                        shutil.rmtree(json_path)
+                os.mkdir(json_path)
+                json_file_path = f'{json_path}/{file_name}.json'
                 with open( json_file_path, "w") as outfile:
                     outfile.write(json_object)
 
@@ -166,7 +178,15 @@ class MultiLineAuthLogView(APIView):
                 # =======================================#
 
                 df_nf = pd.read_csv(csv_file_path)
-                notif = df_nf.loc[df_nf['mod_zscore'] <= 3]
+                df_nf = df_nf.drop(["date","time","distance","mod_zscore"],axis=1)
+                # notif = df_nf.loc[df_nf['distance'] > 0.6]
+                # notif['event'] = notif['event'].str.replace("\n","")
+                notif = df_nf.loc[df_nf['label'] > 3]
+                notif = notif.groupby(['ip','event','label']).count()
+                notif.reset_index(inplace=True)
+                notif = notif.sort_values(by=['process'], ascending=False)
+                # notif['count'] = notif(["process"])
+                notif.rename(columns = {'process':'count'}, inplace = True)
                 notif['event'] = notif['event'].str.replace("\n","")
                 
                 # cretae base Notification folder ->done
@@ -210,8 +230,8 @@ class MultiLineAuthLogView(APIView):
           
         except Exception as e:
             return Response({
-             "error":   e
-            },tatus=status.HTTP_412_PRECONDITION_FAILED)
+             "error":e
+            },status=status.HTTP_412_PRECONDITION_FAILED)
 
 
 # @desc -> list all directory and sub directory name 

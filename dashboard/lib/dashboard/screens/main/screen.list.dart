@@ -25,9 +25,9 @@ class DashboardScreenList {
       tooltipText: "Previous Result Page",
     ),
     SideBarItem(
-      text: "Notification",
-      icon: FontAwesomeIcons.bell,
-      tooltipText: "Auth Anomoly CSV",
+      text: "Auth",
+      icon: FontAwesomeIcons.gauge,
+      tooltipText: "Auth Anomoly Data",
     ),
     SideBarItem(
       text: "Logout",

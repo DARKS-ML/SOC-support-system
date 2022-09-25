@@ -83,7 +83,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
     loadAuthLog();
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _updateDataSource(timer);
-      isPlay ? setState(() {}) : null;
+      isPlay ?  setState(() {}) : null;
     });
     _tooltipBehavior = onLiveHover();
 
@@ -280,15 +280,15 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
                             legend: Legend(isVisible: true),
                             primaryXAxis: CategoryAxis(
                               title: AxisTitle(
-                                text: "Count",
+                                text: "Label",
                                 textStyle: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
                               isVisible: true,
                             ),
-                            primaryYAxis: NumericAxis(
+                            primaryYAxis: CategoryAxis(
                               title: AxisTitle(
-                                text: "Label",
+                                text: "Count",
                                 textStyle: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),

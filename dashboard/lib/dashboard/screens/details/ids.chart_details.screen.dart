@@ -17,6 +17,7 @@ import 'package:dashboard/dashboard/model/ids_model/dos_Hulk_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/dos_SlowHttp_model.dart';
 import 'package:dashboard/dashboard/model/ids_model/ids_bot_model.dart';
 import 'package:dashboard/dashboard/screens/details/filter_csv.dart';
+import 'package:dashboard/dashboard/screens/list_dataset.screen.dart';
 import 'package:dashboard/dashboard/widgets/ids_chart.dart';
 import 'package:dashboard/dashboard/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -125,22 +126,39 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
   bool isPlay = true;
   void _updateDataSource(Timer timer) {
     if (isPlay) {
-      liveBot = chartData.sublist(data + 40, (data + 40) + 40);
-      liveDdosData = ddosData.sublist(data + 40, (data + 40) + 40);
-      livedosGoldenData = dosGoldenData.sublist(data + 40, (data + 40) + 40);
-      livedosHulkData = dosHulkData.sublist(data + 40, (data + 40) + 40);
-      liveslowHttpData = slowHttpData.sublist(data + 40, (data + 40) + 40);
-      liveftpPatatorData = ftpPatatorData.sublist(data + 40, (data + 40) + 40);
-      liveheartbleedData = heartbleedData.sublist(data + 40, (data + 40) + 40);
-      liveinfiltrationData =
-          infiltrationData.sublist(data + 40, (data + 40) + 40);
-      liveportScanData = portScanData.sublist(data + 40, (data + 40) + 40);
-      livesshPatator = sshPatatorData.sublist(data + 40, (data + 40) + 40);
-      livewebBruteForceData =
-          webBruteForceData.sublist(data + 40, (data + 40) + 40);
-      livesqlInjectionData =
-          sqlInjectionData.sublist(data + 40, (data + 40) + 40);
-      livewebXssData = webXssData.sublist(data + 40, (data + 40) + 40);
+      try {
+        liveBot = chartData.sublist(data + 40, (data + 40) + 40);
+        liveDdosData = ddosData.sublist(data + 40, (data + 40) + 40);
+        livedosGoldenData = dosGoldenData.sublist(data + 40, (data + 40) + 40);
+        livedosHulkData = dosHulkData.sublist(data + 40, (data + 40) + 40);
+        liveslowHttpData = slowHttpData.sublist(data + 40, (data + 40) + 40);
+        liveftpPatatorData =
+            ftpPatatorData.sublist(data + 40, (data + 40) + 40);
+        liveheartbleedData =
+            heartbleedData.sublist(data + 40, (data + 40) + 40);
+        liveinfiltrationData =
+            infiltrationData.sublist(data + 40, (data + 40) + 40);
+        liveportScanData = portScanData.sublist(data + 40, (data + 40) + 40);
+        livesshPatator = sshPatatorData.sublist(data + 40, (data + 40) + 40);
+        livewebBruteForceData =
+            webBruteForceData.sublist(data + 40, (data + 40) + 40);
+        livesqlInjectionData =
+            sqlInjectionData.sublist(data + 40, (data + 40) + 40);
+        livewebXssData = webXssData.sublist(data + 40, (data + 40) + 40);
+      } catch (e) {
+        displayDialog(
+          context: context,
+          widget: const Text("Processing.."),
+          child: const Text(
+            "Data Loading Takes time \n waiting.... ",
+            textAlign: TextAlign.center,
+          ),
+          actions: [],
+        );
+        Future.delayed(const Duration(seconds: 1), () {
+          Navigator.pop(context);
+        });
+      }
 
       // livePlot.add(chartData[i]);
       // log("length of liveplot dtata${liveBot.length}");
@@ -435,11 +453,13 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
     loadIDSWebXssLog();
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _updateDataSource(timer);
-      isPlay
-          ? setState(() {
-              // plotIndex++;
-            })
-          : null;
+      if (mounted) {
+        isPlay
+            ? setState(() {
+                // plotIndex++;
+              })
+            : null;
+      }
     });
     _tooltipBehavior1 = hoverBot();
     _tooltipBehavior2 = hoverDdos();
@@ -879,49 +899,35 @@ class _IDSChartDetailsScreenState extends State<IDSChartDetailsScreen> {
       builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
           int seriesIndex) {
         return Expanded(
-          child: InkWell(
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => CSVScreen(
-                    title: "Bot Data List",
-                    filePath: widget.botfileName,
-                  ),
-                ),
-              );
-            },
-            child: SizedBox(
-              height: 110,
-              width: 270,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "TimeStamp:${data.timestamp.toString()}",
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Source IP:${data.sourceIP.toString()}",
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Destination Ip:${data.destinationIP.toString()}",
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Probability:${data.botProbXgb.toString()}",
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                    ]),
-              ),
+          child: SizedBox(
+            height: 110,
+            width: 270,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "TimeStamp:${data.timestamp.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Source IP:${data.sourceIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Destination Ip:${data.destinationIP.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Probability:${data.botProbXgb.toString()}",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ]),
             ),
           ),
         );
