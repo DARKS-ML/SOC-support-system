@@ -83,7 +83,7 @@ class _AuthChartDetailsScreenState extends State<AuthChartDetailsScreen> {
     loadAuthLog();
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _updateDataSource(timer);
-      isPlay ? setState(() {}) : null;
+      isPlay ?  setState(() {}) : null;
     });
     _tooltipBehavior = onLiveHover();
 
